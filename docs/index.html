@@ -1,0 +1,3285 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>FCN 观察看板</title>
+  <style>
+    :root {
+      --bg: #f6f8fb;
+      --card: #ffffff;
+      --text: #172033;
+      --muted: #65758b;
+      --line: #d9e2ec;
+      --blue: #2563eb;
+      --orange: #d97706;
+      --red: #dc2626;
+      --green: #059669;
+    }
+    body {
+      max-width: 1280px;
+      margin: 0 auto;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, "Microsoft YaHei", sans-serif;
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.04);
+    }
+    header {
+      padding: 26px 24px 12px;
+    }
+    h1 {
+      margin: 0 0 8px;
+      font-size: 28px;
+    }
+    .sub {
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .view-nav {
+      display: flex;
+      gap: 10px;
+      padding: 0 24px 18px;
+    }
+    .view-tab {
+      display: inline-block;
+      padding: 10px 16px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--muted);
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+    }
+    .view-tab.active {
+      background: var(--blue);
+      border-color: var(--blue);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(37, 99, 235, 0.18);
+    }
+    .dashboard-view {
+      display: none;
+    }
+    .dashboard-view.active {
+      display: block;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(130px, 1fr));
+      gap: 14px;
+      padding: 12px 32px 20px;
+    }
+    .summary-groups {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      padding: 12px 24px 20px;
+    }
+    .summary-group {
+      background: rgba(255, 255, 255, 0.72);
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 12px;
+    }
+    .summary-title {
+      color: var(--text);
+      font-size: 17px;
+      font-weight: 800;
+      margin: 0 0 12px;
+    }
+    .summary-cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(120px, 1fr));
+      gap: 10px;
+    }
+    .scale-group {
+      grid-column: 1 / -1;
+    }
+    .scale-layout {
+      display: grid;
+      gap: 14px;
+    }
+    .scale-sub-layout {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding-top: 12px;
+      border-top: 1px dashed rgba(148, 163, 184, 0.45);
+      position: relative;
+    }
+    .scale-sub-layout::before {
+      content: "分主体";
+      position: absolute;
+      top: -10px;
+      left: 0;
+      background: #f8fbff;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+      padding-right: 8px;
+    }
+    .scale-detail {
+      border: 1px solid rgba(203, 213, 225, 0.9);
+      border-radius: 14px;
+      background: rgba(255, 255, 255, 0.76);
+      overflow: hidden;
+    }
+    .scale-detail summary {
+      display: grid;
+      grid-template-columns: 1fr auto auto;
+      gap: 10px;
+      align-items: center;
+      cursor: pointer;
+      list-style: none;
+      padding: 12px;
+    }
+    .scale-detail summary::-webkit-details-marker {
+      display: none;
+    }
+    .scale-detail summary span {
+      color: var(--text);
+      font-size: 14px;
+      font-weight: 800;
+    }
+    .scale-detail summary b {
+      color: var(--blue);
+      font-size: 13px;
+    }
+    .scale-detail summary em {
+      color: var(--muted);
+      font-style: normal;
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .scale-detail .scale-block {
+      border: 0;
+      border-top: 1px solid rgba(203, 213, 225, 0.75);
+      border-radius: 0;
+      background: rgba(248, 250, 252, 0.8);
+    }
+    .scale-detail .scale-title {
+      display: none;
+    }
+    .scale-cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(110px, 1fr));
+      gap: 10px;
+    }
+    .scale-title {
+      color: #334155;
+      font-size: 13px;
+      font-weight: 800;
+      margin: 0 0 8px;
+    }
+    .scale-cards {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(110px, 1fr));
+      gap: 10px;
+    }
+    .mini-scale-cards {
+      grid-template-columns: repeat(3, minmax(86px, 1fr));
+      gap: 8px;
+    }
+    .scale-block {
+      border: 1px solid rgba(191, 219, 254, 0.9);
+      border-radius: 14px;
+      padding: 12px;
+      background: linear-gradient(135deg, rgba(239, 246, 255, 0.85), rgba(255, 255, 255, 0.9));
+    }
+    .compact-scale-block {
+      background: rgba(255, 255, 255, 0.68);
+      border-color: rgba(203, 213, 225, 0.9);
+    }
+    .summary-group.risk-group .card {
+      border-color: #fecaca;
+      background: #fff7f7;
+    }
+    .summary-group.action-group .card {
+      border-color: #bbf7d0;
+      background: #f6fff9;
+    }
+    .summary-group.scale-group .card {
+      border-color: #bfdbfe;
+      background: #f8fbff;
+    }
+    .card {
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 16px;
+      box-shadow: 0 1px 2px rgba(15, 23, 42, 0.04);
+    }
+    .mini-card {
+      background: rgba(255, 255, 255, 0.82);
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      padding: 10px;
+    }
+    .card .num {
+      font-size: 24px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .mini-card .num {
+      font-size: 17px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .card .label {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .mini-card .label {
+      color: var(--muted);
+      font-size: 11px;
+    }
+    .legend {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      padding: 12px 14px 0;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .legend span {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .legend-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      display: inline-block;
+    }
+    .dot-red {
+      background: #ef4444;
+    }
+    .dot-orange {
+      background: #f59e0b;
+    }
+    .dot-blue {
+      background: #3b82f6;
+    }
+    section {
+      margin: 0 24px 22px;
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      overflow: hidden;
+    }
+    section h2 {
+      margin: 0;
+      padding: 16px 18px;
+      font-size: 18px;
+      border-bottom: 1px solid var(--line);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+    section h2 span {
+      font-size: 13px;
+      color: var(--muted);
+      font-weight: 400;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      border-bottom: 1px solid #edf2f7;
+      padding: 10px 12px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      color: #46566b;
+      background: #f8fafc;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    tr:hover td {
+      background: #fafcff;
+    }
+    .badge {
+      display: inline-block;
+      padding: 3px 8px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+    .today, .danger {
+      background: #fee2e2;
+      color: var(--red);
+    }
+    .soon {
+      background: #fef3c7;
+      color: var(--orange);
+    }
+    .empty {
+      text-align: center;
+      color: var(--muted);
+      padding: 24px;
+    }
+    .observation-list {
+      display: grid;
+      gap: 14px;
+      padding: 14px 18px 18px;
+    }
+    .observation-group {
+      border-left: 5px solid #94a3b8;
+      background: #fff;
+      border-radius: 12px;
+      overflow: hidden;
+      border-top: 1px solid #e2e8f0;
+      border-right: 1px solid #e2e8f0;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .observation-group-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 14px;
+      font-size: 15px;
+      background: #f8fafc;
+      border-bottom: 1px solid #e2e8f0;
+    }
+    .observation-group-title strong {
+      font-size: 17px;
+    }
+    .observation-group-title span:last-child {
+      color: var(--muted);
+      font-size: 13px;
+    }
+    .obs-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      background: #94a3b8;
+      display: inline-block;
+    }
+    .obs-knockout {
+      border-left-color: var(--blue);
+    }
+    .obs-knockout .obs-dot {
+      background: var(--blue);
+    }
+    .obs-not-knockout {
+      border-left-color: var(--orange);
+    }
+    .obs-not-knockout .obs-dot {
+      background: var(--orange);
+    }
+    .obs-delivery {
+      border-left-color: var(--red);
+    }
+    .obs-delivery .obs-dot {
+      background: var(--red);
+    }
+    .obs-ended {
+      border-left-color: var(--green);
+    }
+    .obs-ended .obs-dot {
+      background: var(--green);
+    }
+    .obs-pending {
+      border-left-color: #94a3b8;
+    }
+    .obs-pending .obs-dot {
+      background: #94a3b8;
+    }
+    .observation-table th,
+    .observation-table td {
+      padding: 9px 12px;
+      font-size: 12px;
+    }
+    .observation-table .obs-product {
+      font-weight: 700;
+      color: var(--text);
+    }
+    .calendar-table {
+      table-layout: fixed;
+    }
+    .calendar-table th {
+      text-align: center;
+    }
+    .calendar-day {
+      height: 150px;
+      padding: 8px;
+      background: #fff;
+    }
+    .muted-day {
+      background: #f8fafc;
+      color: #94a3b8;
+    }
+    .current-day {
+      box-shadow: inset 0 0 0 2px var(--blue);
+    }
+    .calendar-day details {
+      height: 100%;
+    }
+    .calendar-day summary {
+      cursor: pointer;
+      list-style: none;
+    }
+    .calendar-day summary::-webkit-details-marker {
+      display: none;
+    }
+    .date-num {
+      font-weight: 700;
+      margin-bottom: 8px;
+    }
+    .pill-row {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      min-height: 24px;
+    }
+    .pill {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .pill.obs {
+      background: #dbeafe;
+      color: #1d4ed8;
+    }
+    .pill.mat {
+      background: #fef3c7;
+      color: #b45309;
+    }
+    .calendar-labels {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 6px;
+    }
+    .cal-tag {
+      border-radius: 8px;
+      padding: 3px 6px;
+      font-size: 12px;
+      line-height: 1.25;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+    .obs-tag {
+      background: #eff6ff;
+      color: #1d4ed8;
+    }
+    .mat-tag {
+      background: #fff7ed;
+      color: #c2410c;
+    }
+    .cal-more {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .calendar-day ul {
+      margin: 8px 0 0;
+      padding-left: 16px;
+      color: var(--text);
+      max-height: 82px;
+      overflow: auto;
+    }
+    .calendar-day li {
+      margin-bottom: 8px;
+      line-height: 1.4;
+    }
+    .calendar-day li span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .risk-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+      margin: 0 24px 22px;
+      align-items: start;
+    }
+    .risk-grid section {
+      margin: 0;
+    }
+    .risk-list {
+      display: grid;
+      gap: 10px;
+      padding: 14px;
+    }
+    .risk-card {
+      border: 1px solid #e2e8f0;
+      border-radius: 12px;
+      padding: 12px;
+      background: #fff;
+    }
+    .risk-card-top {
+      display: flex;
+      justify-content: space-between;
+      gap: 10px;
+      align-items: baseline;
+      margin-bottom: 6px;
+    }
+    .risk-card-top strong {
+      font-size: 16px;
+    }
+    .risk-card-top span {
+      color: var(--muted);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .risk-product {
+      font-weight: 600;
+      line-height: 1.4;
+    }
+    .risk-meta {
+      color: var(--muted);
+      margin-top: 2px;
+      font-size: 12px;
+    }
+    .risk-prices {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 8px;
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .risk-prices b {
+      display: block;
+      color: var(--text);
+      margin-top: 2px;
+      font-size: 13px;
+    }
+    .risk-source {
+      color: var(--muted);
+      font-size: 11px;
+      margin-top: 8px;
+    }
+    .risk-details {
+      margin-top: 10px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .risk-details summary {
+      cursor: pointer;
+      color: var(--blue);
+      font-weight: 600;
+    }
+    .risk-details ul {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      line-height: 1.5;
+      max-height: 160px;
+      overflow: auto;
+    }
+    .risk-details li {
+      margin-bottom: 8px;
+    }
+    .risk-details span {
+      display: block;
+      margin-top: 2px;
+    }
+    .risk-empty {
+      padding: 20px;
+    }
+    .compact-table th,
+    .compact-table td {
+      padding: 8px 10px;
+      font-size: 12px;
+    }
+    .detail-list {
+      margin: 8px 0 0;
+      padding-left: 18px;
+      color: var(--muted);
+      line-height: 1.6;
+    }
+    .exposure-grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 20px;
+      margin: 0 24px 22px;
+    }
+    .exposure-grid section {
+      margin: 0;
+    }
+    .ended-grid {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(150px, 1fr));
+      gap: 14px;
+      padding: 14px;
+      background: #f8fafc;
+    }
+    .review-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+      gap: 20px;
+      margin: 0 24px 22px;
+    }
+    .review-grid section {
+      margin: 0;
+    }
+    .bar-cell {
+      display: grid;
+      gap: 5px;
+      min-width: 120px;
+    }
+    .bar-track {
+      height: 7px;
+      border-radius: 999px;
+      background: #e5edf7;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 999px;
+      min-width: 2px;
+    }
+    .bar-count {
+      background: #60a5fa;
+    }
+    .bar-notional {
+      background: #34d399;
+    }
+    .bar-income {
+      background: #f59e0b;
+    }
+    .exposure-heatmap {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+      padding: 14px;
+    }
+    .exposure-tile {
+      border-radius: 12px;
+      border: 1px solid #dbe3ef;
+      min-height: auto;
+      overflow: visible;
+      background: linear-gradient(135deg, #eef5ff, #f8fbff);
+    }
+    .exposure-tile summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 10px 12px;
+      height: auto;
+      box-sizing: border-box;
+    }
+    .exposure-tile summary::-webkit-details-marker {
+      display: none;
+    }
+    .tile-md {
+      grid-column: span 1;
+      min-height: auto;
+    }
+    .tile-lg {
+      grid-column: span 1;
+      min-height: auto;
+    }
+    .tile-xl {
+      grid-column: span 1;
+      grid-row: span 1;
+      min-height: auto;
+    }
+    .risk-touched {
+      background: linear-gradient(135deg, #fee2e2, #fff7ed);
+      border-color: #fecaca;
+    }
+    .risk-near {
+      background: linear-gradient(135deg, #fef3c7, #fff7ed);
+      border-color: #fde68a;
+    }
+    .risk-normal {
+      background: linear-gradient(135deg, #e0f2fe, #f8fbff);
+    }
+    .tile-name {
+      font-size: 14px;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 6px;
+    }
+    .tile-amount {
+      font-size: 15px;
+      font-weight: 800;
+      margin-bottom: 4px;
+    }
+    .tile-meta {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .tile-detail {
+      border-top: 1px solid rgba(100, 116, 139, 0.18);
+      padding: 10px 12px 12px;
+      color: var(--muted);
+      font-size: 12px;
+      background: rgba(255, 255, 255, 0.58);
+    }
+    .tile-institution {
+      color: #475569;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .tile-detail ul {
+      margin: 8px 0 0;
+      padding-left: 16px;
+      line-height: 1.5;
+      max-height: 220px;
+      overflow: auto;
+    }
+    .tile-detail li {
+      margin-bottom: 6px;
+    }
+    .tile-detail li strong {
+      display: block;
+      color: var(--text);
+    }
+    .tile-detail li span {
+      display: block;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+    .exposure-empty {
+      padding: 24px;
+    }
+    .note {
+      margin: 0 24px 26px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 13px;
+    }
+    @media (max-width: 1100px) {
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .summary-groups, .risk-grid, .exposure-grid, .review-grid { grid-template-columns: 1fr; }
+      .scale-sub-layout { grid-template-columns: 1fr; }
+      .scale-cards, .mini-scale-cards { grid-template-columns: repeat(2, minmax(100px, 1fr)); }
+      .ended-grid { grid-template-columns: repeat(2, 1fr); }
+      section { overflow-x: auto; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>FCN 观察看板</h1>
+    <div class="sub">
+      数据日期：2026-05-22 | 生成时间：2026-05-22 14:22<br>
+      当前版本不建数据库、不记录人工确认状态，只从 Excel 存续 FCN 台账生成静态 HTML。价格口径：iFinD 价格，不使用 Excel 市场价。金额口径：折美元合计使用人民币兑美元中间价/汇总 sheet 汇率（CNY/USD=0.1415）。
+    </div>
+  </header>
+  <nav class="view-nav">
+    <button class="view-tab active" type="button" data-view="current-view">当前持仓工作台</button>
+    <button class="view-tab" type="button" data-view="ended-view">已结束产品复盘</button>
+  </nav>
+
+  <div id="current-view" class="dashboard-view active">
+    <div id="current-workbench" class="summary-groups">
+      <div class="summary-group scale-group">
+        <div class="summary-title">规模概览</div>
+        <div class="scale-layout">
+          
+      <div class="scale-block">
+        <div class="scale-title">整体</div>
+        <div class="scale-cards ">
+          <div class="card"><div class="num">98</div><div class="label">存续数量</div></div>
+          <div class="card"><div class="num">4,727.4万 USD</div><div class="label">折美元合计</div></div>
+          <div class="card"><div class="num">4,600.0万 USD</div><div class="label">USD 本金</div></div>
+          <div class="card"><div class="num">900.0万 CNY</div><div class="label">CNY 本金</div></div>
+        </div>
+      </div>
+    
+          <div class="scale-sub-layout">
+            
+      <details class="scale-detail">
+        <summary>
+          <span>公司</span>
+          <b>86 笔</b>
+          <em>4,197.4万 USD</em>
+        </summary>
+        
+      <div class="scale-block compact-scale-block">
+        <div class="scale-title">公司</div>
+        <div class="scale-cards mini-scale-cards">
+          <div class="mini-card"><div class="num">86</div><div class="label">存续数量</div></div>
+          <div class="mini-card"><div class="num">4,197.4万 USD</div><div class="label">折美元合计</div></div>
+          <div class="mini-card"><div class="num">4,070.0万 USD</div><div class="label">USD 本金</div></div>
+          <div class="mini-card"><div class="num">900.0万 CNY</div><div class="label">CNY 本金</div></div>
+        </div>
+      </div>
+    
+      </details>
+    
+            
+      <details class="scale-detail">
+        <summary>
+          <span>BC（宝成）</span>
+          <b>12 笔</b>
+          <em>530.0万 USD</em>
+        </summary>
+        
+      <div class="scale-block compact-scale-block">
+        <div class="scale-title">BC（宝成）</div>
+        <div class="scale-cards mini-scale-cards">
+          <div class="mini-card"><div class="num">12</div><div class="label">存续数量</div></div>
+          <div class="mini-card"><div class="num">530.0万 USD</div><div class="label">折美元合计</div></div>
+          <div class="mini-card"><div class="num">530.0万 USD</div><div class="label">USD 本金</div></div>
+          
+        </div>
+      </div>
+    
+      </details>
+    
+          </div>
+        </div>
+      </div>
+      <div class="summary-group action-group">
+        <div class="summary-title">今日动作</div>
+        <div class="summary-cards">
+          <div class="card"><div class="num">4</div><div class="label">今日观察</div></div>
+          <div class="card"><div class="num">0</div><div class="label">今日可能敲出</div></div>
+        </div>
+      </div>
+      <div class="summary-group risk-group">
+        <div class="summary-title">风险提示</div>
+        <div class="summary-cards">
+          <div class="card"><div class="num">4</div><div class="label">低于接货价标的</div></div>
+          <div class="card"><div class="num">3</div><div class="label">接近接货价标的</div></div>
+        </div>
+      </div>
+    </div>
+
+    <section>
+      <h2>今日观察：2026-05-22 <span>4 条；使用 iFinD 历史收盘价判断敲出、接货或结束</span></h2>
+      <div class="observation-list">
+            <div class="observation-group obs-not-knockout">
+              <div class="observation-group-title">
+                <span class="obs-dot"></span>
+                <strong>不敲出</strong>
+                <span>4 条</span>
+              </div>
+              <table class="observation-table">
+                <thead>
+                  <tr><th>产品名称</th><th>金额</th><th>挂钩标的</th><th>购买机构</th><th>价格 / 初始 / 接货</th><th>到期日</th></tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td class="obs-product">JPM FCN TSLA 12%</td>
+                  <td>50.0万 USD</td>
+                  <td>特斯拉</td>
+                  <td>摩根士丹利</td>
+                  <td>417.85 / 434.085 / 240.353</td>
+                  <td>2027-01-26</td>
+                </tr>
+                
+                <tr>
+                  <td class="obs-product">CLSA FCN ETHA 15%</td>
+                  <td>50.0万 USD</td>
+                  <td>ETHA</td>
+                  <td>摩根士丹利</td>
+                  <td>16.15 / 16.7436 / 9.5372</td>
+                  <td>2026-07-24</td>
+                </tr>
+                
+                <tr>
+                  <td class="obs-product">茅台6个月FCN</td>
+                  <td>300.0万 CNY</td>
+                  <td>贵州茅台</td>
+                  <td>中信建投</td>
+                  <td>1311 / 1407.83 / 1309.28</td>
+                  <td>2026-10-22</td>
+                </tr>
+                
+                <tr>
+                  <td class="obs-product">JPM TSLA 12%</td>
+                  <td>50.0万 USD</td>
+                  <td>特斯拉</td>
+                  <td>BC</td>
+                  <td>417.85 / 434.085 / 255.068</td>
+                  <td>2027-01-26</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
+    </section>
+
+    
+    <section>
+      <h2>本月排期 <span>2026年5月，仅显示周一至周五；点击有标记的日期查看具体产品</span></h2>
+      <table class="calendar-table">
+        <thead>
+          <tr><th>周一</th><th>周二</th><th>周三</th><th>周四</th><th>周五</th></tr>
+        </thead>
+        <tbody><tr><td class="calendar-day muted-day">
+                <details>
+                  <summary>
+                    <div class="date-num">27</div>
+                    <div class="pill-row"><span class="pill obs">观察 5</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">特斯拉</span><span class="cal-tag obs-tag">小米集团</span><span class="cal-tag obs-tag">拼多多</span><span class="cal-more">+2 更多</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>观察</strong> XS3217080483 | BNP FCN TSLA 10%
+                      <br><span>特斯拉 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> 公司-FCN持仓情况-ROW-29 | JPM FCN 1810 12%
+                      <br><span>小米集团 | 摩根大通 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3253597069 | CLSA FCN PDD 12%
+                      <br><span>拼多多 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3290744989 | JPM FCN TSLA 10%
+                      <br><span>特斯拉 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> SAC-4438-6 | 茅台6个月FCN
+                      <br><span>贵州茅台 | 中信建投 | 300.0万 CNY</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day muted-day">
+                <details>
+                  <summary>
+                    <div class="date-num">28</div>
+                    <div class="pill-row"><span class="pill obs">观察 3</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">拼多多</span><span class="cal-tag obs-tag">小米集团</span><span class="cal-tag obs-tag">拼多多</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>观察</strong> XS3212866662 | CLSA FCN PDD 10%
+                      <br><span>拼多多 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3239561387 | BARC FCN 1810 12%
+                      <br><span>小米集团 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3253703196 | CLSA FCN PDD 15%
+                      <br><span>拼多多 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day muted-day">
+                <div class="date-num">29</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day muted-day">
+                <details>
+                  <summary>
+                    <div class="date-num">30</div>
+                    <div class="pill-row"><span class="pill obs">观察 3</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">特斯拉</span><span class="cal-tag obs-tag">特斯拉 / 英伟达</span><span class="cal-tag obs-tag">特斯拉 / 谷歌</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>观察</strong> XS3217107864 | BNP FCN TSLA 8%
+                      <br><span>特斯拉 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3270334686 | HSBC FCN TSLA&amp;NVDA 12%
+                      <br><span>特斯拉 / 英伟达 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3270334330 | HSBC FCN TSLA&amp;GOOGL 12%
+                      <br><span>特斯拉 / 谷歌 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day">
+                <div class="date-num">1</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td></tr><tr><td class="calendar-day">
+                <details>
+                  <summary>
+                    <div class="date-num">4</div>
+                    <div class="pill-row"><span class="pill obs">观察 2</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">腾讯控股 / 阿里巴巴</span><span class="cal-tag obs-tag">谷歌</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>观察</strong> XS3253690781 | CLSA FCN 0700 HK+9988 HK 12%
+                      <br><span>腾讯控股 / 阿里巴巴 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3278348860 | GS FCN GOOGL 12%
+                      <br><span>谷歌 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day">
+                <div class="date-num">5</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <details>
+                  <summary>
+                    <div class="date-num">6</div>
+                    <div class="pill-row"><span class="pill obs">观察 1</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">特斯拉</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>观察</strong> XS3269253814 | JPM FCN TSLA 12%
+                      <br><span>特斯拉 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day">
+                <details>
+                  <summary>
+                    <div class="date-num">7</div>
+                    <div class="pill-row"><span class="pill obs">观察 6</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">英伟达 / 特斯拉</span><span class="cal-tag obs-tag">小米集团</span><span class="cal-tag obs-tag">紫金黄金国际</span><span class="cal-more">+3 更多</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>观察</strong> XS3197965927 | JPM FCN NVDA&amp;TSLA 8%
+                      <br><span>英伟达 / 特斯拉 | 摩根大通 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3222022967 | BARC FCN 1810 12.53%
+                      <br><span>小米集团 | 摩根大通 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3305341417 | BARK FCN 2259 10%
+                      <br><span>紫金黄金国际 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3253578275 | CLSA FCN BRKB 8%
+                      <br><span>伯克希尔 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> BC-持仓台账20260521-ROW-3 | JPM NVDA&amp;TSLA 8%
+                      <br><span>英伟达 / 特斯拉 | BC | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> BC-持仓台账20260521-ROW-4 | BARC 1810 12.53%
+                      <br><span>小米集团 | BC | 30.0万 USD</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day">
+                <div class="date-num">8</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td></tr><tr><td class="calendar-day">
+                <details>
+                  <summary>
+                    <div class="date-num">11</div>
+                    <div class="pill-row"><span class="pill obs">观察 4</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">ETHA</span><span class="cal-tag obs-tag">IBIT</span><span class="cal-tag obs-tag">中海油</span><span class="cal-more">+1 更多</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>观察</strong> XS3253701810 | CLSA FCN ETHA 12%
+                      <br><span>ETHA | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3253684388 | CLSA FCN IBIT 12%
+                      <br><span>IBIT | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3305409156 | BARC FCN 0883 8%
+                      <br><span>中海油 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3290920977 | JPM FCN PLTR 10%
+                      <br><span>Palantir | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day">
+                <details>
+                  <summary>
+                    <div class="date-num">12</div>
+                    <div class="pill-row"><span class="pill obs">观察 4</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">微软 / 谷歌</span><span class="cal-tag obs-tag">阿里巴巴</span><span class="cal-tag obs-tag">腾讯控股</span><span class="cal-more">+1 更多</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>观察</strong> XS3269412550 | JPM FCN MSFT&amp;GOOGL 10%
+                      <br><span>微软 / 谷歌 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3253644911 | CLSA FCN 9988 HK 10%
+                      <br><span>阿里巴巴 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3253635091 | CLSA FCN 0700 HK 10%
+                      <br><span>腾讯控股 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3158891385 | CITI FCN MSFT&amp;META 10%
+                      <br><span>微软 / Meta | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day">
+                <div class="date-num">13</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <details>
+                  <summary>
+                    <div class="date-num">14</div>
+                    <div class="pill-row"><span class="pill obs">观察 3</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">特斯拉</span><span class="cal-tag obs-tag">Coinbase</span><span class="cal-tag obs-tag">特斯拉</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>观察</strong> XS3235505651 | JPM FCN TSLA 10%
+                      <br><span>特斯拉 | 摩根大通 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3235505909 | JPM FCN COIN 12%
+                      <br><span>Coinbase | 摩根大通 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> BC-持仓台账20260521-ROW-5 | JPM TSLA 10%
+                      <br><span>特斯拉 | BC | 30.0万 USD</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day">
+                <div class="date-num">15</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td></tr><tr><td class="calendar-day">
+                <details>
+                  <summary>
+                    <div class="date-num">18</div>
+                    <div class="pill-row"><span class="pill obs">观察 5</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">拼多多</span><span class="cal-tag obs-tag">腾讯控股</span><span class="cal-tag obs-tag">腾讯控股</span><span class="cal-more">+2 更多</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>观察</strong> XS3192777574 | JPM FCN PDD 8%
+                      <br><span>拼多多 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3223427058 | JPM FCN 700 8%
+                      <br><span>腾讯控股 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3319851633 | CLSA FCN 0700 10%
+                      <br><span>腾讯控股 | 摩根士丹利 | 30.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> BC-持仓台账20260521-ROW-2 | JPM PDD 8%
+                      <br><span>拼多多 | BC | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> BC-持仓台账20260521-ROW-7 | JPM FCN 0700&amp;9988 10%
+                      <br><span>腾讯控股 / 阿里巴巴 | BC | 50.0万 USD</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day">
+                <details>
+                  <summary>
+                    <div class="date-num">19</div>
+                    <div class="pill-row"><span class="pill obs">观察 1</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">GLD</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>观察</strong> XS3158701949 | CITI FCN GLD 8%
+                      <br><span>GLD | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day">
+                <div class="date-num">20</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <div class="date-num">21</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day current-day">
+                <details>
+                  <summary>
+                    <div class="date-num">22</div>
+                    <div class="pill-row"><span class="pill obs">观察 4</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">特斯拉</span><span class="cal-tag obs-tag">ETHA</span><span class="cal-tag obs-tag">贵州茅台</span><span class="cal-more">+1 更多</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>观察</strong> XS3235569970 | JPM FCN TSLA 12%
+                      <br><span>特斯拉 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3319824820 | CLSA FCN ETHA 15%
+                      <br><span>ETHA | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> SAC-4438-7 | 茅台6个月FCN
+                      <br><span>贵州茅台 | 中信建投 | 300.0万 CNY</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> BC-持仓台账20260521-ROW-6 | JPM TSLA 12%
+                      <br><span>特斯拉 | BC | 50.0万 USD</span>
+                    </li>
+                    </ul>
+                </details>
+                </td></tr><tr><td class="calendar-day">
+                <details>
+                  <summary>
+                    <div class="date-num">25</div>
+                    <div class="pill-row"><span class="pill obs">观察 1</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">贵州茅台</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>观察</strong> SAC-4438-6 | 茅台6个月FCN
+                      <br><span>贵州茅台 | 中信建投 | 300.0万 CNY</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day">
+                <details>
+                  <summary>
+                    <div class="date-num">26</div>
+                    <div class="pill-row"><span class="pill obs">观察 8</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">阿里巴巴 / 网易</span><span class="cal-tag obs-tag">特斯拉</span><span class="cal-tag obs-tag">港交所</span><span class="cal-more">+5 更多</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>观察</strong> XS3212860897 | CLSA FCN 9988 HK+9999 HK 10%
+                      <br><span>阿里巴巴 / 网易 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3217080483 | BNP FCN TSLA 10%
+                      <br><span>特斯拉 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3230823596 | BARC FCN 388 8%
+                      <br><span>港交所 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3230823752 | BARC FCN 1810 12%
+                      <br><span>小米集团 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3242851056 | MS FCN IBIT 8%
+                      <br><span>IBIT | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3235607143 | JPM FCN APP 12%
+                      <br><span>Applovin | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3253656170 | CLSA FCN 0700&amp;9999 10%
+                      <br><span>腾讯控股 / 网易 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3163852141 | CITI FCN BABA 10%
+                      <br><span>阿里巴巴 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day">
+                <details>
+                  <summary>
+                    <div class="date-num">27</div>
+                    <div class="pill-row"><span class="pill obs">观察 3</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">小米集团</span><span class="cal-tag obs-tag">拼多多</span><span class="cal-tag obs-tag">特斯拉</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>观察</strong> 公司-FCN持仓情况-ROW-29 | JPM FCN 1810 12%
+                      <br><span>小米集团 | 摩根大通 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3253597069 | CLSA FCN PDD 12%
+                      <br><span>拼多多 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3290744989 | JPM FCN TSLA 10%
+                      <br><span>特斯拉 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day">
+                <details>
+                  <summary>
+                    <div class="date-num">28</div>
+                    <div class="pill-row"><span class="pill obs">观察 3</span><span class="pill mat">到期 2</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">拼多多</span><span class="cal-tag obs-tag">小米集团</span><span class="cal-tag obs-tag">拼多多</span><span class="cal-tag mat-tag">阿里巴巴 / 网易</span><span class="cal-tag mat-tag">谷歌</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>观察</strong> XS3212866662 | CLSA FCN PDD 10%
+                      <br><span>拼多多 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3239561387 | BARC FCN 1810 12%
+                      <br><span>小米集团 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>观察</strong> XS3253703196 | CLSA FCN PDD 15%
+                      <br><span>拼多多 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>到期</strong> XS3212860897 | CLSA FCN 9988 HK+9999 HK 10%
+                      <br><span>阿里巴巴 / 网易 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    
+                    <li>
+                      <strong>到期</strong> XS3374682410 | JPM FCN GOOGL 10%
+                      <br><span>谷歌 | 摩根士丹利 | 50.0万 USD</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day">
+                <div class="date-num">29</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td></tr></tbody>
+      </table>
+    </section>
+    
+
+    <div class="risk-grid">
+      <section>
+        <h2>接货价预警 <span>按标的汇总；iFinD 价格低于接货价</span></h2>
+        
+    <div class="legend">
+      <span><i class="legend-dot dot-red"></i>低于接货价</span>
+      <span><i class="legend-dot dot-orange"></i>接近接货价</span>
+      <span><i class="legend-dot dot-blue"></i>普通持仓</span>
+    </div>
+    
+        <div class="risk-list">
+            <div class="risk-card">
+              <div class="risk-card-top">
+                <strong>腾讯控股</strong>
+                <span>2 笔产品</span>
+              </div>
+              <div class="risk-product">分摊本金 75.0万 USD</div>
+              <div class="risk-meta">0700.HK</div>
+              <div class="risk-prices">
+                <span>市场价 <b>442.4</b></span>
+                <span>最小距离 <b>-8.80%</b></span>
+                <span>涉及产品 <b>2</b></span>
+              </div>
+              <details class="risk-details">
+                <summary>查看产品明细</summary>
+                <ul>
+                <li>
+                  <strong>JPM FCN 700 8%</strong>
+                  <span>摩根士丹利 | 50.0万 USD | 接货价 485.1103875 | 距离 -8.80% | 最后观察日 2026-09-17</span>
+                </li>
+                
+                <li>
+                  <strong>CLSA FCN 0700 HK+9988 HK 12%</strong>
+                  <span>摩根士丹利 | 25.0万 USD | 接货价 468.864 | 距离 -5.64% | 最后观察日 2026-08-03</span>
+                </li>
+                </ul>
+              </details>
+              <div class="risk-source">ifind_realtime | 2026-05-22 14:22:07</div>
+            </div>
+            
+
+            <div class="risk-card">
+              <div class="risk-card-top">
+                <strong>小米集团</strong>
+                <span>3 笔产品</span>
+              </div>
+              <div class="risk-product">分摊本金 130.0万 USD</div>
+              <div class="risk-meta">1810.HK</div>
+              <div class="risk-prices">
+                <span>市场价 <b>30.06</b></span>
+                <span>最小距离 <b>-4.17%</b></span>
+                <span>涉及产品 <b>3</b></span>
+              </div>
+              <details class="risk-details">
+                <summary>查看产品明细</summary>
+                <ul>
+                <li>
+                  <strong>BARC 1810 12.53%</strong>
+                  <span>BC | 30.0万 USD | 接货价 31.36832 | 距离 -4.17% | 最后观察日 2026-07-07</span>
+                </li>
+                
+                <li>
+                  <strong>BARC FCN 1810 12.53%</strong>
+                  <span>摩根大通 | 50.0万 USD | 接货价 31.36832 | 距离 -4.17% | 最后观察日 2026-07-07</span>
+                </li>
+                
+                <li>
+                  <strong>BARC FCN 1810 12%</strong>
+                  <span>摩根士丹利 | 50.0万 USD | 接货价 30.2667116 | 距离 -0.68% | 最后观察日 2026-07-23</span>
+                </li>
+                </ul>
+              </details>
+              <div class="risk-source">ifind_realtime | 2026-05-22 14:22:07</div>
+            </div>
+            
+
+            <div class="risk-card">
+              <div class="risk-card-top">
+                <strong>拼多多</strong>
+                <span>1 笔产品</span>
+              </div>
+              <div class="risk-product">分摊本金 50.0万 USD</div>
+              <div class="risk-meta">PDD.O</div>
+              <div class="risk-prices">
+                <span>市场价 <b>97.79</b></span>
+                <span>最小距离 <b>-1.30%</b></span>
+                <span>涉及产品 <b>1</b></span>
+              </div>
+              <details class="risk-details">
+                <summary>查看产品明细</summary>
+                <ul>
+                <li>
+                  <strong>CLSA FCN PDD 10%</strong>
+                  <span>摩根士丹利 | 50.0万 USD | 接货价 99.07903971 | 距离 -1.30% | 最后观察日 2026-08-28</span>
+                </li>
+                </ul>
+              </details>
+              <div class="risk-source">ifind_history_close | 2026-05-21</div>
+            </div>
+            
+
+            <div class="risk-card">
+              <div class="risk-card-top">
+                <strong>贵州茅台</strong>
+                <span>2 笔产品</span>
+              </div>
+              <div class="risk-product">分摊本金 600.0万 CNY</div>
+              <div class="risk-meta">600519.SH</div>
+              <div class="risk-prices">
+                <span>市场价 <b>1294.37</b></span>
+                <span>最小距离 <b>-1.14%</b></span>
+                <span>涉及产品 <b>2</b></span>
+              </div>
+              <details class="risk-details">
+                <summary>查看产品明细</summary>
+                <ul>
+                <li>
+                  <strong>茅台6个月FCN</strong>
+                  <span>中信建投 | 300.0万 CNY | 接货价 1309.279575 | 距离 -1.14% | 最后观察日 2026-10-22</span>
+                </li>
+                
+                <li>
+                  <strong>茅台6个月FCN</strong>
+                  <span>中信建投 | 300.0万 CNY | 接货价 1309.2726 | 距离 -1.14% | 最后观察日 2026-09-28</span>
+                </li>
+                </ul>
+              </details>
+              <div class="risk-source">ifind_realtime | 2026-05-22 14:22:05</div>
+            </div>
+            </div>
+      </section>
+
+      <section>
+        <h2>接近接货价 <span>按标的汇总；iFinD 价格仍高于接货价，但距离在 2% 以内</span></h2>
+        
+    <div class="legend">
+      <span><i class="legend-dot dot-red"></i>低于接货价</span>
+      <span><i class="legend-dot dot-orange"></i>接近接货价</span>
+      <span><i class="legend-dot dot-blue"></i>普通持仓</span>
+    </div>
+    
+        <div class="risk-list">
+            <div class="risk-card">
+              <div class="risk-card-top">
+                <strong>小米集团</strong>
+                <span>1 笔产品</span>
+              </div>
+              <div class="risk-product">分摊本金 50.0万 USD</div>
+              <div class="risk-meta">1810.HK</div>
+              <div class="risk-prices">
+                <span>市场价 <b>30.06</b></span>
+                <span>最小距离 <b>1.29%</b></span>
+                <span>涉及产品 <b>1</b></span>
+              </div>
+              <details class="risk-details">
+                <summary>查看产品明细</summary>
+                <ul>
+                <li>
+                  <strong>BARC FCN 1810 12%</strong>
+                  <span>摩根士丹利 | 50.0万 USD | 接货价 29.67778008 | 距离 1.29% | 最后观察日 2026-10-28</span>
+                </li>
+                </ul>
+              </details>
+              <div class="risk-source">ifind_realtime | 2026-05-22 14:22:07</div>
+            </div>
+            
+
+            <div class="risk-card">
+              <div class="risk-card-top">
+                <strong>招商银行</strong>
+                <span>1 笔产品</span>
+              </div>
+              <div class="risk-product">分摊本金 300.0万 CNY</div>
+              <div class="risk-meta">600036.SH</div>
+              <div class="risk-prices">
+                <span>市场价 <b>37.11</b></span>
+                <span>最小距离 <b>1.86%</b></span>
+                <span>涉及产品 <b>1</b></span>
+              </div>
+              <details class="risk-details">
+                <summary>查看产品明细</summary>
+                <ul>
+                <li>
+                  <strong>招商银行6个月FCN</strong>
+                  <span>中信建投 | 300.0万 CNY | 接货价 36.430656 | 距离 1.86% | 最后观察日 2026-11-12</span>
+                </li>
+                </ul>
+              </details>
+              <div class="risk-source">ifind_realtime | 2026-05-22 14:22:06</div>
+            </div>
+            
+
+            <div class="risk-card">
+              <div class="risk-card-top">
+                <strong>拼多多</strong>
+                <span>2 笔产品</span>
+              </div>
+              <div class="risk-product">分摊本金 100.0万 USD</div>
+              <div class="risk-meta">PDD.O</div>
+              <div class="risk-prices">
+                <span>市场价 <b>97.79</b></span>
+                <span>最小距离 <b>1.95%</b></span>
+                <span>涉及产品 <b>2</b></span>
+              </div>
+              <details class="risk-details">
+                <summary>查看产品明细</summary>
+                <ul>
+                <li>
+                  <strong>JPM PDD 8%</strong>
+                  <span>BC | 50.0万 USD | 接货价 95.91808468 | 距离 1.95% | 最后观察日 2026-10-16</span>
+                </li>
+                
+                <li>
+                  <strong>JPM FCN PDD 8%</strong>
+                  <span>摩根士丹利 | 50.0万 USD | 接货价 95.91808468 | 距离 1.95% | 最后观察日 2026-10-16</span>
+                </li>
+                </ul>
+              </details>
+              <div class="risk-source">ifind_history_close | 2026-05-21</div>
+            </div>
+            </div>
+      </section>
+    </div>
+
+    <div class="exposure-grid">
+      <section>
+        <h2>境外标的敞口 <span>热力方块；大小代表分摊本金，颜色联动接货风险</span></h2>
+        
+    <div class="legend">
+      <span><i class="legend-dot dot-red"></i>低于接货价</span>
+      <span><i class="legend-dot dot-orange"></i>接近接货价</span>
+      <span><i class="legend-dot dot-blue"></i>普通持仓</span>
+    </div>
+    
+        <div class="exposure-heatmap">
+            <details class="exposure-tile tile-xl risk-normal">
+              <summary>
+                <div class="tile-name">特斯拉</div>
+                <div class="tile-amount">605.0万 USD</div>
+                <div class="tile-meta">17 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">BC / 摩根士丹利 / 摩根大通</div>
+                <ul>
+            <li>
+              <strong>BNP FCN TSLA 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-06-30 | 最后观察：2026-06-26 | XS3217080483</span>
+            </li>
+            
+            <li>
+              <strong>BNP FCN TSLA 8%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-07-02 | 最后观察：2026-06-30 | XS3217107864</span>
+            </li>
+            
+            <li>
+              <strong>HSBC FCN TSLA&amp;GOOGL 12%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-08-03 | 最后观察：2026-07-30 | XS3270334330</span>
+            </li>
+            
+            <li>
+              <strong>HSBC FCN TSLA&amp;NVDA 12%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-08-03 | 最后观察：2026-07-30 | XS3270334686</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN NVDA&amp;TSLA 8%</strong>
+              <span>摩根大通 | 25.0万 USD</span>
+              <span>到期：2026-08-11 | 最后观察：2026-08-07 | XS3197965927</span>
+            </li>
+            
+            <li>
+              <strong>JPM NVDA&amp;TSLA 8%</strong>
+              <span>BC | 25.0万 USD</span>
+              <span>到期：2026-08-11 | 最后观察：2026-08-07 | BC-持仓台账20260521-ROW-3</span>
+            </li>
+            
+            <li>
+              <strong>JPM TSLA 10%</strong>
+              <span>BC | 30.0万 USD</span>
+              <span>到期：2027-01-14 | 最后观察：2027-01-14 | BC-持仓台账20260521-ROW-5</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN TSLA 10%</strong>
+              <span>摩根大通 | 50.0万 USD</span>
+              <span>到期：2027-01-16 | 最后观察：2027-01-14 | XS3235505651</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN TSLA 12%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2027-01-26 | 最后观察：2027-01-22 | XS3235569970</span>
+            </li>
+            
+            <li>
+              <strong>JPM TSLA 12%</strong>
+              <span>BC | 50.0万 USD</span>
+              <span>到期：2027-01-26 | 最后观察：2027-01-22 | BC-持仓台账20260521-ROW-6</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN TSLA 12%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2027-02-10 | 最后观察：2027-02-08 | XS3269253814</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN TSLA 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2027-03-31 | 最后观察：2027-03-29 | XS3290744989</span>
+            </li>
+            
+            <li>
+              <strong>HSBC FCN NVDA&amp;TSLA 12%</strong>
+              <span>BC | 25.0万 USD</span>
+              <span>到期：2027-05-28 | 最后观察：2027-05-26 | BC-持仓台账20260521-ROW-10</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN GOOGL&amp;TSLA 10%</strong>
+              <span>BC | 25.0万 USD</span>
+              <span>到期：2027-05-28 | 最后观察：2027-05-25 | BC-持仓台账20260521-ROW-11</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN GOOGL&amp;TSLA 12%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2027-06-08 | 最后观察：2027-06-04 | 公司-FCN持仓情况-ROW-80</span>
+            </li>
+            
+            <li>
+              <strong>HSBC FCN NVDA&amp;TSLA 12%</strong>
+              <span>摩根大通 | 25.0万 USD</span>
+              <span>到期：2027-06-29 | 最后观察：2027-05-25 | 公司-FCN持仓情况-ROW-60</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN GOOGL&amp;TSLA 10%</strong>
+              <span>摩根大通 | 25.0万 USD</span>
+              <span>到期：2027-06-29 | 最后观察：2027-05-25 | 公司-FCN持仓情况-ROW-61</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-xl risk-normal">
+              <summary>
+                <div class="tile-name">谷歌</div>
+                <div class="tile-amount">425.0万 USD</div>
+                <div class="tile-meta">13 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">BC / 摩根士丹利 / 摩根大通</div>
+                <ul>
+            <li>
+              <strong>JPM FCN GOOGL 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-05-28 | 最后观察：2027-05-26 | XS3374682410</span>
+            </li>
+            
+            <li>
+              <strong>HSBC FCN TSLA&amp;GOOGL 12%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-08-03 | 最后观察：2026-07-30 | XS3270334330</span>
+            </li>
+            
+            <li>
+              <strong>GS FCN GOOGL 12%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-08-06 | 最后观察：2026-08-04 | XS3278348860</span>
+            </li>
+            
+            <li>
+              <strong>BARC FCN GOOGL 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-08-28 | 最后观察：2026-08-26 | XS3363622294</span>
+            </li>
+            
+            <li>
+              <strong>BARC FCN AVGO&amp;GOOGL 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-12-01 | 最后观察：2026-11-27 | XS3357827552</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN MSFT&amp;GOOGL 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2027-02-17 | 最后观察：2027-02-12 | XS3269412550</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN GOOGL&amp;TSM 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2027-05-11 | 最后观察：2027-05-07 | XS3313484068</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN GOOGL 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2027-05-13 | 最后观察：2027-05-11 | XS3313315114</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN GOOGL&amp;TSLA 10%</strong>
+              <span>BC | 25.0万 USD</span>
+              <span>到期：2027-05-28 | 最后观察：2027-05-25 | BC-持仓台账20260521-ROW-11</span>
+            </li>
+            
+            <li>
+              <strong>BARC FCN NVDA&amp;GOOGL 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2027-06-02 | 最后观察：2027-05-28 | XS3363551170</span>
+            </li>
+            
+            <li>
+              <strong>HSBC FCN GOOGL&amp;NVDA 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2027-06-08 | 最后观察：2027-06-04 | 公司-FCN持仓情况-ROW-81</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN GOOGL&amp;TSLA 12%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2027-06-08 | 最后观察：2027-06-04 | 公司-FCN持仓情况-ROW-80</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN GOOGL&amp;TSLA 10%</strong>
+              <span>摩根大通 | 25.0万 USD</span>
+              <span>到期：2027-06-29 | 最后观察：2027-05-25 | 公司-FCN持仓情况-ROW-61</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-xl risk-touched">
+              <summary>
+                <div class="tile-name">拼多多</div>
+                <div class="tile-amount">400.0万 USD</div>
+                <div class="tile-meta">8 笔产品 | 低于接货价</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">BC / 摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>CLSA FCN PDD 15%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-07-30 | 最后观察：2026-07-28 | XS3253703196</span>
+            </li>
+            
+            <li>
+              <strong>CLSA FCN PDD 15%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-08-05 | 最后观察：2026-08-03 | XS3253697109</span>
+            </li>
+            
+            <li>
+              <strong>CLSA FCN PDD 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-09-01 | 最后观察：2026-08-28 | XS3212866662</span>
+            </li>
+            
+            <li>
+              <strong>CLSA FCN PDD 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-09-30 | 最后观察：2026-09-28 | XS3253593407</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN PDD 8%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-10-20 | 最后观察：2026-10-16 | XS3192777574</span>
+            </li>
+            
+            <li>
+              <strong>JPM PDD 8%</strong>
+              <span>BC | 50.0万 USD</span>
+              <span>到期：2026-10-20 | 最后观察：2026-10-16 | BC-持仓台账20260521-ROW-2</span>
+            </li>
+            
+            <li>
+              <strong>CLSA FCN PDD 15%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-12-08 | 最后观察：2026-12-04 | 公司-FCN持仓情况-ROW-83</span>
+            </li>
+            
+            <li>
+              <strong>CLSA FCN PDD 12%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-12-30 | 最后观察：2026-12-28 | XS3253597069</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-lg risk-normal">
+              <summary>
+                <div class="tile-name">英伟达</div>
+                <div class="tile-amount">300.0万 USD</div>
+                <div class="tile-meta">12 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">BC / 摩根士丹利 / 摩根大通</div>
+                <ul>
+            <li>
+              <strong>HSBC FCN TSLA&amp;NVDA 12%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-08-03 | 最后观察：2026-07-30 | XS3270334686</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN NVDA&amp;TSLA 8%</strong>
+              <span>摩根大通 | 25.0万 USD</span>
+              <span>到期：2026-08-11 | 最后观察：2026-08-07 | XS3197965927</span>
+            </li>
+            
+            <li>
+              <strong>JPM NVDA&amp;TSLA 8%</strong>
+              <span>BC | 25.0万 USD</span>
+              <span>到期：2026-08-11 | 最后观察：2026-08-07 | BC-持仓台账20260521-ROW-3</span>
+            </li>
+            
+            <li>
+              <strong>BARC FCN NVDA&amp;TSM 12%</strong>
+              <span>摩根大通 | 25.0万 USD</span>
+              <span>到期：2027-02-03 | 最后观察：2027-02-01 | 公司-FCN持仓情况-ROW-44</span>
+            </li>
+            
+            <li>
+              <strong>BARC FCN NVDA&amp;TSM 12%</strong>
+              <span>BC | 25.0万 USD</span>
+              <span>到期：2027-02-03 | 最后观察：2027-02-01 | BC-持仓台账20260521-ROW-8</span>
+            </li>
+            
+            <li>
+              <strong>UBS FCN META&amp;NVDA 12%</strong>
+              <span>摩根大通 | 25.0万 USD</span>
+              <span>到期：2027-02-03 | 最后观察：2027-02-01 | 公司-FCN持仓情况-ROW-45</span>
+            </li>
+            
+            <li>
+              <strong>UBS FCN META&amp;NVDA 12%</strong>
+              <span>BC | 25.0万 USD</span>
+              <span>到期：2027-02-03 | 最后观察：2027-02-01 | BC-持仓台账20260521-ROW-9</span>
+            </li>
+            
+            <li>
+              <strong>HSBC FCN NVDA&amp;TSM 12%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2027-05-24 | 最后观察：2027-05-20 | XS3288602959</span>
+            </li>
+            
+            <li>
+              <strong>HSBC FCN NVDA&amp;TSLA 12%</strong>
+              <span>BC | 25.0万 USD</span>
+              <span>到期：2027-05-28 | 最后观察：2027-05-26 | BC-持仓台账20260521-ROW-10</span>
+            </li>
+            
+            <li>
+              <strong>BARC FCN NVDA&amp;GOOGL 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2027-06-02 | 最后观察：2027-05-28 | XS3363551170</span>
+            </li>
+            
+            <li>
+              <strong>HSBC FCN GOOGL&amp;NVDA 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2027-06-08 | 最后观察：2027-06-04 | 公司-FCN持仓情况-ROW-81</span>
+            </li>
+            
+            <li>
+              <strong>HSBC FCN NVDA&amp;TSLA 12%</strong>
+              <span>摩根大通 | 25.0万 USD</span>
+              <span>到期：2027-06-29 | 最后观察：2027-05-25 | 公司-FCN持仓情况-ROW-60</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-lg risk-touched">
+              <summary>
+                <div class="tile-name">腾讯控股</div>
+                <div class="tile-amount">230.0万 USD</div>
+                <div class="tile-meta">7 笔产品 | 低于接货价</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">BC / 摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>CLSA FCN 0700 HK+9988 HK 12%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-08-05 | 最后观察：2026-08-03 | XS3253690781</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN 0700&amp;9988 10%</strong>
+              <span>BC | 25.0万 USD</span>
+              <span>到期：2026-09-18 | 最后观察：2026-09-16 | BC-持仓台账20260521-ROW-7</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN 700 8%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-09-21 | 最后观察：2026-09-17 | XS3223427058</span>
+            </li>
+            
+            <li>
+              <strong>CLSA FCN 0700&amp;9999 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-11-27 | 最后观察：2026-11-24 | XS3253656170</span>
+            </li>
+            
+            <li>
+              <strong>CLSA FCN 0700 HK 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-12-16 | 最后观察：2026-12-14 | XS3253635091</span>
+            </li>
+            
+            <li>
+              <strong>CLSA FCN 0700&amp;9988 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2027-03-05 | 最后观察：2027-03-03 | XS3319751171</span>
+            </li>
+            
+            <li>
+              <strong>CLSA FCN 0700 10%</strong>
+              <span>摩根士丹利 | 30.0万 USD</span>
+              <span>到期：2027-04-20 | 最后观察：2027-04-16 | XS3319851633</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-lg risk-touched">
+              <summary>
+                <div class="tile-name">小米集团</div>
+                <div class="tile-amount">230.0万 USD</div>
+                <div class="tile-meta">5 笔产品 | 低于接货价</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">BC / 摩根士丹利 / 摩根大通</div>
+                <ul>
+            <li>
+              <strong>BARC FCN 1810 12.53%</strong>
+              <span>摩根大通 | 50.0万 USD</span>
+              <span>到期：2026-07-07 | 最后观察：2026-07-07 | XS3222022967</span>
+            </li>
+            
+            <li>
+              <strong>BARC 1810 12.53%</strong>
+              <span>BC | 30.0万 USD</span>
+              <span>到期：2026-07-09 | 最后观察：2026-07-07 | BC-持仓台账20260521-ROW-4</span>
+            </li>
+            
+            <li>
+              <strong>BARC FCN 1810 12%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-07-27 | 最后观察：2026-07-23 | XS3230823752</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN 1810 12%</strong>
+              <span>摩根大通 | 50.0万 USD</span>
+              <span>到期：2026-08-31 | 最后观察：2026-08-27 | 公司-FCN持仓情况-ROW-29</span>
+            </li>
+            
+            <li>
+              <strong>BARC FCN 1810 12%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-10-30 | 最后观察：2026-10-28 | XS3239561387</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">阿里巴巴</div>
+                <div class="tile-amount">200.0万 USD</div>
+                <div class="tile-meta">6 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">BC / 摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>CLSA FCN 9988 HK+9999 HK 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-05-28 | 最后观察：2026-05-26 | XS3212860897</span>
+            </li>
+            
+            <li>
+              <strong>CLSA FCN 0700 HK+9988 HK 12%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-08-05 | 最后观察：2026-08-03 | XS3253690781</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN 0700&amp;9988 10%</strong>
+              <span>BC | 25.0万 USD</span>
+              <span>到期：2026-09-18 | 最后观察：2026-09-16 | BC-持仓台账20260521-ROW-7</span>
+            </li>
+            
+            <li>
+              <strong>CITI FCN BABA 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-10-28 | 最后观察：2026-10-26 | XS3163852141</span>
+            </li>
+            
+            <li>
+              <strong>CLSA FCN 9988 HK 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-12-16 | 最后观察：2026-12-14 | XS3253644911</span>
+            </li>
+            
+            <li>
+              <strong>CLSA FCN 0700&amp;9988 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2027-03-05 | 最后观察：2027-03-03 | XS3319751171</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">Coinbase</div>
+                <div class="tile-amount">200.0万 USD</div>
+                <div class="tile-meta">4 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">BC / 摩根士丹利 / 摩根大通</div>
+                <ul>
+            <li>
+              <strong>JPM FCN COIN 12%</strong>
+              <span>摩根大通 | 50.0万 USD</span>
+              <span>到期：2026-07-19 | 最后观察：2026-07-14 | XS3235505909</span>
+            </li>
+            
+            <li>
+              <strong>BARC FCN COIN 15%</strong>
+              <span>摩根大通 | 50.0万 USD</span>
+              <span>到期：2026-11-27 | 最后观察：2026-11-25 | 公司-FCN持仓情况-ROW-62</span>
+            </li>
+            
+            <li>
+              <strong>BARC FCN COIN 15%</strong>
+              <span>BC | 50.0万 USD</span>
+              <span>到期：2026-11-30 | 最后观察：2026-11-25 | BC-持仓台账20260521-ROW-12</span>
+            </li>
+            
+            <li>
+              <strong>MS FCN COIN 15%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-12-08 | 最后观察：2026-12-04 | 公司-FCN持仓情况-ROW-84</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">IBIT</div>
+                <div class="tile-amount">150.0万 USD</div>
+                <div class="tile-meta">3 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>MS FCN IBIT 8%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-07-27 | 最后观察：2026-07-23 | XS3242851056</span>
+            </li>
+            
+            <li>
+              <strong>CLSA FCN IBIT 12%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-08-12 | 最后观察：2026-08-10 | XS3253684388</span>
+            </li>
+            
+            <li>
+              <strong>CLSA FCN IBIT 12%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-11-06 | 最后观察：2026-11-04 | XS3319793926</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">台积电</div>
+                <div class="tile-amount">150.0万 USD</div>
+                <div class="tile-meta">5 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">BC / 摩根士丹利 / 摩根大通</div>
+                <ul>
+            <li>
+              <strong>BARC FCN NVDA&amp;TSM 12%</strong>
+              <span>摩根大通 | 25.0万 USD</span>
+              <span>到期：2027-02-03 | 最后观察：2027-02-01 | 公司-FCN持仓情况-ROW-44</span>
+            </li>
+            
+            <li>
+              <strong>BARC FCN NVDA&amp;TSM 12%</strong>
+              <span>BC | 25.0万 USD</span>
+              <span>到期：2027-02-03 | 最后观察：2027-02-01 | BC-持仓台账20260521-ROW-8</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN GOOGL&amp;TSM 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2027-05-11 | 最后观察：2027-05-07 | XS3313484068</span>
+            </li>
+            
+            <li>
+              <strong>HSBC FCN NVDA&amp;TSM 12%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2027-05-24 | 最后观察：2027-05-20 | XS3288602959</span>
+            </li>
+            
+            <li>
+              <strong>HSBC FCN TSM 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2027-06-04 | 最后观察：2027-06-02 | XS3288868717</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">Circle</div>
+                <div class="tile-amount">150.0万 USD</div>
+                <div class="tile-meta">3 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>MS FCN CRCL 15%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-08-28 | 最后观察：2026-08-26 | XS3354964341</span>
+            </li>
+            
+            <li>
+              <strong>BNP FCN CRCL 15%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-11-12 | 最后观察：2026-11-09 | XS3344208502</span>
+            </li>
+            
+            <li>
+              <strong>SG FCN CRCL 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2027-02-24 | 最后观察：2027-02-22 | XS3367405928</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">美光科技</div>
+                <div class="tile-amount">150.0万 USD</div>
+                <div class="tile-meta">3 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>UBS FCN MU 12%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-09-08 | 最后观察：2026-09-03 | XS3381388498</span>
+            </li>
+            
+            <li>
+              <strong>CITI FCN MU 15%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-12-04 | 最后观察：2026-12-02 | XS3165060032</span>
+            </li>
+            
+            <li>
+              <strong>SG FCN MU 12%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-12-08 | 最后观察：2026-12-04 | 公司-FCN持仓情况-ROW-82</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">博通</div>
+                <div class="tile-amount">125.0万 USD</div>
+                <div class="tile-meta">3 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>BARC FCN AVGO&amp;GOOGL 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-12-01 | 最后观察：2026-11-27 | XS3357827552</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN AVGO 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2027-05-13 | 最后观察：2027-05-11 | XS3313315205</span>
+            </li>
+            
+            <li>
+              <strong>GS FCN AVGO 12%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2027-06-04 | 最后观察：2027-06-02 | XS3278412468</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">Applovin</div>
+                <div class="tile-amount">100.0万 USD</div>
+                <div class="tile-meta">2 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>JPM FCN APP 12%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-07-27 | 最后观察：2026-07-23 | XS3235607143</span>
+            </li>
+            
+            <li>
+              <strong>SG FCN APP 15%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-08-26 | 最后观察：2026-08-24 | XS3361152138</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">ETHA</div>
+                <div class="tile-amount">100.0万 USD</div>
+                <div class="tile-meta">2 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>CLSA FCN ETHA 15%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-07-24 | 最后观察：2026-07-22 | XS3319824820</span>
+            </li>
+            
+            <li>
+              <strong>CLSA FCN ETHA 12%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-08-12 | 最后观察：2026-08-10 | XS3253701810</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">GLD</div>
+                <div class="tile-amount">100.0万 USD</div>
+                <div class="tile-meta">2 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>CITI FCN GLD 8%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-09-22 | 最后观察：2026-09-21 | XS3158701949</span>
+            </li>
+            
+            <li>
+              <strong>GS FCN GLD 8%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-11-17 | 最后观察：2026-11-13 | 公司-FCN持仓情况-ROW-53</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">UNH</div>
+                <div class="tile-amount">100.0万 USD</div>
+                <div class="tile-meta">2 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>JPM FCN UNH 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-11-13 | 最后观察：2026-11-11 | XS3313315031</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN UNH 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2027-06-04 | 最后观察：2027-06-02 | XS3374505983</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">微软</div>
+                <div class="tile-amount">75.0万 USD</div>
+                <div class="tile-meta">3 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>CITI FCN MSFT&amp;META 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-09-16 | 最后观察：2026-09-14 | XS3158891385</span>
+            </li>
+            
+            <li>
+              <strong>BARC FCN MSFT&amp;META 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-11-24 | 最后观察：2026-11-20 | XS3351267003</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN MSFT&amp;GOOGL 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2027-02-17 | 最后观察：2027-02-12 | XS3269412550</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">Meta</div>
+                <div class="tile-amount">75.0万 USD</div>
+                <div class="tile-meta">3 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">BC / 摩根士丹利 / 摩根大通</div>
+                <ul>
+            <li>
+              <strong>CITI FCN MSFT&amp;META 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-09-16 | 最后观察：2026-09-14 | XS3158891385</span>
+            </li>
+            
+            <li>
+              <strong>UBS FCN META&amp;NVDA 12%</strong>
+              <span>摩根大通 | 25.0万 USD</span>
+              <span>到期：2027-02-03 | 最后观察：2027-02-01 | 公司-FCN持仓情况-ROW-45</span>
+            </li>
+            
+            <li>
+              <strong>UBS FCN META&amp;NVDA 12%</strong>
+              <span>BC | 25.0万 USD</span>
+              <span>到期：2027-02-03 | 最后观察：2027-02-01 | BC-持仓台账20260521-ROW-9</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">Coherent</div>
+                <div class="tile-amount">70.0万 USD</div>
+                <div class="tile-meta">2 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">BC / 摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>SOCGEN FCN COHR 48.60%</strong>
+              <span>BC | 20.0万 USD</span>
+              <span>到期：2026-06-30 | 最后观察：2026-06-26 | BC-持仓台账20260521-ROW-13</span>
+            </li>
+            
+            <li>
+              <strong>BARC FCN COHR 15%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-08-31 | 最后观察：2026-08-27 | XS3357826232</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">网易</div>
+                <div class="tile-amount">50.0万 USD</div>
+                <div class="tile-meta">2 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>CLSA FCN 9988 HK+9999 HK 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-05-28 | 最后观察：2026-05-26 | XS3212860897</span>
+            </li>
+            
+            <li>
+              <strong>CLSA FCN 0700&amp;9999 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-11-27 | 最后观察：2026-11-24 | XS3253656170</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">港交所</div>
+                <div class="tile-amount">50.0万 USD</div>
+                <div class="tile-meta">1 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>BARC FCN 388 8%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-10-27 | 最后观察：2026-10-23 | XS3230823596</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">紫金黄金国际</div>
+                <div class="tile-amount">50.0万 USD</div>
+                <div class="tile-meta">1 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>BARK FCN 2259 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-07-09 | 最后观察：2026-07-07 | XS3305341417</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">伯克希尔</div>
+                <div class="tile-amount">50.0万 USD</div>
+                <div class="tile-meta">1 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>CLSA FCN BRKB 8%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-10-09 | 最后观察：2026-10-07 | XS3253578275</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">中海油</div>
+                <div class="tile-amount">50.0万 USD</div>
+                <div class="tile-meta">1 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>BARC FCN 0883 8%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2027-01-13 | 最后观察：2027-01-11 | XS3305409156</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">Palantir</div>
+                <div class="tile-amount">50.0万 USD</div>
+                <div class="tile-meta">1 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>JPM FCN PLTR 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-10-14 | 最后观察：2026-10-12 | XS3290920977</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">甲骨文</div>
+                <div class="tile-amount">50.0万 USD</div>
+                <div class="tile-meta">1 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>BARC FCN ORCL 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-11-12 | 最后观察：2026-11-09 | XS3341164765</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">达美乐</div>
+                <div class="tile-amount">50.0万 USD</div>
+                <div class="tile-meta">1 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>CLSA FCN DPZ 8%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-11-17 | 最后观察：2026-11-13 | 公司-FCN持仓情况-ROW-54</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">超威</div>
+                <div class="tile-amount">50.0万 USD</div>
+                <div class="tile-meta">1 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>HSBC FCN AMD 12%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2027-02-24 | 最后观察：2027-02-22 | XS3288667069</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">MAGS</div>
+                <div class="tile-amount">50.0万 USD</div>
+                <div class="tile-meta">1 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>GS FCN MAGS 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-12-02 | 最后观察：2026-11-30 | XS3283685280</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">英特尔</div>
+                <div class="tile-amount">50.0万 USD</div>
+                <div class="tile-meta">1 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>JPM FCN INTC 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-09-04 | 最后观察：2026-09-02 | XS3374505801</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">DRAM</div>
+                <div class="tile-amount">50.0万 USD</div>
+                <div class="tile-meta">1 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>MS FCN DRAM 12%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-09-08 | 最后观察：2026-09-03 | XS3355041511</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">META</div>
+                <div class="tile-amount">25.0万 USD</div>
+                <div class="tile-meta">1 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>BARC FCN MSFT&amp;META 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-11-24 | 最后观察：2026-11-20 | XS3351267003</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">2倍做多三星电子</div>
+                <div class="tile-amount">20.0万 USD</div>
+                <div class="tile-meta">1 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根大通</div>
+                <ul>
+            <li>
+              <strong>JPM FCN 7747 50%</strong>
+              <span>摩根大通 | 20.0万 USD</span>
+              <span>到期：2026-06-30 | 最后观察：2026-06-26 | 公司-FCN持仓情况-ROW-70</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">2倍做多海力士</div>
+                <div class="tile-amount">20.0万 USD</div>
+                <div class="tile-meta">1 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根大通</div>
+                <ul>
+            <li>
+              <strong>JPM FCN 7709 48.9%</strong>
+              <span>摩根大通 | 20.0万 USD</span>
+              <span>到期：2026-06-30 | 最后观察：2026-06-26 | 公司-FCN持仓情况-ROW-71</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            </div>
+      </section>
+
+      <section>
+        <h2>境内标的敞口 <span>热力方块；大小代表分摊本金，颜色联动接货风险</span></h2>
+        
+    <div class="legend">
+      <span><i class="legend-dot dot-red"></i>低于接货价</span>
+      <span><i class="legend-dot dot-orange"></i>接近接货价</span>
+      <span><i class="legend-dot dot-blue"></i>普通持仓</span>
+    </div>
+    
+        <div class="exposure-heatmap">
+            <details class="exposure-tile tile-xl risk-touched">
+              <summary>
+                <div class="tile-name">贵州茅台</div>
+                <div class="tile-amount">600.0万 CNY</div>
+                <div class="tile-meta">2 笔产品 | 低于接货价</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">中信建投</div>
+                <ul>
+            <li>
+              <strong>茅台6个月FCN</strong>
+              <span>中信建投 | 300.0万 CNY</span>
+              <span>到期：2026-09-28 | 最后观察：2026-09-28 | SAC-4438-6</span>
+            </li>
+            
+            <li>
+              <strong>茅台6个月FCN</strong>
+              <span>中信建投 | 300.0万 CNY</span>
+              <span>到期：2026-10-22 | 最后观察：2026-10-22 | SAC-4438-7</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-lg risk-near">
+              <summary>
+                <div class="tile-name">招商银行</div>
+                <div class="tile-amount">300.0万 CNY</div>
+                <div class="tile-meta">1 笔产品 | 接近接货价</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">中信建投</div>
+                <ul>
+            <li>
+              <strong>招商银行6个月FCN</strong>
+              <span>中信建投 | 300.0万 CNY</span>
+              <span>到期：2026-11-12 | 最后观察：2026-11-12 | SAC-4438-8</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            </div>
+      </section>
+    </div>
+
+    <p class="note">
+      说明：价格来自 iFinD；今日观察按 FCN 规则判断，接货风险按标的汇总展示。双挂钩产品的风险金额按本金平分到各标的。
+    </p>
+  </div>
+
+  <div id="ended-view" class="dashboard-view">
+    
+  <section id="ended-review" class="view-block">
+    <h2>已结束产品复盘 <span>读取已结束美元/人民币 FCN sheet；不包含机构维度和热力图</span></h2>
+    <div class="ended-grid">
+      <div class="card"><div class="num">168</div><div class="label">已结束产品数量</div></div>
+      <div class="card"><div class="num">1,200.0万 CNY / 6,805.0万 USD</div><div class="label">已结束本金</div></div>
+      <div class="card"><div class="num">9.8万 CNY / 143.3万 USD</div><div class="label">已实现票息/收益估算</div></div>
+      <div class="card"><div class="num">9.58%</div><div class="label">平均年化票息</div></div>
+      <div class="card"><div class="num">3.1 月</div><div class="label">平均持有周期</div></div>
+    </div>
+  </section>
+
+  <div class="review-grid">
+    <section>
+      <h2>标的维度复盘 <span>按标的和币种汇总，按已实现收益排序</span></h2>
+      <table>
+        <thead>
+          <tr><th>标的</th><th>币种</th><th>结束笔数</th><th>本金</th><th>已实现收益</th><th>收益/本金</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>TLT</td>
+              <td>USD</td>
+              <td>9</td>
+              <td>320.0万</td>
+              <td>55.2万</td>
+              <td>17.24%</td>
+            </tr>
+            
+
+            <tr>
+              <td>TSLA</td>
+              <td>USD</td>
+              <td>11</td>
+              <td>540.0万</td>
+              <td>15.8万</td>
+              <td>2.93%</td>
+            </tr>
+            
+
+            <tr>
+              <td>英伟达 / 台积电</td>
+              <td>USD</td>
+              <td>4</td>
+              <td>200.0万</td>
+              <td>13.0万</td>
+              <td>6.50%</td>
+            </tr>
+            
+
+            <tr>
+              <td>PDD</td>
+              <td>USD</td>
+              <td>13</td>
+              <td>435.0万</td>
+              <td>7.9万</td>
+              <td>1.81%</td>
+            </tr>
+            
+
+            <tr>
+              <td>NVDA</td>
+              <td>USD</td>
+              <td>7</td>
+              <td>290.0万</td>
+              <td>7.6万</td>
+              <td>2.62%</td>
+            </tr>
+            
+
+            <tr>
+              <td>Meta</td>
+              <td>USD</td>
+              <td>7</td>
+              <td>320.0万</td>
+              <td>7.0万</td>
+              <td>2.20%</td>
+            </tr>
+            
+
+            <tr>
+              <td>特斯拉</td>
+              <td>USD</td>
+              <td>5</td>
+              <td>330.0万</td>
+              <td>6.1万</td>
+              <td>1.85%</td>
+            </tr>
+            
+
+            <tr>
+              <td>贵州茅台</td>
+              <td>CNY</td>
+              <td>2</td>
+              <td>600.0万</td>
+              <td>5.7万</td>
+              <td>0.95%</td>
+            </tr>
+            
+
+            <tr>
+              <td>TSM</td>
+              <td>USD</td>
+              <td>2</td>
+              <td>80.0万</td>
+              <td>4.4万</td>
+              <td>5.50%</td>
+            </tr>
+            
+
+            <tr>
+              <td>0388</td>
+              <td>USD</td>
+              <td>3</td>
+              <td>135.0万</td>
+              <td>4.1万</td>
+              <td>3.06%</td>
+            </tr>
+            
+
+            <tr>
+              <td>拼多多</td>
+              <td>USD</td>
+              <td>3</td>
+              <td>150.0万</td>
+              <td>4.1万</td>
+              <td>2.72%</td>
+            </tr>
+            
+
+            <tr>
+              <td>茅台</td>
+              <td>CNY</td>
+              <td>2</td>
+              <td>600.0万</td>
+              <td>4.1万</td>
+              <td>0.68%</td>
+            </tr>
+            
+
+            <tr>
+              <td>DUOL</td>
+              <td>USD</td>
+              <td>2</td>
+              <td>40.0万</td>
+              <td>3.4万</td>
+              <td>8.48%</td>
+            </tr>
+            
+
+            <tr>
+              <td>GOOGL</td>
+              <td>USD</td>
+              <td>4</td>
+              <td>160.0万</td>
+              <td>3.2万</td>
+              <td>1.98%</td>
+            </tr>
+            
+
+            <tr>
+              <td>中海油</td>
+              <td>USD</td>
+              <td>2</td>
+              <td>85.0万</td>
+              <td>3.1万</td>
+              <td>3.69%</td>
+            </tr>
+            
+
+            <tr>
+              <td>UNH</td>
+              <td>USD</td>
+              <td>6</td>
+              <td>260.0万</td>
+              <td>3.1万</td>
+              <td>1.21%</td>
+            </tr>
+            
+
+            <tr>
+              <td>小米</td>
+              <td>USD</td>
+              <td>2</td>
+              <td>70.0万</td>
+              <td>3.1万</td>
+              <td>4.39%</td>
+            </tr>
+            
+
+            <tr>
+              <td>布鲁可</td>
+              <td>USD</td>
+              <td>3</td>
+              <td>60.0万</td>
+              <td>2.8万</td>
+              <td>4.67%</td>
+            </tr>
+            
+
+            <tr>
+              <td>Coinbase</td>
+              <td>USD</td>
+              <td>3</td>
+              <td>150.0万</td>
+              <td>2.7万</td>
+              <td>1.78%</td>
+            </tr>
+            
+
+            <tr>
+              <td>伯克希尔</td>
+              <td>USD</td>
+              <td>2</td>
+              <td>100.0万</td>
+              <td>2.3万</td>
+              <td>2.33%</td>
+            </tr>
+            
+
+            <tr>
+              <td>9988</td>
+              <td>USD</td>
+              <td>4</td>
+              <td>100.0万</td>
+              <td>2.3万</td>
+              <td>2.33%</td>
+            </tr>
+            
+
+            <tr>
+              <td>ETHA</td>
+              <td>USD</td>
+              <td>3</td>
+              <td>150.0万</td>
+              <td>2.3万</td>
+              <td>1.56%</td>
+            </tr>
+            
+
+            <tr>
+              <td>小米集团</td>
+              <td>USD</td>
+              <td>1</td>
+              <td>50.0万</td>
+              <td>2.3万</td>
+              <td>4.55%</td>
+            </tr>
+            
+
+            <tr>
+              <td>台积电</td>
+              <td>USD</td>
+              <td>3</td>
+              <td>130.0万</td>
+              <td>2.0万</td>
+              <td>1.56%</td>
+            </tr>
+            
+
+            <tr>
+              <td>谷歌 / 台积电</td>
+              <td>USD</td>
+              <td>1</td>
+              <td>200.0万</td>
+              <td>2.0万</td>
+              <td>1.00%</td>
+            </tr>
+            
+
+            <tr>
+              <td>腾讯控股 / 阿里巴巴</td>
+              <td>USD</td>
+              <td>1</td>
+              <td>50.0万</td>
+              <td>2.0万</td>
+              <td>4.00%</td>
+            </tr>
+            
+
+            <tr>
+              <td>MAGS</td>
+              <td>USD</td>
+              <td>4</td>
+              <td>200.0万</td>
+              <td>1.7万</td>
+              <td>0.83%</td>
+            </tr>
+            
+
+            <tr>
+              <td>700 / 9988</td>
+              <td>USD</td>
+              <td>4</td>
+              <td>110.0万</td>
+              <td>1.6万</td>
+              <td>1.45%</td>
+            </tr>
+            
+
+            <tr>
+              <td>小米集团 / 老铺黄金</td>
+              <td>USD</td>
+              <td>2</td>
+              <td>60.0万</td>
+              <td>1.4万</td>
+              <td>2.33%</td>
+            </tr>
+            
+
+            <tr>
+              <td>港交所</td>
+              <td>USD</td>
+              <td>1</td>
+              <td>35.0万</td>
+              <td>1.4万</td>
+              <td>4.00%</td>
+            </tr>
+            </tbody>
+      </table>
+    </section>
+
+    <section>
+      <h2>周度结束节奏 <span>最近 12 周；按敲出/结束时间统计</span></h2>
+      <table>
+        <thead>
+          <tr><th>周区间</th><th>结束笔数</th><th>释放本金</th><th>已实现收益</th><th>收益/本金</th></tr>
+        </thead>
+        <tbody>
+            <tr>
+              <td>2026-12-14 至 2026-12-20</td>
+              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-income" style="width:0%"></div></div></div></td>
+              <td>-</td>
+            </tr>
+            
+
+            <tr>
+              <td>2026-12-21 至 2026-12-27</td>
+              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:100%"></div></div></div></td>
+              <td><div class="bar-cell"><span>100.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:100%"></div></div></div></td>
+              <td><div class="bar-cell"><span>8.0万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:100%"></div></div></div></td>
+              <td>8.00%</td>
+            </tr>
+            
+
+            <tr>
+              <td>2026-12-28 至 2027-01-03</td>
+              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:100%"></div></div></div></td>
+              <td><div class="bar-cell"><span>30.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:30%"></div></div></div></td>
+              <td><div class="bar-cell"><span>2.4万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:30%"></div></div></div></td>
+              <td>8.00%</td>
+            </tr>
+            
+
+            <tr>
+              <td>2027-01-04 至 2027-01-10</td>
+              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:100%"></div></div></div></td>
+              <td><div class="bar-cell"><span>50.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:50%"></div></div></div></td>
+              <td><div class="bar-cell"><span>4.0万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:50%"></div></div></div></td>
+              <td>8.00%</td>
+            </tr>
+            
+
+            <tr>
+              <td>2027-01-11 至 2027-01-17</td>
+              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-income" style="width:0%"></div></div></div></td>
+              <td>-</td>
+            </tr>
+            
+
+            <tr>
+              <td>2027-01-18 至 2027-01-24</td>
+              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-income" style="width:0%"></div></div></div></td>
+              <td>-</td>
+            </tr>
+            
+
+            <tr>
+              <td>2027-01-25 至 2027-01-31</td>
+              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-income" style="width:0%"></div></div></div></td>
+              <td>-</td>
+            </tr>
+            
+
+            <tr>
+              <td>2027-02-01 至 2027-02-07</td>
+              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-income" style="width:0%"></div></div></div></td>
+              <td>-</td>
+            </tr>
+            
+
+            <tr>
+              <td>2027-02-08 至 2027-02-14</td>
+              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-income" style="width:0%"></div></div></div></td>
+              <td>-</td>
+            </tr>
+            
+
+            <tr>
+              <td>2027-02-15 至 2027-02-21</td>
+              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:100%"></div></div></div></td>
+              <td><div class="bar-cell"><span>50.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:50%"></div></div></div></td>
+              <td><div class="bar-cell"><span>6.0万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:75%"></div></div></div></td>
+              <td>12.00%</td>
+            </tr>
+            
+
+            <tr>
+              <td>2027-02-22 至 2027-02-28</td>
+              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-income" style="width:0%"></div></div></div></td>
+              <td>-</td>
+            </tr>
+            
+
+            <tr>
+              <td>2027-03-01 至 2027-03-07</td>
+              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:100%"></div></div></div></td>
+              <td><div class="bar-cell"><span>50.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:50%"></div></div></div></td>
+              <td><div class="bar-cell"><span>6.0万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:75%"></div></div></div></td>
+              <td>12.00%</td>
+            </tr>
+            </tbody>
+      </table>
+    </section>
+  </div>
+    
+  </div>
+  <script>
+    const tabs = document.querySelectorAll(".view-tab");
+    const views = document.querySelectorAll(".dashboard-view");
+    tabs.forEach((tab) => {
+      tab.addEventListener("click", () => {
+        tabs.forEach((item) => item.classList.remove("active"));
+        views.forEach((view) => view.classList.remove("active"));
+        tab.classList.add("active");
+        document.getElementById(tab.dataset.view).classList.add("active");
+      });
+    });
+  </script>
+</body>
+</html>

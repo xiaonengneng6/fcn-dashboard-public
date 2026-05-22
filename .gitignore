@@ -1,0 +1,9 @@
+# Keep this publishing repository minimal.
+
+# Never upload source ledgers or secrets.
+*.xlsx
+*token*
+*key*
+ifind key.txt
+config.json
+
