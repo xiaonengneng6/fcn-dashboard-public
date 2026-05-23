@@ -36,26 +36,39 @@
       line-height: 1.6;
     }
     .view-nav {
-      display: flex;
-      gap: 10px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
       padding: 0 24px 18px;
     }
     .view-tab {
-      display: inline-block;
-      padding: 10px 16px;
-      border-radius: 999px;
-      border: 1px solid var(--line);
+      display: grid;
+      gap: 5px;
+      text-align: left;
+      padding: 16px 18px;
+      border-radius: 16px;
+      border: 1px solid #cbd5e1;
       background: #fff;
-      color: var(--muted);
+      color: var(--text);
       font-weight: 700;
-      font-size: 13px;
+      font-size: 18px;
       cursor: pointer;
+      box-shadow: 0 1px 3px rgba(15, 23, 42, 0.06);
     }
     .view-tab.active {
-      background: var(--blue);
+      background: linear-gradient(135deg, #1d4ed8, #2563eb);
       border-color: var(--blue);
       color: #fff;
       box-shadow: 0 8px 18px rgba(37, 99, 235, 0.18);
+    }
+    .view-tab small {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+      line-height: 1.45;
+    }
+    .view-tab.active small {
+      color: #dbeafe;
     }
     .dashboard-view {
       display: none;
@@ -117,48 +130,6 @@
       font-size: 12px;
       font-weight: 800;
       padding-right: 8px;
-    }
-    .scale-detail {
-      border: 1px solid rgba(203, 213, 225, 0.9);
-      border-radius: 14px;
-      background: rgba(255, 255, 255, 0.76);
-      overflow: hidden;
-    }
-    .scale-detail summary {
-      display: grid;
-      grid-template-columns: 1fr auto auto;
-      gap: 10px;
-      align-items: center;
-      cursor: pointer;
-      list-style: none;
-      padding: 12px;
-    }
-    .scale-detail summary::-webkit-details-marker {
-      display: none;
-    }
-    .scale-detail summary span {
-      color: var(--text);
-      font-size: 14px;
-      font-weight: 800;
-    }
-    .scale-detail summary b {
-      color: var(--blue);
-      font-size: 13px;
-    }
-    .scale-detail summary em {
-      color: var(--muted);
-      font-style: normal;
-      font-size: 12px;
-      white-space: nowrap;
-    }
-    .scale-detail .scale-block {
-      border: 0;
-      border-top: 1px solid rgba(203, 213, 225, 0.75);
-      border-radius: 0;
-      background: rgba(248, 250, 252, 0.8);
-    }
-    .scale-detail .scale-title {
-      display: none;
     }
     .scale-cards {
       display: grid;
@@ -327,6 +298,16 @@
       display: grid;
       gap: 14px;
       padding: 14px 18px 18px;
+    }
+    .observation-summary {
+      margin: 14px 18px 0;
+      padding: 10px 12px;
+      border-left: 4px solid var(--blue);
+      border-radius: 10px;
+      background: #eff6ff;
+      color: #1e3a8a;
+      font-weight: 700;
+      font-size: 14px;
     }
     .observation-group {
       border-left: 5px solid #94a3b8;
@@ -531,8 +512,19 @@
       white-space: nowrap;
     }
     .risk-product {
-      font-weight: 600;
-      line-height: 1.4;
+      display: grid;
+      gap: 2px;
+      margin-top: 8px;
+      line-height: 1.35;
+    }
+    .risk-product span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .risk-product strong {
+      color: var(--text);
+      font-size: 16px;
+      font-weight: 800;
     }
     .risk-meta {
       color: var(--muted);
@@ -541,7 +533,7 @@
     }
     .risk-prices {
       display: grid;
-      grid-template-columns: repeat(3, 1fr);
+      grid-template-columns: repeat(2, 1fr);
       gap: 8px;
       margin-top: 10px;
       color: var(--muted);
@@ -750,6 +742,7 @@
     }
     @media (max-width: 1100px) {
       .grid { grid-template-columns: repeat(2, 1fr); }
+      .view-nav { grid-template-columns: 1fr; }
       .summary-groups, .risk-grid, .exposure-grid, .review-grid { grid-template-columns: 1fr; }
       .scale-sub-layout { grid-template-columns: 1fr; }
       .scale-cards, .mini-scale-cards { grid-template-columns: repeat(2, minmax(100px, 1fr)); }
@@ -762,13 +755,19 @@
   <header>
     <h1>FCN 观察看板</h1>
     <div class="sub">
-      数据日期：2026-05-22 | 生成时间：2026-05-22 15:32<br>
+      数据日期：2026-05-23 | 生成时间：2026-05-23 11:03<br>
       当前版本不建数据库、不记录人工确认状态，只从 Excel 存续 FCN 台账生成静态 HTML。价格口径：iFinD 价格，不使用 Excel 市场价。金额口径：折美元合计使用人民币兑美元中间价/汇总 sheet 汇率（CNY/USD=0.1415）。
     </div>
   </header>
   <nav class="view-nav">
-    <button class="view-tab active" type="button" data-view="current-view">当前持仓工作台</button>
-    <button class="view-tab" type="button" data-view="ended-view">已结束产品复盘</button>
+    <button class="view-tab active" type="button" data-view="current-view">
+      <span>当前持仓工作台</span>
+      <small>观察提醒 · 接货风险 · 标的敞口</small>
+    </button>
+    <button class="view-tab" type="button" data-view="ended-view">
+      <span>已结束产品复盘</span>
+      <small>结束数量 · 已实现收益 · 周度节奏</small>
+    </button>
   </nav>
 
   <div id="current-view" class="dashboard-view active">
@@ -780,53 +779,35 @@
       <div class="scale-block">
         <div class="scale-title">整体</div>
         <div class="scale-cards ">
-          <div class="card"><div class="num">98</div><div class="label">存续数量</div></div>
-          <div class="card"><div class="num">4,727.4万 USD</div><div class="label">折美元合计</div></div>
-          <div class="card"><div class="num">4,600.0万 USD</div><div class="label">USD 本金</div></div>
+          <div class="card"><div class="num">100</div><div class="label">存续数量</div></div>
+          <div class="card"><div class="num">4,700.0万 USD</div><div class="label">USD 本金</div></div>
           <div class="card"><div class="num">900.0万 CNY</div><div class="label">CNY 本金</div></div>
+          <div class="card"><div class="num">4,827.4万 USD</div><div class="label">折美元合计</div></div>
         </div>
       </div>
     
           <div class="scale-sub-layout">
             
-      <details class="scale-detail">
-        <summary>
-          <span>公司</span>
-          <b>86 笔</b>
-          <em>4,197.4万 USD</em>
-        </summary>
-        
       <div class="scale-block compact-scale-block">
         <div class="scale-title">公司</div>
         <div class="scale-cards mini-scale-cards">
-          <div class="mini-card"><div class="num">86</div><div class="label">存续数量</div></div>
-          <div class="mini-card"><div class="num">4,197.4万 USD</div><div class="label">折美元合计</div></div>
-          <div class="mini-card"><div class="num">4,070.0万 USD</div><div class="label">USD 本金</div></div>
+          <div class="mini-card"><div class="num">88</div><div class="label">存续数量</div></div>
+          <div class="mini-card"><div class="num">4,170.0万 USD</div><div class="label">USD 本金</div></div>
           <div class="mini-card"><div class="num">900.0万 CNY</div><div class="label">CNY 本金</div></div>
+          <div class="mini-card"><div class="num">4,297.4万 USD</div><div class="label">折美元合计</div></div>
         </div>
       </div>
     
-      </details>
-    
             
-      <details class="scale-detail">
-        <summary>
-          <span>BC（宝成）</span>
-          <b>12 笔</b>
-          <em>530.0万 USD</em>
-        </summary>
-        
       <div class="scale-block compact-scale-block">
         <div class="scale-title">BC（宝成）</div>
         <div class="scale-cards mini-scale-cards">
           <div class="mini-card"><div class="num">12</div><div class="label">存续数量</div></div>
-          <div class="mini-card"><div class="num">530.0万 USD</div><div class="label">折美元合计</div></div>
           <div class="mini-card"><div class="num">530.0万 USD</div><div class="label">USD 本金</div></div>
           
+          <div class="mini-card"><div class="num">530.0万 USD</div><div class="label">折美元合计</div></div>
         </div>
       </div>
-    
-      </details>
     
           </div>
         </div>
@@ -834,7 +815,7 @@
       <div class="summary-group action-group">
         <div class="summary-title">今日动作</div>
         <div class="summary-cards">
-          <div class="card"><div class="num">4</div><div class="label">今日观察</div></div>
+          <div class="card"><div class="num">0</div><div class="label">今日观察</div></div>
           <div class="card"><div class="num">0</div><div class="label">今日可能敲出</div></div>
         </div>
       </div>
@@ -842,64 +823,15 @@
         <div class="summary-title">风险提示</div>
         <div class="summary-cards">
           <div class="card"><div class="num">4</div><div class="label">低于接货价标的</div></div>
-          <div class="card"><div class="num">3</div><div class="label">接近接货价标的</div></div>
+          <div class="card"><div class="num">2</div><div class="label">接近接货价标的</div></div>
         </div>
       </div>
     </div>
 
     <section>
-      <h2>今日观察：2026-05-22 <span>4 条；使用 iFinD 历史收盘价判断敲出、接货或结束</span></h2>
-      <div class="observation-list">
-            <div class="observation-group obs-not-knockout">
-              <div class="observation-group-title">
-                <span class="obs-dot"></span>
-                <strong>不敲出</strong>
-                <span>4 条</span>
-              </div>
-              <table class="observation-table">
-                <thead>
-                  <tr><th>产品名称</th><th>金额</th><th>挂钩标的</th><th>购买机构</th><th>市场价格 / 初始 / 接货</th><th>到期日</th></tr>
-                </thead>
-                <tbody>
-                <tr>
-                  <td class="obs-product">JPM FCN TSLA 12%</td>
-                  <td>50.0万 USD</td>
-                  <td>特斯拉</td>
-                  <td>摩根士丹利</td>
-                  <td>417.85 / 434.085 / 240.353</td>
-                  <td>2027-01-26</td>
-                </tr>
-                
-                <tr>
-                  <td class="obs-product">CLSA FCN ETHA 15%</td>
-                  <td>50.0万 USD</td>
-                  <td>ETHA</td>
-                  <td>摩根士丹利</td>
-                  <td>16.15 / 16.7436 / 9.5372</td>
-                  <td>2026-07-24</td>
-                </tr>
-                
-                <tr>
-                  <td class="obs-product">茅台6个月FCN</td>
-                  <td>300.0万 CNY</td>
-                  <td>贵州茅台</td>
-                  <td>中信建投</td>
-                  <td>1290.2 / 1407.83 / 1309.28</td>
-                  <td>2026-10-22</td>
-                </tr>
-                
-                <tr>
-                  <td class="obs-product">JPM TSLA 12%</td>
-                  <td>50.0万 USD</td>
-                  <td>特斯拉</td>
-                  <td>BC</td>
-                  <td>417.85 / 434.085 / 255.068</td>
-                  <td>2027-01-26</td>
-                </tr>
-                </tbody>
-              </table>
-            </div>
-            </div>
+      <h2>今日观察：2026-05-23 <span>0 条；使用 iFinD 历史收盘价判断敲出、接货或结束</span></h2>
+      <div class="observation-summary">今日观察 FCN 0 只。</div>
+      <div class="empty">今日暂无观察日</div>
     </section>
 
     
@@ -1225,7 +1157,7 @@
                 <div class="date-num">21</div>
                 <div class="pill-row"></div>
                 <div class="calendar-labels"></div>
-                </td><td class="calendar-day current-day">
+                </td><td class="calendar-day">
                 <details>
                   <summary>
                     <div class="date-num">22</div>
@@ -1400,28 +1332,67 @@
                 <strong>腾讯控股</strong>
                 <span>2 笔产品</span>
               </div>
-              <div class="risk-product">分摊本金 75.0万 USD</div>
+              <div class="risk-product">
+                <span>分摊本金</span>
+                <strong>75.0万 USD</strong>
+              </div>
               <div class="risk-meta">0700.HK</div>
               <div class="risk-prices">
-                <span>市场价 <b>442.0</b></span>
-                <span>最小距离 <b>-8.89%</b></span>
-                <span>涉及产品 <b>2</b></span>
+                <span>市场价 <b>441.4</b></span>
+                <span>最小距离 <b>-9.01%</b></span>
               </div>
               <details class="risk-details">
                 <summary>查看产品明细</summary>
                 <ul>
                 <li>
                   <strong>JPM FCN 700 8%</strong>
-                  <span>摩根士丹利 | 50.0万 USD | 接货价 485.1103875 | 距离 -8.89% | 最后观察日 2026-09-17</span>
+                  <span>摩根士丹利 | 50.0万 USD | 接货价 485.1103875 | 距离 -9.01% | 最后观察日 2026-09-17</span>
                 </li>
                 
                 <li>
                   <strong>CLSA FCN 0700 HK+9988 HK 12%</strong>
-                  <span>摩根士丹利 | 25.0万 USD | 接货价 468.864 | 距离 -5.73% | 最后观察日 2026-08-03</span>
+                  <span>摩根士丹利 | 25.0万 USD | 接货价 468.864 | 距离 -5.86% | 最后观察日 2026-08-03</span>
                 </li>
                 </ul>
               </details>
-              <div class="risk-source">ifind_realtime | 2026-05-22 15:32:46</div>
+              <div class="risk-source">ifind_realtime | 2026-05-22 18:19:29</div>
+            </div>
+            
+
+            <div class="risk-card">
+              <div class="risk-card-top">
+                <strong>拼多多</strong>
+                <span>3 笔产品</span>
+              </div>
+              <div class="risk-product">
+                <span>分摊本金</span>
+                <strong>150.0万 USD</strong>
+              </div>
+              <div class="risk-meta">PDD.O</div>
+              <div class="risk-prices">
+                <span>市场价 <b>94.52</b></span>
+                <span>最小距离 <b>-4.60%</b></span>
+              </div>
+              <details class="risk-details">
+                <summary>查看产品明细</summary>
+                <ul>
+                <li>
+                  <strong>CLSA FCN PDD 10%</strong>
+                  <span>摩根士丹利 | 50.0万 USD | 接货价 99.07903971 | 距离 -4.60% | 最后观察日 2026-08-28</span>
+                </li>
+                
+                <li>
+                  <strong>JPM PDD 8%</strong>
+                  <span>BC | 50.0万 USD | 接货价 95.91808468 | 距离 -1.46% | 最后观察日 2026-10-16</span>
+                </li>
+                
+                <li>
+                  <strong>JPM FCN PDD 8%</strong>
+                  <span>摩根士丹利 | 50.0万 USD | 接货价 95.91808468 | 距离 -1.46% | 最后观察日 2026-10-16</span>
+                </li>
+                </ul>
+              </details>
+              <div class="risk-source">ifind_history_close | 2026-05-22</div>
             </div>
             
 
@@ -1430,12 +1401,14 @@
                 <strong>小米集团</strong>
                 <span>3 笔产品</span>
               </div>
-              <div class="risk-product">分摊本金 130.0万 USD</div>
+              <div class="risk-product">
+                <span>分摊本金</span>
+                <strong>130.0万 USD</strong>
+              </div>
               <div class="risk-meta">1810.HK</div>
               <div class="risk-prices">
                 <span>市场价 <b>30.0</b></span>
                 <span>最小距离 <b>-4.36%</b></span>
-                <span>涉及产品 <b>3</b></span>
               </div>
               <details class="risk-details">
                 <summary>查看产品明细</summary>
@@ -1456,7 +1429,7 @@
                 </li>
                 </ul>
               </details>
-              <div class="risk-source">ifind_realtime | 2026-05-22 15:32:45</div>
+              <div class="risk-source">ifind_realtime | 2026-05-22 18:19:29</div>
             </div>
             
 
@@ -1465,12 +1438,14 @@
                 <strong>贵州茅台</strong>
                 <span>2 笔产品</span>
               </div>
-              <div class="risk-product">分摊本金 600.0万 CNY</div>
+              <div class="risk-product">
+                <span>分摊本金</span>
+                <strong>600.0万 CNY</strong>
+              </div>
               <div class="risk-meta">600519.SH</div>
               <div class="risk-prices">
                 <span>市场价 <b>1290.2</b></span>
                 <span>最小距离 <b>-1.46%</b></span>
-                <span>涉及产品 <b>2</b></span>
               </div>
               <details class="risk-details">
                 <summary>查看产品明细</summary>
@@ -1486,32 +1461,7 @@
                 </li>
                 </ul>
               </details>
-              <div class="risk-source">ifind_realtime | 2026-05-22 15:32:17</div>
-            </div>
-            
-
-            <div class="risk-card">
-              <div class="risk-card-top">
-                <strong>拼多多</strong>
-                <span>1 笔产品</span>
-              </div>
-              <div class="risk-product">分摊本金 50.0万 USD</div>
-              <div class="risk-meta">PDD.O</div>
-              <div class="risk-prices">
-                <span>市场价 <b>97.79</b></span>
-                <span>最小距离 <b>-1.30%</b></span>
-                <span>涉及产品 <b>1</b></span>
-              </div>
-              <details class="risk-details">
-                <summary>查看产品明细</summary>
-                <ul>
-                <li>
-                  <strong>CLSA FCN PDD 10%</strong>
-                  <span>摩根士丹利 | 50.0万 USD | 接货价 99.07903971 | 距离 -1.30% | 最后观察日 2026-08-28</span>
-                </li>
-                </ul>
-              </details>
-              <div class="risk-source">ifind_history_close | 2026-05-21</div>
+              <div class="risk-source">ifind_realtime | 2026-05-22 16:00:47</div>
             </div>
             </div>
       </section>
@@ -1531,12 +1481,14 @@
                 <strong>小米集团</strong>
                 <span>1 笔产品</span>
               </div>
-              <div class="risk-product">分摊本金 50.0万 USD</div>
+              <div class="risk-product">
+                <span>分摊本金</span>
+                <strong>50.0万 USD</strong>
+              </div>
               <div class="risk-meta">1810.HK</div>
               <div class="risk-prices">
                 <span>市场价 <b>30.0</b></span>
                 <span>最小距离 <b>1.09%</b></span>
-                <span>涉及产品 <b>1</b></span>
               </div>
               <details class="risk-details">
                 <summary>查看产品明细</summary>
@@ -1547,7 +1499,7 @@
                 </li>
                 </ul>
               </details>
-              <div class="risk-source">ifind_realtime | 2026-05-22 15:32:45</div>
+              <div class="risk-source">ifind_realtime | 2026-05-22 18:19:29</div>
             </div>
             
 
@@ -1556,12 +1508,14 @@
                 <strong>招商银行</strong>
                 <span>1 笔产品</span>
               </div>
-              <div class="risk-product">分摊本金 300.0万 CNY</div>
+              <div class="risk-product">
+                <span>分摊本金</span>
+                <strong>300.0万 CNY</strong>
+              </div>
               <div class="risk-meta">600036.SH</div>
               <div class="risk-prices">
                 <span>市场价 <b>37.02</b></span>
                 <span>最小距离 <b>1.62%</b></span>
-                <span>涉及产品 <b>1</b></span>
               </div>
               <details class="risk-details">
                 <summary>查看产品明细</summary>
@@ -1572,37 +1526,7 @@
                 </li>
                 </ul>
               </details>
-              <div class="risk-source">ifind_realtime | 2026-05-22 15:32:18</div>
-            </div>
-            
-
-            <div class="risk-card">
-              <div class="risk-card-top">
-                <strong>拼多多</strong>
-                <span>2 笔产品</span>
-              </div>
-              <div class="risk-product">分摊本金 100.0万 USD</div>
-              <div class="risk-meta">PDD.O</div>
-              <div class="risk-prices">
-                <span>市场价 <b>97.79</b></span>
-                <span>最小距离 <b>1.95%</b></span>
-                <span>涉及产品 <b>2</b></span>
-              </div>
-              <details class="risk-details">
-                <summary>查看产品明细</summary>
-                <ul>
-                <li>
-                  <strong>JPM PDD 8%</strong>
-                  <span>BC | 50.0万 USD | 接货价 95.91808468 | 距离 1.95% | 最后观察日 2026-10-16</span>
-                </li>
-                
-                <li>
-                  <strong>JPM FCN PDD 8%</strong>
-                  <span>摩根士丹利 | 50.0万 USD | 接货价 95.91808468 | 距离 1.95% | 最后观察日 2026-10-16</span>
-                </li>
-                </ul>
-              </details>
-              <div class="risk-source">ifind_history_close | 2026-05-21</div>
+              <div class="risk-source">ifind_realtime | 2026-05-22 16:00:48</div>
             </div>
             </div>
       </section>
@@ -2149,6 +2073,42 @@
             
             <details class="exposure-tile tile-md risk-normal">
               <summary>
+                <div class="tile-name">博通</div>
+                <div class="tile-amount">175.0万 USD</div>
+                <div class="tile-meta">4 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>BARC FCN AVGO&amp;GOOGL 10%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>到期：2026-12-01 | 最后观察：2026-11-27</span>
+            </li>
+            
+            <li>
+              <strong>CITI FCN AVGO 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-12-09 | 最后观察：2026-12-07</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN AVGO 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2027-05-13 | 最后观察：2027-05-11</span>
+            </li>
+            
+            <li>
+              <strong>GS FCN AVGO 12%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2027-06-04 | 最后观察：2027-06-02</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
                 <div class="tile-name">IBIT</div>
                 <div class="tile-amount">150.0万 USD</div>
                 <div class="tile-meta">3 笔产品 | 普通持仓</div>
@@ -2251,6 +2211,36 @@
             
             <details class="exposure-tile tile-md risk-normal">
               <summary>
+                <div class="tile-name">UNH</div>
+                <div class="tile-amount">150.0万 USD</div>
+                <div class="tile-meta">3 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>JPM FCN UNH 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2026-11-13 | 最后观察：2026-11-11</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN UNH 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2027-06-04 | 最后观察：2027-06-02</span>
+            </li>
+            
+            <li>
+              <strong>CITI FCN UNH 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>到期：2027-06-09 | 最后观察：2027-06-07</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
                 <div class="tile-name">美光科技</div>
                 <div class="tile-amount">150.0万 USD</div>
                 <div class="tile-meta">3 笔产品 | 普通持仓</div>
@@ -2274,36 +2264,6 @@
               <strong>SG FCN MU 12%</strong>
               <span>摩根士丹利 | 50.0万 USD</span>
               <span>到期：2026-12-08 | 最后观察：2026-12-04</span>
-            </li>
-            </ul>
-              </div>
-            </details>
-            
-            <details class="exposure-tile tile-md risk-normal">
-              <summary>
-                <div class="tile-name">博通</div>
-                <div class="tile-amount">125.0万 USD</div>
-                <div class="tile-meta">3 笔产品 | 普通持仓</div>
-              </summary>
-              <div class="tile-detail">
-                <div class="tile-institution">摩根士丹利</div>
-                <ul>
-            <li>
-              <strong>BARC FCN AVGO&amp;GOOGL 10%</strong>
-              <span>摩根士丹利 | 25.0万 USD</span>
-              <span>到期：2026-12-01 | 最后观察：2026-11-27</span>
-            </li>
-            
-            <li>
-              <strong>JPM FCN AVGO 10%</strong>
-              <span>摩根士丹利 | 50.0万 USD</span>
-              <span>到期：2027-05-13 | 最后观察：2027-05-11</span>
-            </li>
-            
-            <li>
-              <strong>GS FCN AVGO 12%</strong>
-              <span>摩根士丹利 | 50.0万 USD</span>
-              <span>到期：2027-06-04 | 最后观察：2027-06-02</span>
             </li>
             </ul>
               </div>
@@ -2376,30 +2336,6 @@
               <strong>GS FCN GLD 8%</strong>
               <span>摩根士丹利 | 50.0万 USD</span>
               <span>到期：2026-11-17 | 最后观察：2026-11-13</span>
-            </li>
-            </ul>
-              </div>
-            </details>
-            
-            <details class="exposure-tile tile-sm risk-normal">
-              <summary>
-                <div class="tile-name">UNH</div>
-                <div class="tile-amount">100.0万 USD</div>
-                <div class="tile-meta">2 笔产品 | 普通持仓</div>
-              </summary>
-              <div class="tile-detail">
-                <div class="tile-institution">摩根士丹利</div>
-                <ul>
-            <li>
-              <strong>JPM FCN UNH 10%</strong>
-              <span>摩根士丹利 | 50.0万 USD</span>
-              <span>到期：2026-11-13 | 最后观察：2026-11-11</span>
-            </li>
-            
-            <li>
-              <strong>JPM FCN UNH 10%</strong>
-              <span>摩根士丹利 | 50.0万 USD</span>
-              <span>到期：2027-06-04 | 最后观察：2027-06-02</span>
             </li>
             </ul>
               </div>
@@ -3158,7 +3094,16 @@
         </thead>
         <tbody>
             <tr>
-              <td>2026-12-14 至 2026-12-20</td>
+              <td>2026-03-02 至 2026-03-08</td>
+              <td><div class="bar-cell"><span>2</span><div class="bar-track"><div class="bar-fill bar-count" style="width:16%"></div></div></div></td>
+              <td><div class="bar-cell"><span>100.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:17%"></div></div></div></td>
+              <td><div class="bar-cell"><span>9,166 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:7%"></div></div></div></td>
+              <td>0.92%</td>
+            </tr>
+            
+
+            <tr>
+              <td>2026-03-09 至 2026-03-15</td>
               <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
               <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
               <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-income" style="width:0%"></div></div></div></td>
@@ -3167,101 +3112,92 @@
             
 
             <tr>
-              <td>2026-12-21 至 2026-12-27</td>
-              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:100%"></div></div></div></td>
-              <td><div class="bar-cell"><span>100.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:100%"></div></div></div></td>
-              <td><div class="bar-cell"><span>8.0万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:100%"></div></div></div></td>
-              <td>8.00%</td>
+              <td>2026-03-16 至 2026-03-22</td>
+              <td><div class="bar-cell"><span>3</span><div class="bar-track"><div class="bar-fill bar-count" style="width:25%"></div></div></div></td>
+              <td><div class="bar-cell"><span>150.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:25%"></div></div></div></td>
+              <td><div class="bar-cell"><span>7.0万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:61%"></div></div></div></td>
+              <td>4.67%</td>
             </tr>
             
 
             <tr>
-              <td>2026-12-28 至 2027-01-03</td>
-              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:100%"></div></div></div></td>
-              <td><div class="bar-cell"><span>30.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:30%"></div></div></div></td>
-              <td><div class="bar-cell"><span>2.4万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:30%"></div></div></div></td>
-              <td>8.00%</td>
+              <td>2026-03-23 至 2026-03-29</td>
+              <td><div class="bar-cell"><span>2</span><div class="bar-track"><div class="bar-fill bar-count" style="width:16%"></div></div></div></td>
+              <td><div class="bar-cell"><span>60.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:10%"></div></div></div></td>
+              <td><div class="bar-cell"><span>5,750 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:5%"></div></div></div></td>
+              <td>0.96%</td>
             </tr>
             
 
             <tr>
-              <td>2027-01-04 至 2027-01-10</td>
-              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:100%"></div></div></div></td>
-              <td><div class="bar-cell"><span>50.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:50%"></div></div></div></td>
-              <td><div class="bar-cell"><span>4.0万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:50%"></div></div></div></td>
-              <td>8.00%</td>
+              <td>2026-03-30 至 2026-04-05</td>
+              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:8%"></div></div></div></td>
+              <td><div class="bar-cell"><span>300.0万 CNY</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:51%"></div></div></div></td>
+              <td><div class="bar-cell"><span>1.5万 CNY</span><div class="bar-track"><div class="bar-fill bar-income" style="width:13%"></div></div></div></td>
+              <td>0.50%</td>
             </tr>
             
 
             <tr>
-              <td>2027-01-11 至 2027-01-17</td>
-              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
-              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
-              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-income" style="width:0%"></div></div></div></td>
-              <td>-</td>
+              <td>2026-04-06 至 2026-04-12</td>
+              <td><div class="bar-cell"><span>5</span><div class="bar-track"><div class="bar-fill bar-count" style="width:41%"></div></div></div></td>
+              <td><div class="bar-cell"><span>190.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:32%"></div></div></div></td>
+              <td><div class="bar-cell"><span>4.1万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:35%"></div></div></div></td>
+              <td>2.16%</td>
             </tr>
             
 
             <tr>
-              <td>2027-01-18 至 2027-01-24</td>
-              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
-              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
-              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-income" style="width:0%"></div></div></div></td>
-              <td>-</td>
+              <td>2026-04-13 至 2026-04-19</td>
+              <td><div class="bar-cell"><span>7</span><div class="bar-track"><div class="bar-fill bar-count" style="width:58%"></div></div></div></td>
+              <td><div class="bar-cell"><span>330.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:56%"></div></div></div></td>
+              <td><div class="bar-cell"><span>7.9万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:68%"></div></div></div></td>
+              <td>2.38%</td>
             </tr>
             
 
             <tr>
-              <td>2027-01-25 至 2027-01-31</td>
-              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
-              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
-              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-income" style="width:0%"></div></div></div></td>
-              <td>-</td>
+              <td>2026-04-20 至 2026-04-26</td>
+              <td><div class="bar-cell"><span>4</span><div class="bar-track"><div class="bar-fill bar-count" style="width:33%"></div></div></div></td>
+              <td><div class="bar-cell"><span>350.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:59%"></div></div></div></td>
+              <td><div class="bar-cell"><span>3.2万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:27%"></div></div></div></td>
+              <td>0.90%</td>
             </tr>
             
 
             <tr>
-              <td>2027-02-01 至 2027-02-07</td>
-              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
-              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
-              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-income" style="width:0%"></div></div></div></td>
-              <td>-</td>
+              <td>2026-04-27 至 2026-05-03</td>
+              <td><div class="bar-cell"><span>10</span><div class="bar-track"><div class="bar-fill bar-count" style="width:83%"></div></div></div></td>
+              <td><div class="bar-cell"><span>500.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:85%"></div></div></div></td>
+              <td><div class="bar-cell"><span>11.5万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:100%"></div></div></div></td>
+              <td>2.29%</td>
             </tr>
             
 
             <tr>
-              <td>2027-02-08 至 2027-02-14</td>
-              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
-              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
-              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-income" style="width:0%"></div></div></div></td>
-              <td>-</td>
+              <td>2026-05-04 至 2026-05-10</td>
+              <td><div class="bar-cell"><span>4</span><div class="bar-track"><div class="bar-fill bar-count" style="width:33%"></div></div></div></td>
+              <td><div class="bar-cell"><span>200.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:34%"></div></div></div></td>
+              <td><div class="bar-cell"><span>3.1万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:27%"></div></div></div></td>
+              <td>1.56%</td>
             </tr>
             
 
             <tr>
-              <td>2027-02-15 至 2027-02-21</td>
-              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:100%"></div></div></div></td>
-              <td><div class="bar-cell"><span>50.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:50%"></div></div></div></td>
-              <td><div class="bar-cell"><span>6.0万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:75%"></div></div></div></td>
-              <td>12.00%</td>
+              <td>2026-05-11 至 2026-05-17</td>
+              <td><div class="bar-cell"><span>12</span><div class="bar-track"><div class="bar-fill bar-count" style="width:100%"></div></div></div></td>
+              <td><div class="bar-cell"><span>585.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:100%"></div></div></div></td>
+              <td><div class="bar-cell"><span>7.6万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:66%"></div></div></div></td>
+              <td>1.31%</td>
             </tr>
             
 
             <tr>
-              <td>2027-02-22 至 2027-02-28</td>
-              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
-              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
-              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-income" style="width:0%"></div></div></div></td>
-              <td>-</td>
-            </tr>
-            
-
-            <tr>
-              <td>2027-03-01 至 2027-03-07</td>
-              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:100%"></div></div></div></td>
-              <td><div class="bar-cell"><span>50.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:50%"></div></div></div></td>
-              <td><div class="bar-cell"><span>6.0万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:75%"></div></div></div></td>
-              <td>12.00%</td>
+              <td>2026-05-18 至 2026-05-24</td>
+              <td><div class="bar-cell"><span>8</span><div class="bar-track"><div class="bar-fill bar-count" style="width:66%"></div></div></div></td>
+              <td><div class="bar-cell"><span>385.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:65%"></div></div></div></td>
+              <td><div class="bar-cell"><span>7.6万 USD</span><div class="bar-track"><div class="bar-fill bar-income" style="width:66%"></div></div></div></td>
+              <td>1.98%</td>
             </tr>
             </tbody>
       </table>
