@@ -309,6 +309,17 @@
       font-weight: 700;
       font-size: 14px;
     }
+    .risk-summary {
+      margin: 12px 14px 0;
+      padding: 10px 12px;
+      border-left: 4px solid var(--red);
+      border-radius: 10px;
+      background: #fff1f2;
+      color: #991b1b;
+      font-weight: 700;
+      font-size: 13px;
+      line-height: 1.6;
+    }
     .observation-group {
       border-left: 5px solid #94a3b8;
       background: #fff;
@@ -755,7 +766,7 @@
   <header>
     <h1>FCN 观察看板</h1>
     <div class="sub">
-      数据日期：2026-05-23 | 生成时间：2026-05-23 14:58
+      数据日期：2026-05-25 | 生成时间：2026-05-25 09:48
     </div>
   </header>
   <nav class="view-nav">
@@ -781,7 +792,7 @@
           <div class="card"><div class="num">100</div><div class="label">存续数量</div></div>
           <div class="card"><div class="num">4,700.0万 USD</div><div class="label">USD 本金</div></div>
           <div class="card"><div class="num">900.0万 CNY</div><div class="label">CNY 本金</div></div>
-          <div class="card"><div class="num">4,827.4万 USD</div><div class="label">折美元合计</div></div>
+          <div class="card"><div class="num">4,832.6万 USD</div><div class="label">折美元合计</div></div>
         </div>
       </div>
     
@@ -793,7 +804,7 @@
           <div class="mini-card"><div class="num">88</div><div class="label">存续数量</div></div>
           <div class="mini-card"><div class="num">4,170.0万 USD</div><div class="label">USD 本金</div></div>
           <div class="mini-card"><div class="num">900.0万 CNY</div><div class="label">CNY 本金</div></div>
-          <div class="mini-card"><div class="num">4,297.4万 USD</div><div class="label">折美元合计</div></div>
+          <div class="mini-card"><div class="num">4,302.6万 USD</div><div class="label">折美元合计</div></div>
         </div>
       </div>
     
@@ -814,7 +825,7 @@
       <div class="summary-group action-group">
         <div class="summary-title">今日动作</div>
         <div class="summary-cards">
-          <div class="card"><div class="num">0</div><div class="label">今日观察</div></div>
+          <div class="card"><div class="num">1</div><div class="label">今日观察</div></div>
           <div class="card"><div class="num">0</div><div class="label">今日可能敲出</div></div>
         </div>
       </div>
@@ -828,9 +839,32 @@
     </div>
 
     <section>
-      <h2>今日观察：2026-05-23 <span>0 条；使用 iFinD 历史收盘价判断敲出、接货或结束</span></h2>
-      <div class="observation-summary">今日观察 FCN 0 只。</div>
-      <div class="empty">今日暂无观察日</div>
+      <h2>今日观察：2026-05-25 <span>1 条；使用 iFinD 历史收盘价判断敲出、接货或结束</span></h2>
+      <div class="observation-summary">今日观察 FCN 1 只，暂无敲出或接货。</div>
+      <div class="observation-list">
+            <div class="observation-group obs-not-knockout">
+              <div class="observation-group-title">
+                <span class="obs-dot"></span>
+                <strong>不敲出</strong>
+                <span>1 条</span>
+              </div>
+              <table class="observation-table">
+                <thead>
+                  <tr><th>产品名称</th><th>金额</th><th>挂钩标的</th><th>购买机构</th><th>市场价格 / 初始 / 接货</th><th>到期日</th></tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td class="obs-product">茅台6个月FCN</td>
+                  <td>300.0万 CNY</td>
+                  <td>贵州茅台</td>
+                  <td>中信建投</td>
+                  <td>1290.2 / 1407.82 / 1309.27</td>
+                  <td>2026-09-28</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
     </section>
 
     
@@ -1185,7 +1219,7 @@
                     </li>
                     </ul>
                 </details>
-                </td></tr><tr><td class="calendar-day">
+                </td></tr><tr><td class="calendar-day current-day">
                 <details>
                   <summary>
                     <div class="date-num">25</div>
@@ -1325,6 +1359,7 @@
       <span><i class="legend-dot dot-blue"></i>普通持仓</span>
     </div>
     
+        <div class="risk-summary">触及接货价预警 FCN 10 只，公司账户 363.4 万美元，宝成账户 80.0 万美元，涉及标的：小米集团、拼多多、腾讯控股、贵州茅台。</div>
         <div class="risk-list">
             <div class="risk-card">
               <div class="risk-card-top">
@@ -1443,24 +1478,24 @@
               </div>
               <div class="risk-meta">600519.SH</div>
               <div class="risk-prices">
-                <span>市场价 <b>1290.2</b></span>
-                <span>最小距离 <b>-1.46%</b></span>
+                <span>市场价 <b>1291.5</b></span>
+                <span>最小距离 <b>-1.36%</b></span>
               </div>
               <details class="risk-details">
                 <summary>查看产品明细</summary>
                 <ul>
                 <li>
                   <strong>茅台6个月FCN</strong>
-                  <span>中信建投 | 300.0万 CNY | 接货价 1309.279575 | 距离 -1.46% | 最后观察日 2026-10-22</span>
+                  <span>中信建投 | 300.0万 CNY | 接货价 1309.279575 | 距离 -1.36% | 最后观察日 2026-10-22</span>
                 </li>
                 
                 <li>
                   <strong>茅台6个月FCN</strong>
-                  <span>中信建投 | 300.0万 CNY | 接货价 1309.2726 | 距离 -1.46% | 最后观察日 2026-09-28</span>
+                  <span>中信建投 | 300.0万 CNY | 接货价 1309.2726 | 距离 -1.36% | 最后观察日 2026-09-28</span>
                 </li>
                 </ul>
               </details>
-              <div class="risk-source">ifind_realtime | 2026-05-22 16:00:47</div>
+              <div class="risk-source">ifind_realtime | 2026-05-25 09:48:33</div>
             </div>
             </div>
       </section>
@@ -1513,19 +1548,19 @@
               </div>
               <div class="risk-meta">600036.SH</div>
               <div class="risk-prices">
-                <span>市场价 <b>37.02</b></span>
-                <span>最小距离 <b>1.62%</b></span>
+                <span>市场价 <b>37.07</b></span>
+                <span>最小距离 <b>1.75%</b></span>
               </div>
               <details class="risk-details">
                 <summary>查看产品明细</summary>
                 <ul>
                 <li>
                   <strong>招商银行6个月FCN</strong>
-                  <span>中信建投 | 300.0万 CNY | 接货价 36.430656 | 距离 1.62% | 最后观察日 2026-11-12</span>
+                  <span>中信建投 | 300.0万 CNY | 接货价 36.430656 | 距离 1.75% | 最后观察日 2026-11-12</span>
                 </li>
                 </ul>
               </details>
-              <div class="risk-source">ifind_realtime | 2026-05-22 16:00:48</div>
+              <div class="risk-source">ifind_realtime | 2026-05-25 09:48:32</div>
             </div>
             </div>
       </section>
