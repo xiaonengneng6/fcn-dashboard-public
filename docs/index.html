@@ -217,6 +217,52 @@
       grid-template-columns: repeat(3, minmax(86px, 1fr));
       gap: 8px;
     }
+    .compact-scale-layout {
+      display: grid;
+      grid-template-columns: minmax(150px, 0.95fr) minmax(220px, 1.6fr);
+      gap: 10px;
+      align-items: stretch;
+    }
+    .compact-detail-cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .compact-total-card {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      border-color: #bfdbfe;
+      background: linear-gradient(135deg, #f8fbff 0%, #ffffff 100%);
+      min-height: 92px;
+    }
+    .compact-total-card .num {
+      color: var(--text);
+      font-size: 22px;
+      line-height: 1.15;
+    }
+    .accent-scale-block .compact-total-card .num {
+      color: #1d4ed8;
+    }
+    .accent-scale-block .compact-total-card {
+      border-color: #93c5fd;
+    }
+    .compact-total-card .label {
+      font-weight: 700;
+    }
+    .count-card,
+    .wide-card {
+      grid-column: 1 / -1;
+    }
+    .count-card {
+      display: grid;
+      grid-template-columns: auto 1fr;
+      align-items: end;
+      column-gap: 8px;
+    }
+    .count-card .label {
+      padding-bottom: 1px;
+    }
     .scale-block {
       border: 1px solid rgba(191, 219, 254, 0.9);
       border-radius: 14px;
@@ -226,6 +272,13 @@
     .compact-scale-block {
       background: rgba(255, 255, 255, 0.68);
       border-color: rgba(203, 213, 225, 0.9);
+    }
+    .accent-scale-block {
+      border-color: #93c5fd;
+      box-shadow: inset 3px 0 0 rgba(37, 99, 235, 0.35);
+    }
+    .accent-scale-block .scale-title {
+      color: #1d4ed8;
     }
     .summary-group.risk-group .card {
       border-color: #fecaca;
@@ -872,6 +925,7 @@
       .equity-overview-cards { grid-template-columns: 1fr; }
       .summary-groups, .risk-grid, .exposure-grid, .review-grid { grid-template-columns: 1fr; }
       .scale-sub-layout { grid-template-columns: 1fr; }
+      .compact-scale-layout { grid-template-columns: 1fr; }
       .scale-cards, .mini-scale-cards, .option-summary-cards, .option-total-cards, .option-account-cards { grid-template-columns: repeat(2, minmax(100px, 1fr)); }
       .ended-grid { grid-template-columns: repeat(2, 1fr); }
       section { overflow-x: auto; }
@@ -882,7 +936,7 @@
   <header>
     <h1>权益类观察看板</h1>
     <div class="sub">
-      数据日期：2026-06-10 | 生成时间：2026-06-10 16:38
+      数据日期：2026-06-10 | 生成时间：2026-06-10 17:28
     </div>
   </header>
   <nav class="view-nav">
@@ -907,9 +961,9 @@
     </div>
     <div class="equity-overview-cards">
       <div class="equity-card">
-        <div class="num">5,472.8万 USD</div>
-        <div class="label">FCN 存续规模</div>
-        <div class="hint">按当前台账本金折合美元汇总</div>
+        <div class="num">4,992.8万 USD</div>
+        <div class="label">公司 FCN 存续规模</div>
+        <div class="hint">按公司账户本金折合美元汇总</div>
       </div>
       <div class="equity-card">
         <div class="num">418.2万 USD</div>
@@ -927,39 +981,32 @@
   <div id="current-view" class="dashboard-view active">
     <div id="current-workbench" class="summary-groups">
       <div class="summary-group scale-group">
-        <div class="summary-title">规模概览</div>
+        <div class="summary-title">FCN规模概览</div>
         <div class="scale-layout">
-          
-      <div class="scale-block">
-        <div class="scale-title">整体</div>
-        <div class="scale-cards ">
-          <div class="card"><div class="num">114</div><div class="label">存续数量</div></div>
-          <div class="card"><div class="num">5,340.0万 USD</div><div class="label">USD 本金</div></div>
-          <div class="card"><div class="num">900.0万 CNY</div><div class="label">CNY 本金</div></div>
-          <div class="card usd-equivalent-card"><div class="num">5,472.8万 USD</div><div class="label">折合美元合计</div></div>
-        </div>
-      </div>
-    
           <div class="scale-sub-layout">
             
-      <div class="scale-block compact-scale-block">
+      <div class="scale-block compact-scale-block accent-scale-block">
         <div class="scale-title">公司</div>
-        <div class="scale-cards mini-scale-cards">
-          <div class="mini-card"><div class="num">103</div><div class="label">存续数量</div></div>
-          <div class="mini-card"><div class="num">4,860.0万 USD</div><div class="label">USD 本金</div></div>
-          <div class="mini-card"><div class="num">900.0万 CNY</div><div class="label">CNY 本金</div></div>
-          <div class="mini-card"><div class="num">4,992.8万 USD</div><div class="label">折合美元合计</div></div>
+        <div class="compact-scale-layout">
+          <div class="mini-card compact-total-card"><div class="num">4,992.8万 USD</div><div class="label">折合美元合计</div></div>
+          <div class="compact-detail-cards">
+            <div class="mini-card principal-card"><div class="num">4,860.0万 USD</div><div class="label">USD 本金</div></div>
+            <div class="mini-card principal-card"><div class="num">900.0万 CNY</div><div class="label">CNY 本金</div></div>
+            <div class="mini-card count-card"><div class="num">103</div><div class="label">存续数量</div></div>
+          </div>
         </div>
       </div>
     
             
       <div class="scale-block compact-scale-block">
         <div class="scale-title">BC（宝成）</div>
-        <div class="scale-cards mini-scale-cards">
-          <div class="mini-card"><div class="num">11</div><div class="label">存续数量</div></div>
-          <div class="mini-card"><div class="num">480.0万 USD</div><div class="label">USD 本金</div></div>
-          
-          <div class="mini-card"><div class="num">480.0万 USD</div><div class="label">折合美元合计</div></div>
+        <div class="compact-scale-layout">
+          <div class="mini-card compact-total-card"><div class="num">480.0万 USD</div><div class="label">折合美元合计</div></div>
+          <div class="compact-detail-cards">
+            <div class="mini-card principal-card wide-card"><div class="num">480.0万 USD</div><div class="label">USD 本金</div></div>
+            
+            <div class="mini-card count-card"><div class="num">11</div><div class="label">存续数量</div></div>
+          </div>
         </div>
       </div>
     
@@ -1773,7 +1820,7 @@
                 </li>
                 </ul>
               </details>
-              <div class="risk-source">ifind_realtime | 2026-06-10 16:30:31</div>
+              <div class="risk-source">ifind_realtime | 2026-06-10 17:20:20</div>
             </div>
             
 
@@ -1800,7 +1847,7 @@
                 </li>
                 </ul>
               </details>
-              <div class="risk-source">ifind_realtime | 2026-06-10 16:30:31</div>
+              <div class="risk-source">ifind_realtime | 2026-06-10 17:20:20</div>
             </div>
             </div>
       </section>
@@ -3289,13 +3336,15 @@
     
     <div class="scale-layout option-scale-layout">
       
-      <div class="scale-block">
+      <div class="scale-block compact-scale-block accent-scale-block">
         <div class="scale-title">整体</div>
-        <div class="scale-cards option-total-cards">
-          <div class="card usd-equivalent-card"><div class="num">418.2万 USD</div><div class="label">全额保证金</div></div>
-          <div class="card"><div class="num">41</div><div class="label">存续期权笔数</div></div>
-          <div class="card"><div class="num">552</div><div class="label">合约总量</div></div>
-          <div class="card"><div class="num">0</div><div class="label">行权风险提示</div></div>
+        <div class="compact-scale-layout option-margin-layout">
+          <div class="mini-card compact-total-card"><div class="num">418.2万 USD</div><div class="label">全额保证金</div></div>
+          <div class="compact-detail-cards">
+            <div class="mini-card"><div class="num">41</div><div class="label">存续期权笔数</div></div>
+            <div class="mini-card"><div class="num">552</div><div class="label">合约总量</div></div>
+            <div class="mini-card count-card"><div class="num">0</div><div class="label">行权风险提示</div></div>
+          </div>
         </div>
       </div>
     
@@ -3303,21 +3352,25 @@
         
       <div class="scale-block compact-scale-block">
         <div class="scale-title">老虎证券</div>
-        <div class="scale-cards mini-scale-cards option-account-cards">
-          <div class="mini-card"><div class="num">212.6万 USD</div><div class="label">全额保证金</div></div>
-          <div class="mini-card"><div class="num">21</div><div class="label">存续期权笔数</div></div>
-          <div class="mini-card"><div class="num">347</div><div class="label">合约总量</div></div>
-          <div class="mini-card"><div class="num">0</div><div class="label">行权风险提示</div></div>
+        <div class="compact-scale-layout option-margin-layout">
+          <div class="mini-card compact-total-card"><div class="num">212.6万 USD</div><div class="label">全额保证金</div></div>
+          <div class="compact-detail-cards">
+            <div class="mini-card"><div class="num">21</div><div class="label">存续期权笔数</div></div>
+            <div class="mini-card"><div class="num">347</div><div class="label">合约总量</div></div>
+            <div class="mini-card count-card"><div class="num">0</div><div class="label">行权风险提示</div></div>
+          </div>
         </div>
       </div>
     
       <div class="scale-block compact-scale-block">
         <div class="scale-title">嘉信证券</div>
-        <div class="scale-cards mini-scale-cards option-account-cards">
-          <div class="mini-card"><div class="num">205.6万 USD</div><div class="label">全额保证金</div></div>
-          <div class="mini-card"><div class="num">20</div><div class="label">存续期权笔数</div></div>
-          <div class="mini-card"><div class="num">205</div><div class="label">合约总量</div></div>
-          <div class="mini-card"><div class="num">0</div><div class="label">行权风险提示</div></div>
+        <div class="compact-scale-layout option-margin-layout">
+          <div class="mini-card compact-total-card"><div class="num">205.6万 USD</div><div class="label">全额保证金</div></div>
+          <div class="compact-detail-cards">
+            <div class="mini-card"><div class="num">20</div><div class="label">存续期权笔数</div></div>
+            <div class="mini-card"><div class="num">205</div><div class="label">合约总量</div></div>
+            <div class="mini-card count-card"><div class="num">0</div><div class="label">行权风险提示</div></div>
+          </div>
         </div>
       </div>
     
@@ -3637,7 +3690,7 @@
             </li>
             
             <li>
-              <strong>DRAM 20260717 40.0 PUT</strong>
+              <strong>DRAM 20260717 35.0 PUT</strong>
               <span>卖出 PUT | 数量 25 | 行权价 35</span>
               <span>权利金 1,000 USD | 到期 2026-07-17</span>
             </li>
@@ -4636,7 +4689,7 @@
               <td>59.86</td>
               <td>待补充期权现价</td>
               <td>否</td>
-              <td>DRAM 20260717 40.0 PUT</td>
+              <td>DRAM 20260717 35.0 PUT</td>
             </tr>
             
 
