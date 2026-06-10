@@ -37,7 +37,7 @@
     }
     .view-nav {
       display: grid;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: repeat(3, 1fr);
       gap: 14px;
       padding: 0 24px 18px;
     }
@@ -104,6 +104,9 @@
       display: grid;
       grid-template-columns: repeat(2, minmax(120px, 1fr));
       gap: 10px;
+    }
+    .option-summary-cards {
+      grid-template-columns: repeat(5, minmax(120px, 1fr));
     }
     .scale-group {
       grid-column: 1 / -1;
@@ -792,7 +795,7 @@
       .view-nav { grid-template-columns: 1fr; }
       .summary-groups, .risk-grid, .exposure-grid, .review-grid { grid-template-columns: 1fr; }
       .scale-sub-layout { grid-template-columns: 1fr; }
-      .scale-cards, .mini-scale-cards { grid-template-columns: repeat(2, minmax(100px, 1fr)); }
+      .scale-cards, .mini-scale-cards, .option-summary-cards { grid-template-columns: repeat(2, minmax(100px, 1fr)); }
       .ended-grid { grid-template-columns: repeat(2, 1fr); }
       section { overflow-x: auto; }
     }
@@ -802,7 +805,7 @@
   <header>
     <h1>FCN 观察看板</h1>
     <div class="sub">
-      数据日期：2026-06-09 | 生成时间：2026-06-09 10:16
+      数据日期：2026-06-10 | 生成时间：2026-06-10 10:00
     </div>
   </header>
   <nav class="view-nav">
@@ -813,6 +816,10 @@
     <button class="view-tab" type="button" data-view="ended-view">
       <span>已结束产品复盘</span>
       <small>结束数量 · 已实现收益 · 周度节奏</small>
+    </button>
+    <button class="view-tab" type="button" data-view="option-view">
+      <span>期权持仓</span>
+      <small>规模概览 · 到期排期 · 标的敞口</small>
     </button>
   </nav>
 
@@ -861,7 +868,7 @@
       <div class="summary-group action-group">
         <div class="summary-title">今日动作</div>
         <div class="summary-cards">
-          <div class="card"><div class="num">0</div><div class="label">今日观察</div></div>
+          <div class="card"><div class="num">4</div><div class="label">今日观察</div></div>
           <div class="card"><div class="num">0</div><div class="label">今日可能敲出</div></div>
         </div>
       </div>
@@ -875,9 +882,87 @@
     </div>
 
     <section>
-      <h2>今日观察：2026-06-09 <span>0 条；使用 iFinD 历史收盘价 判断敲出、接货或结束</span></h2>
-      <div class="observation-summary"><div class="observation-summary-main">今日观察 FCN 0 只。</div></div>
-      <div class="empty">今日暂无观察日</div>
+      <h2>今日观察：2026-06-10 <span>4 条；使用 iFinD 历史收盘价 判断敲出、接货或结束</span></h2>
+      <div class="observation-summary"><div class="observation-summary-main">今日观察 FCN 4 只，暂无敲出、产品结束或接货。</div></div>
+      <div class="observation-list">
+            <div class="observation-group obs-not-knockout">
+              <div class="observation-group-title">
+                <span class="obs-dot"></span>
+                <strong>不敲出</strong>
+                <span>4 条</span>
+              </div>
+              <table class="observation-table">
+                <thead>
+                  <tr><th>产品名称</th><th>金额</th><th>挂钩标的</th><th>购买机构</th><th>价格判断</th><th>到期日</th></tr>
+                </thead>
+                <tbody>
+                <tr>
+                  <td class="obs-product">CLSA FCN ETHA 12%</td>
+                  <td>50.0万 USD</td>
+                  <td>ETHA</td>
+                  <td>摩根士丹利</td>
+                  <td><div class="obs-price-lines">
+            <div class="obs-price-line">
+              <strong>ETHA</strong>
+              <span>市场 12.48</span>
+              <span>初始 22.3546</span>
+              <span>接货 12.57</span>
+            </div>
+            </div></td>
+                  <td>2026-08-12</td>
+                </tr>
+                
+                <tr>
+                  <td class="obs-product">CLSA FCN IBIT 12%</td>
+                  <td>50.0万 USD</td>
+                  <td>IBIT</td>
+                  <td>摩根士丹利</td>
+                  <td><div class="obs-price-lines">
+            <div class="obs-price-line">
+              <strong>IBIT</strong>
+              <span>市场 35.14</span>
+              <span>初始 49.9795</span>
+              <span>接货 34.9207</span>
+            </div>
+            </div></td>
+                  <td>2026-08-12</td>
+                </tr>
+                
+                <tr>
+                  <td class="obs-product">BARC FCN 0883 8%</td>
+                  <td>50.0万 USD</td>
+                  <td>中海油</td>
+                  <td>摩根士丹利</td>
+                  <td><div class="obs-price-lines">
+            <div class="obs-price-line">
+              <strong>中海油</strong>
+              <span>市场 26.7</span>
+              <span>初始 29.04</span>
+              <span>接货 19.875</span>
+            </div>
+            </div></td>
+                  <td>2027-01-13</td>
+                </tr>
+                
+                <tr>
+                  <td class="obs-product">JPM FCN PLTR 10%</td>
+                  <td>50.0万 USD</td>
+                  <td>Palantir</td>
+                  <td>摩根士丹利</td>
+                  <td><div class="obs-price-lines">
+            <div class="obs-price-line">
+              <strong>Palantir</strong>
+              <span>市场 132.07</span>
+              <span>初始 143.618</span>
+              <span>接货 65.0301</span>
+            </div>
+            </div></td>
+                  <td>2026-10-14</td>
+                </tr>
+                </tbody>
+              </table>
+            </div>
+            </div>
     </section>
 
     
@@ -1001,11 +1086,11 @@
                     </li>
                     </ul>
                 </details>
-                </td><td class="calendar-day current-day">
+                </td><td class="calendar-day">
                 <div class="date-num">9</div>
                 <div class="pill-row"></div>
                 <div class="calendar-labels"></div>
-                </td><td class="calendar-day">
+                </td><td class="calendar-day current-day">
                 <details>
                   <summary>
                     <div class="date-num">10</div>
@@ -1570,24 +1655,24 @@
               </div>
               <div class="risk-meta">1810.HK</div>
               <div class="risk-prices">
-                <span>市场价 <b>27.18</b></span>
-                <span>最小距离 <b>-13.35%</b></span>
+                <span>市场价 <b>26.38</b></span>
+                <span>最小距离 <b>-15.90%</b></span>
               </div>
               <details class="risk-details">
                 <summary>查看产品明细</summary>
                 <ul>
                 <li>
                   <strong>BARC 1810 12.53%</strong>
-                  <span>BC | 30.0万 USD | 接货价 31.36832 | 距离 -13.35% | 最后观察日 2026-07-07</span>
+                  <span>BC | 30.0万 USD | 接货价 31.36832 | 距离 -15.90% | 最后观察日 2026-07-07</span>
                 </li>
                 
                 <li>
                   <strong>BARC FCN 1810 12.53%</strong>
-                  <span>摩根大通 | 50.0万 USD | 接货价 31.36832 | 距离 -13.35% | 最后观察日 2026-07-07</span>
+                  <span>摩根大通 | 50.0万 USD | 接货价 31.36832 | 距离 -15.90% | 最后观察日 2026-07-07</span>
                 </li>
                 </ul>
               </details>
-              <div class="risk-source">ifind_realtime | 2026-06-09 10:16:59</div>
+              <div class="risk-source">ifind_realtime | 2026-06-10 10:00:51</div>
             </div>
             
 
@@ -1602,19 +1687,19 @@
               </div>
               <div class="risk-meta">2259.HK</div>
               <div class="risk-prices">
-                <span>市场价 <b>105.6</b></span>
-                <span>最小距离 <b>-4.93%</b></span>
+                <span>市场价 <b>102.1</b></span>
+                <span>最小距离 <b>-8.09%</b></span>
               </div>
               <details class="risk-details">
                 <summary>查看产品明细</summary>
                 <ul>
                 <li>
                   <strong>BARK FCN 2259 10%</strong>
-                  <span>摩根士丹利 | 50.0万 USD | 接货价 111.0812 | 距离 -4.93% | 最后观察日 2026-07-07</span>
+                  <span>摩根士丹利 | 50.0万 USD | 接货价 111.0812 | 距离 -8.09% | 最后观察日 2026-07-07</span>
                 </li>
                 </ul>
               </details>
-              <div class="risk-source">ifind_realtime | 2026-06-09 10:16:58</div>
+              <div class="risk-source">ifind_realtime | 2026-06-10 10:00:51</div>
             </div>
             </div>
       </section>
@@ -3298,90 +3383,1468 @@
         <tbody>
             <tr>
               <td>2026-03-16 至 2026-03-22</td>
-              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:33%"></div></div></div></td>
-              <td><div class="bar-cell"><span>50.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:16%"></div></div></div></td>
+              <td><div class="bar-cell"><span>3</span><div class="bar-track"><div class="bar-fill bar-count" style="width:25%"></div></div></div></td>
+              <td><div class="bar-cell"><span>150.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:25%"></div></div></div></td>
             </tr>
             
 
             <tr>
               <td>2026-03-23 至 2026-03-29</td>
-              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
-              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>2</span><div class="bar-track"><div class="bar-fill bar-count" style="width:16%"></div></div></div></td>
+              <td><div class="bar-cell"><span>60.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:10%"></div></div></div></td>
             </tr>
             
 
             <tr>
               <td>2026-03-30 至 2026-04-05</td>
-              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:33%"></div></div></div></td>
-              <td><div class="bar-cell"><span>300.0万 CNY</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:100%"></div></div></div></td>
+              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:8%"></div></div></div></td>
+              <td><div class="bar-cell"><span>300.0万 CNY</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:51%"></div></div></div></td>
             </tr>
             
 
             <tr>
               <td>2026-04-06 至 2026-04-12</td>
-              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:33%"></div></div></div></td>
-              <td><div class="bar-cell"><span>30.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:10%"></div></div></div></td>
+              <td><div class="bar-cell"><span>5</span><div class="bar-track"><div class="bar-fill bar-count" style="width:41%"></div></div></div></td>
+              <td><div class="bar-cell"><span>190.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:32%"></div></div></div></td>
             </tr>
             
 
             <tr>
               <td>2026-04-13 至 2026-04-19</td>
-              <td><div class="bar-cell"><span>3</span><div class="bar-track"><div class="bar-fill bar-count" style="width:100%"></div></div></div></td>
-              <td><div class="bar-cell"><span>130.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:43%"></div></div></div></td>
+              <td><div class="bar-cell"><span>7</span><div class="bar-track"><div class="bar-fill bar-count" style="width:58%"></div></div></div></td>
+              <td><div class="bar-cell"><span>330.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:56%"></div></div></div></td>
             </tr>
             
 
             <tr>
               <td>2026-04-20 至 2026-04-26</td>
-              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
-              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>4</span><div class="bar-track"><div class="bar-fill bar-count" style="width:33%"></div></div></div></td>
+              <td><div class="bar-cell"><span>350.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:59%"></div></div></div></td>
             </tr>
             
 
             <tr>
               <td>2026-04-27 至 2026-05-03</td>
-              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:33%"></div></div></div></td>
-              <td><div class="bar-cell"><span>50.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:16%"></div></div></div></td>
+              <td><div class="bar-cell"><span>10</span><div class="bar-track"><div class="bar-fill bar-count" style="width:83%"></div></div></div></td>
+              <td><div class="bar-cell"><span>500.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:85%"></div></div></div></td>
             </tr>
             
 
             <tr>
               <td>2026-05-04 至 2026-05-10</td>
-              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
-              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>5</span><div class="bar-track"><div class="bar-fill bar-count" style="width:41%"></div></div></div></td>
+              <td><div class="bar-cell"><span>250.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:42%"></div></div></div></td>
             </tr>
             
 
             <tr>
               <td>2026-05-11 至 2026-05-17</td>
-              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:33%"></div></div></div></td>
-              <td><div class="bar-cell"><span>50.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:16%"></div></div></div></td>
+              <td><div class="bar-cell"><span>12</span><div class="bar-track"><div class="bar-fill bar-count" style="width:100%"></div></div></div></td>
+              <td><div class="bar-cell"><span>585.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:100%"></div></div></div></td>
             </tr>
             
 
             <tr>
               <td>2026-05-18 至 2026-05-24</td>
-              <td><div class="bar-cell"><span>2</span><div class="bar-track"><div class="bar-fill bar-count" style="width:66%"></div></div></div></td>
-              <td><div class="bar-cell"><span>85.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:28%"></div></div></div></td>
+              <td><div class="bar-cell"><span>8</span><div class="bar-track"><div class="bar-fill bar-count" style="width:66%"></div></div></div></td>
+              <td><div class="bar-cell"><span>385.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:65%"></div></div></div></td>
             </tr>
             
 
             <tr>
               <td>2026-05-25 至 2026-05-31</td>
-              <td><div class="bar-cell"><span>0</span><div class="bar-track"><div class="bar-fill bar-count" style="width:0%"></div></div></div></td>
-              <td><div class="bar-cell"><span>-</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:0%"></div></div></div></td>
+              <td><div class="bar-cell"><span>3</span><div class="bar-track"><div class="bar-fill bar-count" style="width:25%"></div></div></div></td>
+              <td><div class="bar-cell"><span>150.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:25%"></div></div></div></td>
             </tr>
             
 
             <tr>
               <td>2026-06-01 至 2026-06-07</td>
-              <td><div class="bar-cell"><span>1</span><div class="bar-track"><div class="bar-fill bar-count" style="width:33%"></div></div></div></td>
-              <td><div class="bar-cell"><span>50.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:16%"></div></div></div></td>
+              <td><div class="bar-cell"><span>2</span><div class="bar-track"><div class="bar-fill bar-count" style="width:16%"></div></div></div></td>
+              <td><div class="bar-cell"><span>100.0万 USD</span><div class="bar-track"><div class="bar-fill bar-notional" style="width:17%"></div></div></div></td>
             </tr>
             </tbody>
       </table>
     </section>
   </div>
+    
+  </div>
+
+  <div id="option-view" class="dashboard-view">
+    
+  <section>
+    <h2>期权规模概览 <span>读取公司-期权持仓情况；与 FCN 分开展示</span></h2>
+    <div class="summary-cards option-summary-cards">
+      <div class="card"><div class="num">36</div><div class="label">存续期权笔数</div></div>
+      <div class="card"><div class="num">525</div><div class="label">合约总量</div></div>
+      <div class="card"><div class="num">363.5万 USD</div><div class="label">全额保证金</div></div>
+      <div class="card"><div class="num">7.0万 USD</div><div class="label">已收权利金</div></div>
+      <div class="card"><div class="num">4</div><div class="label">行权风险提示</div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>本月期权到期日历 <span>仅显示本月到期；点击有标记日期查看具体期权</span></h2>
+    
+      <table class="calendar-table">
+        <thead><tr><th>周一</th><th>周二</th><th>周三</th><th>周四</th><th>周五</th></tr></thead>
+        <tbody><tr><td class="calendar-day">
+                <div class="date-num">1</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <div class="date-num">2</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <div class="date-num">3</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <div class="date-num">4</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <div class="date-num">5</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td></tr><tr><td class="calendar-day">
+                <div class="date-num">8</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <div class="date-num">9</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day current-day">
+                <div class="date-num">10</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <div class="date-num">11</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <details>
+                  <summary>
+                    <div class="date-num">12</div>
+                    <div class="pill-row"><span class="pill mat">到期 7</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">AAOI PUT</span><span class="cal-tag obs-tag">ASTS PUT</span><span class="cal-tag obs-tag">ASTS PUT</span><span class="cal-more">+4 更多</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>AAOI</strong> PUT 卖出
+                      <br><span>AAOI 20260612 105.0 PUT | 行权价 105 | 数量 9 | 当前价 196.64</span>
+                    </li>
+                    
+                    <li>
+                      <strong>ASTS</strong> PUT 卖出
+                      <br><span>ASTS 20260612 70.00 PUT | 行权价 70 | 数量 14 | 当前价 92.06</span>
+                    </li>
+                    
+                    <li>
+                      <strong>ASTS</strong> PUT 卖出
+                      <br><span>ASTS 20260612 85.0 PUT | 行权价 85 | 数量 12 | 当前价 92.06</span>
+                    </li>
+                    
+                    <li>
+                      <strong>DRAM</strong> PUT 卖出
+                      <br><span>DRAM 20260612 47.0 PUT | 行权价 47 | 数量 21 | 当前价 60.52</span>
+                    </li>
+                    
+                    <li>
+                      <strong>PDD</strong> CALL 卖出
+                      <br><span>PDD 20260612 90.0 CALL | 行权价 90 | 数量 11 | 当前价 82.62</span>
+                    </li>
+                    
+                    <li>
+                      <strong>RKLB</strong> PUT 卖出
+                      <br><span>RKLB 20260612 105.0 PUT | 行权价 105 | 数量 10 | 当前价 113.65</span>
+                    </li>
+                    
+                    <li>
+                      <strong>英特尔</strong> PUT 卖出
+                      <br><span>INTC 20260612 75.0 PUT | 行权价 75 | 数量 13 | 当前价 110.27</span>
+                    </li>
+                    </ul>
+                </details>
+                </td></tr><tr><td class="calendar-day">
+                <div class="date-num">15</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <div class="date-num">16</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <div class="date-num">17</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <details>
+                  <summary>
+                    <div class="date-num">18</div>
+                    <div class="pill-row"><span class="pill mat">到期 13</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">AAOI PUT</span><span class="cal-tag obs-tag">COHR PUT</span><span class="cal-tag obs-tag">Circle PUT</span><span class="cal-more">+10 更多</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>AAOI</strong> PUT 卖出
+                      <br><span>AAOI 20260618 100.0 PUT | 行权价 100 | 数量 10 | 当前价 196.64</span>
+                    </li>
+                    
+                    <li>
+                      <strong>COHR</strong> PUT 卖出
+                      <br><span>COHR 20260618 300.0 PUT | 行权价 300 | 数量 3 | 当前价 401.93</span>
+                    </li>
+                    
+                    <li>
+                      <strong>Circle</strong> PUT 卖出
+                      <br><span>CRCL 20260618 60.0 PUT | 行权价 60 | 数量 17 | 当前价 82.53</span>
+                    </li>
+                    
+                    <li>
+                      <strong>Coinbase</strong> PUT 卖出
+                      <br><span>COIN 20260618 120.0 PUT | 行权价 120 | 数量 8 | 当前价 162.11</span>
+                    </li>
+                    
+                    <li>
+                      <strong>DRAM</strong> PUT 卖出
+                      <br><span>DRAM 20260618 40.0 PUT | 行权价 40 | 数量 25 | 当前价 60.52</span>
+                    </li>
+                    
+                    <li>
+                      <strong>DXYZ</strong> PUT 卖出
+                      <br><span>DXYZ 20260618 25.0 PUT | 行权价 25 | 数量 40 | 当前价 39.23</span>
+                    </li>
+                    
+                    <li>
+                      <strong>LITE</strong> PUT 卖出
+                      <br><span>LITE 20260618 600.0 PUT | 行权价 600 | 数量 2 | 当前价 895.4</span>
+                    </li>
+                    
+                    <li>
+                      <strong>MRVL</strong> PUT 卖出
+                      <br><span>MRVL 20260618 170.0 PUT | 行权价 170 | 数量 6 | 当前价 288.85</span>
+                    </li>
+                    
+                    <li>
+                      <strong>NOK</strong> PUT 卖出
+                      <br><span>NOK 20260618 11.0 PUT | 行权价 11 | 数量 90 | 当前价 14.59</span>
+                    </li>
+                    
+                    <li>
+                      <strong>QQQ</strong> PUT 卖出
+                      <br><span>QQQ 20260618 500.0 PUT | 行权价 500 | 数量 2 | 当前价 716.07</span>
+                    </li>
+                    
+                    <li>
+                      <strong>SPY</strong> PUT 卖出
+                      <br><span>SPY 20260618 570.0 PUT | 行权价 570 | 数量 2 | 当前价 739.22</span>
+                    </li>
+                    
+                    <li>
+                      <strong>拼多多</strong> PUT 卖出
+                      <br><span>PDD 20260618 80.0 PUT | 行权价 80 | 数量 13 | 当前价 82.62</span>
+                    </li>
+                    
+                    <li>
+                      <strong>英特尔</strong> PUT 卖出
+                      <br><span>INTC 20260618 75.0 PUT | 行权价 75 | 数量 13 | 当前价 110.27</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day">
+                <div class="date-num">19</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td></tr><tr><td class="calendar-day">
+                <div class="date-num">22</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <div class="date-num">23</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <div class="date-num">24</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <div class="date-num">25</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <details>
+                  <summary>
+                    <div class="date-num">26</div>
+                    <div class="pill-row"><span class="pill mat">到期 2</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">AAOI PUT</span><span class="cal-tag obs-tag">DRAM PUT</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>AAOI</strong> PUT 卖出
+                      <br><span>AAOI 20260626 110.0 PUT | 行权价 110 | 数量 9 | 当前价 196.64</span>
+                    </li>
+                    
+                    <li>
+                      <strong>DRAM</strong> PUT 卖出
+                      <br><span>DRAM 20260626 45.0 PUT | 行权价 45 | 数量 22 | 当前价 60.52</span>
+                    </li>
+                    </ul>
+                </details>
+                </td></tr><tr><td class="calendar-day">
+                <div class="date-num">29</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day">
+                <details>
+                  <summary>
+                    <div class="date-num">30</div>
+                    <div class="pill-row"><span class="pill mat">到期 3</span></div>
+                    <div class="calendar-labels"><span class="cal-tag obs-tag">QQQ PUT</span><span class="cal-tag obs-tag">SPY PUT</span><span class="cal-tag obs-tag">SPY PUT</span></div>
+                  </summary>
+                  <ul>
+                    <li>
+                      <strong>QQQ</strong> PUT 卖出
+                      <br><span>QQQ 20260630 500.0 PUT | 行权价 500 | 数量 2 | 当前价 716.07</span>
+                    </li>
+                    
+                    <li>
+                      <strong>SPY</strong> PUT 卖出
+                      <br><span>SPY 20260630 570.0 PUT | 行权价 570 | 数量 2 | 当前价 739.22</span>
+                    </li>
+                    
+                    <li>
+                      <strong>SPY</strong> PUT 卖出
+                      <br><span>SPY 20260630 580.0 PUT | 行权价 580 | 数量 2 | 当前价 739.22</span>
+                    </li>
+                    </ul>
+                </details>
+                </td><td class="calendar-day muted-day">
+                <div class="date-num">1</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day muted-day">
+                <div class="date-num">2</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td><td class="calendar-day muted-day">
+                <div class="date-num">3</div>
+                <div class="pill-row"></div>
+                <div class="calendar-labels"></div>
+                </td></tr></tbody>
+      </table>
+    
+  </section>
+
+  <section>
+    <h2>期权风险提示 <span>卖 Put 接近行权价、卖 Call 接近被行权；阈值 5%</span></h2>
+    <div class="risk-list">
+            <div class="risk-card">
+              <div class="risk-card-top">
+                <strong>拼多多</strong>
+                <span>4 笔期权</span>
+              </div>
+              <div class="risk-product">
+                <span>全额保证金</span>
+                <strong>40.6万 USD</strong>
+              </div>
+              <div class="risk-meta">卖 Put 接货风险 | 权利金 1.7万 USD</div>
+              <div class="risk-prices">
+                <span>当前价 <b>82.62</b></span>
+                <span>距离 <b>-17.38%</b></span>
+                <span>最近到期 <b>2026-06-18</b></span>
+              </div>
+              <details class="risk-details">
+                <summary>查看期权明细</summary>
+                <ul>
+                <li>
+                  <strong>PDD 20260918 100.0 PUT</strong>
+                  <span>卖出 PUT | 数量 10 | 行权价 100 | 距离 -17.38%</span>
+                  <span>保证金 10.0万 USD | 权利金 3,990 USD | 到期 2026-09-18</span>
+                </li>
+                
+                <li>
+                  <strong>PDD 20260918 100.0 PUT</strong>
+                  <span>卖出 PUT | 数量 10 | 行权价 100 | 距离 -17.38%</span>
+                  <span>保证金 10.0万 USD | 权利金 8,150 USD | 到期 2026-09-18</span>
+                </li>
+                
+                <li>
+                  <strong>PDD 20260717 85.0 PUT</strong>
+                  <span>卖出 PUT | 数量 12 | 行权价 85 | 距离 -2.80%</span>
+                  <span>保证金 10.2万 USD | 权利金 1,800 USD | 到期 2026-07-17</span>
+                </li>
+                
+                <li>
+                  <strong>PDD 20260618 80.0 PUT</strong>
+                  <span>卖出 PUT | 数量 13 | 行权价 80 | 距离 3.28%</span>
+                  <span>保证金 10.4万 USD | 权利金 3,250 USD | 到期 2026-06-18</span>
+                </li>
+                </ul>
+              </details>
+            </div>
+            </div>
+  </section>
+
+  <section>
+    <h2>期权标的敞口 <span>按标的汇总全额保证金，不与 FCN 混算</span></h2>
+    <div class="exposure-heatmap">
+            <details class="exposure-tile tile-xl risk-normal">
+              <summary>
+                <div class="tile-name">DRAM</div>
+                <div class="tile-amount">48.5万 USD</div>
+                <div class="tile-meta">5 笔期权 | 权利金 1.1万 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>DRAM 20260612 47.0 PUT</strong>
+              <span>卖出 PUT | 数量 21 | 行权价 47</span>
+              <span>权利金 1,575 USD | 到期 2026-06-12</span>
+            </li>
+            
+            <li>
+              <strong>DRAM 20260618 40.0 PUT</strong>
+              <span>卖出 PUT | 数量 25 | 行权价 40</span>
+              <span>权利金 2,500 USD | 到期 2026-06-18</span>
+            </li>
+            
+            <li>
+              <strong>DRAM 20260626 45.0 PUT</strong>
+              <span>卖出 PUT | 数量 22 | 行权价 45</span>
+              <span>权利金 1,100 USD | 到期 2026-06-26</span>
+            </li>
+            
+            <li>
+              <strong>DRAM 20260717 40.0 PUT</strong>
+              <span>卖出 PUT | 数量 25 | 行权价 35</span>
+              <span>权利金 1,000 USD | 到期 2026-07-17</span>
+            </li>
+            
+            <li>
+              <strong>DRAM 20260821 40.0 PUT</strong>
+              <span>卖出 PUT | 数量 25 | 行权价 40</span>
+              <span>权利金 4,500 USD | 到期 2026-08-21</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-xl risk-touched">
+              <summary>
+                <div class="tile-name">拼多多</div>
+                <div class="tile-amount">40.6万 USD</div>
+                <div class="tile-meta">4 笔期权 | 权利金 1.7万 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>PDD 20260618 80.0 PUT</strong>
+              <span>卖出 PUT | 数量 13 | 行权价 80</span>
+              <span>权利金 3,250 USD | 到期 2026-06-18</span>
+            </li>
+            
+            <li>
+              <strong>PDD 20260717 85.0 PUT</strong>
+              <span>卖出 PUT | 数量 12 | 行权价 85</span>
+              <span>权利金 1,800 USD | 到期 2026-07-17</span>
+            </li>
+            
+            <li>
+              <strong>PDD 20260918 100.0 PUT</strong>
+              <span>卖出 PUT | 数量 10 | 行权价 100</span>
+              <span>权利金 3,990 USD | 到期 2026-09-18</span>
+            </li>
+            
+            <li>
+              <strong>PDD 20260918 100.0 PUT</strong>
+              <span>卖出 PUT | 数量 10 | 行权价 100</span>
+              <span>权利金 8,150 USD | 到期 2026-09-18</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-xl risk-normal">
+              <summary>
+                <div class="tile-name">SPY</div>
+                <div class="tile-amount">34.4万 USD</div>
+                <div class="tile-meta">3 笔期权 | 权利金 4,680 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>SPY 20260618 570.0 PUT</strong>
+              <span>卖出 PUT | 数量 2 | 行权价 570</span>
+              <span>权利金 1,590 USD | 到期 2026-06-18</span>
+            </li>
+            
+            <li>
+              <strong>SPY 20260630 570.0 PUT</strong>
+              <span>卖出 PUT | 数量 2 | 行权价 570</span>
+              <span>权利金 1,520 USD | 到期 2026-06-30</span>
+            </li>
+            
+            <li>
+              <strong>SPY 20260630 580.0 PUT</strong>
+              <span>卖出 PUT | 数量 2 | 行权价 580</span>
+              <span>权利金 1,570 USD | 到期 2026-06-30</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-lg risk-normal">
+              <summary>
+                <div class="tile-name">AAOI</div>
+                <div class="tile-amount">29.4万 USD</div>
+                <div class="tile-meta">3 笔期权 | 权利金 3,534 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>AAOI 20260612 105.0 PUT</strong>
+              <span>卖出 PUT | 数量 9 | 行权价 105</span>
+              <span>权利金 909 USD | 到期 2026-06-12</span>
+            </li>
+            
+            <li>
+              <strong>AAOI 20260618 100.0 PUT</strong>
+              <span>卖出 PUT | 数量 10 | 行权价 100</span>
+              <span>权利金 1,050 USD | 到期 2026-06-18</span>
+            </li>
+            
+            <li>
+              <strong>AAOI 20260626 110.0 PUT</strong>
+              <span>卖出 PUT | 数量 9 | 行权价 110</span>
+              <span>权利金 1,575 USD | 到期 2026-06-26</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-lg risk-normal">
+              <summary>
+                <div class="tile-name">Circle</div>
+                <div class="tile-amount">20.7万 USD</div>
+                <div class="tile-meta">2 笔期权 | 权利金 4,358 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>CRCL 20260618 60.0 PUT</strong>
+              <span>卖出 PUT | 数量 17 | 行权价 60</span>
+              <span>权利金 2,108 USD | 到期 2026-06-18</span>
+            </li>
+            
+            <li>
+              <strong>CRCL 20260717 70.0 PUT</strong>
+              <span>卖出 PUT | 数量 15 | 行权价 70</span>
+              <span>权利金 2,250 USD | 到期 2026-07-17</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-lg risk-normal">
+              <summary>
+                <div class="tile-name">ASTS</div>
+                <div class="tile-amount">20.0万 USD</div>
+                <div class="tile-meta">2 笔期权 | 权利金 2,350 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>ASTS 20260612 70.00 PUT</strong>
+              <span>卖出 PUT | 数量 14 | 行权价 70</span>
+              <span>权利金 910 USD | 到期 2026-06-12</span>
+            </li>
+            
+            <li>
+              <strong>ASTS 20260612 85.0 PUT</strong>
+              <span>卖出 PUT | 数量 12 | 行权价 85</span>
+              <span>权利金 1,440 USD | 到期 2026-06-12</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-lg risk-normal">
+              <summary>
+                <div class="tile-name">QQQ</div>
+                <div class="tile-amount">20.0万 USD</div>
+                <div class="tile-meta">2 笔期权 | 权利金 2,848 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>QQQ 20260618 500.0 PUT</strong>
+              <span>卖出 PUT | 数量 2 | 行权价 500</span>
+              <span>权利金 1,500 USD | 到期 2026-06-18</span>
+            </li>
+            
+            <li>
+              <strong>QQQ 20260630 500.0 PUT</strong>
+              <span>卖出 PUT | 数量 2 | 行权价 500</span>
+              <span>权利金 1,348 USD | 到期 2026-06-30</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-lg risk-normal">
+              <summary>
+                <div class="tile-name">英特尔</div>
+                <div class="tile-amount">19.5万 USD</div>
+                <div class="tile-meta">2 笔期权 | 权利金 1,716 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>INTC 20260612 75.0 PUT</strong>
+              <span>卖出 PUT | 数量 13 | 行权价 75</span>
+              <span>权利金 910 USD | 到期 2026-06-12</span>
+            </li>
+            
+            <li>
+              <strong>INTC 20260618 75.0 PUT</strong>
+              <span>卖出 PUT | 数量 13 | 行权价 75</span>
+              <span>权利金 806 USD | 到期 2026-06-18</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">LITE</div>
+                <div class="tile-amount">12.0万 USD</div>
+                <div class="tile-meta">1 笔期权 | 权利金 1,540 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>LITE 20260618 600.0 PUT</strong>
+              <span>卖出 PUT | 数量 2 | 行权价 600</span>
+              <span>权利金 1,540 USD | 到期 2026-06-18</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">RKLB</div>
+                <div class="tile-amount">10.5万 USD</div>
+                <div class="tile-meta">1 笔期权 | 权利金 1,300 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>RKLB 20260612 105.0 PUT</strong>
+              <span>卖出 PUT | 数量 10 | 行权价 105</span>
+              <span>权利金 1,300 USD | 到期 2026-06-12</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">MRVL</div>
+                <div class="tile-amount">10.2万 USD</div>
+                <div class="tile-meta">1 笔期权 | 权利金 450 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>MRVL 20260618 170.0 PUT</strong>
+              <span>卖出 PUT | 数量 6 | 行权价 170</span>
+              <span>权利金 450 USD | 到期 2026-06-18</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">港交所</div>
+                <div class="tile-amount">10.1万 USD</div>
+                <div class="tile-meta">1 笔期权 | 权利金 3,119 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>HEX.HK 20260929 360 PUT</strong>
+              <span>卖出 PUT | 数量 22 | 行权价 360</span>
+              <span>权利金 3,119 USD | 到期 2026-09-29</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">DXYZ</div>
+                <div class="tile-amount">10.0万 USD</div>
+                <div class="tile-meta">1 笔期权 | 权利金 800 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>DXYZ 20260618 25.0 PUT</strong>
+              <span>卖出 PUT | 数量 40 | 行权价 25</span>
+              <span>权利金 800 USD | 到期 2026-06-18</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">台积电</div>
+                <div class="tile-amount">10.0万 USD</div>
+                <div class="tile-meta">1 笔期权 | 权利金 1,465 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>TSM 20260821 200.0 PUT</strong>
+              <span>卖出 PUT | 数量 5 | 行权价 200</span>
+              <span>权利金 1,465 USD | 到期 2026-08-21</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">PDD</div>
+                <div class="tile-amount">9.9万 USD</div>
+                <div class="tile-meta">1 笔期权 | 权利金 1,210 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>PDD 20260612 90.0 CALL</strong>
+              <span>卖出 CALL | 数量 11 | 行权价 90</span>
+              <span>权利金 1,210 USD | 到期 2026-06-12</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">NOK</div>
+                <div class="tile-amount">9.9万 USD</div>
+                <div class="tile-meta">1 笔期权 | 权利金 450 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>NOK 20260618 11.0 PUT</strong>
+              <span>卖出 PUT | 数量 90 | 行权价 11</span>
+              <span>权利金 450 USD | 到期 2026-06-18</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">CRCL</div>
+                <div class="tile-amount">9.9万 USD</div>
+                <div class="tile-meta">1 笔期权 | 权利金 2,860 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>CRCL 20260918 45.0 PUT</strong>
+              <span>卖出 PUT | 数量 22 | 行权价 45</span>
+              <span>权利金 2,860 USD | 到期 2026-09-18</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">INTC</div>
+                <div class="tile-amount">9.8万 USD</div>
+                <div class="tile-meta">1 笔期权 | 权利金 1,365 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>INTC 20260717 75.0 PUT</strong>
+              <span>卖出 PUT | 数量 13 | 行权价 75</span>
+              <span>权利金 1,365 USD | 到期 2026-07-17</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">Coinbase</div>
+                <div class="tile-amount">9.6万 USD</div>
+                <div class="tile-meta">1 笔期权 | 权利金 1,200 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>COIN 20260618 120.0 PUT</strong>
+              <span>卖出 PUT | 数量 8 | 行权价 120</span>
+              <span>权利金 1,200 USD | 到期 2026-06-18</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">英伟达</div>
+                <div class="tile-amount">9.6万 USD</div>
+                <div class="tile-meta">1 笔期权 | 权利金 4,400 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>NVDA 20261218 120.0 PUT</strong>
+              <span>卖出 PUT | 数量 8 | 行权价 120</span>
+              <span>权利金 4,400 USD | 到期 2026-12-18</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-md risk-normal">
+              <summary>
+                <div class="tile-name">COHR</div>
+                <div class="tile-amount">9.0万 USD</div>
+                <div class="tile-meta">1 笔期权 | 权利金 2,130 USD</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">按全额保证金汇总；不与 FCN 混算</div>
+                <ul>
+            <li>
+              <strong>COHR 20260618 300.0 PUT</strong>
+              <span>卖出 PUT | 数量 3 | 行权价 300</span>
+              <span>权利金 2,130 USD | 到期 2026-06-18</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            </div>
+  </section>
+
+  <section>
+    <h2>期权明细 <span>浮盈亏待补充期权现价后计算</span></h2>
+    <table>
+      <thead>
+        <tr><th>标的</th><th>类型</th><th>方向</th><th>行权价</th><th>到期日</th><th>数量</th><th>权利金</th><th>保证金</th><th>当前价</th><th>浮盈亏</th><th>可能行权</th><th>期权明细</th></tr>
+      </thead>
+      <tbody>
+            <tr>
+              <td>AAOI</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>105</td>
+              <td>2026-06-12</td>
+              <td>9</td>
+              <td>909 USD</td>
+              <td>9.4万 USD</td>
+              <td>196.64</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>AAOI 20260612 105.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>ASTS</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>70</td>
+              <td>2026-06-12</td>
+              <td>14</td>
+              <td>910 USD</td>
+              <td>9.8万 USD</td>
+              <td>92.06</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>ASTS 20260612 70.00 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>ASTS</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>85</td>
+              <td>2026-06-12</td>
+              <td>12</td>
+              <td>1,440 USD</td>
+              <td>10.2万 USD</td>
+              <td>92.06</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>ASTS 20260612 85.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>DRAM</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>47</td>
+              <td>2026-06-12</td>
+              <td>21</td>
+              <td>1,575 USD</td>
+              <td>9.9万 USD</td>
+              <td>60.52</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>DRAM 20260612 47.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>PDD</td>
+              <td>CALL</td>
+              <td>卖出</td>
+              <td>90</td>
+              <td>2026-06-12</td>
+              <td>11</td>
+              <td>1,210 USD</td>
+              <td>9.9万 USD</td>
+              <td>82.62</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>PDD 20260612 90.0 CALL</td>
+            </tr>
+            
+
+            <tr>
+              <td>RKLB</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>105</td>
+              <td>2026-06-12</td>
+              <td>10</td>
+              <td>1,300 USD</td>
+              <td>10.5万 USD</td>
+              <td>113.65</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>RKLB 20260612 105.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>英特尔</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>75</td>
+              <td>2026-06-12</td>
+              <td>13</td>
+              <td>910 USD</td>
+              <td>9.8万 USD</td>
+              <td>110.27</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>INTC 20260612 75.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>AAOI</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>100</td>
+              <td>2026-06-18</td>
+              <td>10</td>
+              <td>1,050 USD</td>
+              <td>10.0万 USD</td>
+              <td>196.64</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>AAOI 20260618 100.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>COHR</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>300</td>
+              <td>2026-06-18</td>
+              <td>3</td>
+              <td>2,130 USD</td>
+              <td>9.0万 USD</td>
+              <td>401.93</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>COHR 20260618 300.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>Circle</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>60</td>
+              <td>2026-06-18</td>
+              <td>17</td>
+              <td>2,108 USD</td>
+              <td>10.2万 USD</td>
+              <td>82.53</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>CRCL 20260618 60.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>Coinbase</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>120</td>
+              <td>2026-06-18</td>
+              <td>8</td>
+              <td>1,200 USD</td>
+              <td>9.6万 USD</td>
+              <td>162.11</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>COIN 20260618 120.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>DRAM</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>40</td>
+              <td>2026-06-18</td>
+              <td>25</td>
+              <td>2,500 USD</td>
+              <td>10.0万 USD</td>
+              <td>60.52</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>DRAM 20260618 40.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>DXYZ</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>25</td>
+              <td>2026-06-18</td>
+              <td>40</td>
+              <td>800 USD</td>
+              <td>10.0万 USD</td>
+              <td>39.23</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>DXYZ 20260618 25.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>LITE</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>600</td>
+              <td>2026-06-18</td>
+              <td>2</td>
+              <td>1,540 USD</td>
+              <td>12.0万 USD</td>
+              <td>895.4</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>LITE 20260618 600.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>MRVL</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>170</td>
+              <td>2026-06-18</td>
+              <td>6</td>
+              <td>450 USD</td>
+              <td>10.2万 USD</td>
+              <td>288.85</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>MRVL 20260618 170.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>NOK</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>11</td>
+              <td>2026-06-18</td>
+              <td>90</td>
+              <td>450 USD</td>
+              <td>9.9万 USD</td>
+              <td>14.59</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>NOK 20260618 11.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>QQQ</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>500</td>
+              <td>2026-06-18</td>
+              <td>2</td>
+              <td>1,500 USD</td>
+              <td>10.0万 USD</td>
+              <td>716.07</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>QQQ 20260618 500.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>SPY</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>570</td>
+              <td>2026-06-18</td>
+              <td>2</td>
+              <td>1,590 USD</td>
+              <td>11.4万 USD</td>
+              <td>739.22</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>SPY 20260618 570.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>拼多多</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>80</td>
+              <td>2026-06-18</td>
+              <td>13</td>
+              <td>3,250 USD</td>
+              <td>10.4万 USD</td>
+              <td>82.62</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>PDD 20260618 80.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>英特尔</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>75</td>
+              <td>2026-06-18</td>
+              <td>13</td>
+              <td>806 USD</td>
+              <td>9.8万 USD</td>
+              <td>110.27</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>INTC 20260618 75.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>AAOI</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>110</td>
+              <td>2026-06-26</td>
+              <td>9</td>
+              <td>1,575 USD</td>
+              <td>9.9万 USD</td>
+              <td>196.64</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>AAOI 20260626 110.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>DRAM</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>45</td>
+              <td>2026-06-26</td>
+              <td>22</td>
+              <td>1,100 USD</td>
+              <td>9.9万 USD</td>
+              <td>60.52</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>DRAM 20260626 45.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>QQQ</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>500</td>
+              <td>2026-06-30</td>
+              <td>2</td>
+              <td>1,348 USD</td>
+              <td>10.0万 USD</td>
+              <td>716.07</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>QQQ 20260630 500.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>SPY</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>570</td>
+              <td>2026-06-30</td>
+              <td>2</td>
+              <td>1,520 USD</td>
+              <td>11.4万 USD</td>
+              <td>739.22</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>SPY 20260630 570.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>SPY</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>580</td>
+              <td>2026-06-30</td>
+              <td>2</td>
+              <td>1,570 USD</td>
+              <td>11.6万 USD</td>
+              <td>739.22</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>SPY 20260630 580.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>Circle</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>70</td>
+              <td>2026-07-17</td>
+              <td>15</td>
+              <td>2,250 USD</td>
+              <td>10.5万 USD</td>
+              <td>82.53</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>CRCL 20260717 70.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>DRAM</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>35</td>
+              <td>2026-07-17</td>
+              <td>25</td>
+              <td>1,000 USD</td>
+              <td>8.8万 USD</td>
+              <td>60.52</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>DRAM 20260717 40.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>INTC</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>75</td>
+              <td>2026-07-17</td>
+              <td>13</td>
+              <td>1,365 USD</td>
+              <td>9.8万 USD</td>
+              <td>110.27</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>INTC 20260717 75.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>拼多多</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>85</td>
+              <td>2026-07-17</td>
+              <td>12</td>
+              <td>1,800 USD</td>
+              <td>10.2万 USD</td>
+              <td>82.62</td>
+              <td>待补充期权现价</td>
+              <td>是</td>
+              <td>PDD 20260717 85.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>DRAM</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>40</td>
+              <td>2026-08-21</td>
+              <td>25</td>
+              <td>4,500 USD</td>
+              <td>10.0万 USD</td>
+              <td>60.52</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>DRAM 20260821 40.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>台积电</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>200</td>
+              <td>2026-08-21</td>
+              <td>5</td>
+              <td>1,465 USD</td>
+              <td>10.0万 USD</td>
+              <td>426.8</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>TSM 20260821 200.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>CRCL</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>45</td>
+              <td>2026-09-18</td>
+              <td>22</td>
+              <td>2,860 USD</td>
+              <td>9.9万 USD</td>
+              <td>82.53</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>CRCL 20260918 45.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>拼多多</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>100</td>
+              <td>2026-09-18</td>
+              <td>10</td>
+              <td>3,990 USD</td>
+              <td>10.0万 USD</td>
+              <td>82.62</td>
+              <td>待补充期权现价</td>
+              <td>是</td>
+              <td>PDD 20260918 100.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>拼多多</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>100</td>
+              <td>2026-09-18</td>
+              <td>10</td>
+              <td>8,150 USD</td>
+              <td>10.0万 USD</td>
+              <td>82.62</td>
+              <td>待补充期权现价</td>
+              <td>是</td>
+              <td>PDD 20260918 100.0 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>港交所</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>360</td>
+              <td>2026-09-29</td>
+              <td>22</td>
+              <td>3,119 USD</td>
+              <td>10.1万 USD</td>
+              <td>385</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>HEX.HK 20260929 360 PUT</td>
+            </tr>
+            
+
+            <tr>
+              <td>英伟达</td>
+              <td>PUT</td>
+              <td>卖出</td>
+              <td>120</td>
+              <td>2026-12-18</td>
+              <td>8</td>
+              <td>4,400 USD</td>
+              <td>9.6万 USD</td>
+              <td>208.64</td>
+              <td>待补充期权现价</td>
+              <td>否</td>
+              <td>NVDA 20261218 120.0 PUT</td>
+            </tr>
+            </tbody>
+    </table>
+  </section>
     
   </div>
   <script>
