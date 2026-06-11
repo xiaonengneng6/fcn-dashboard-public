@@ -761,6 +761,83 @@
       padding: 8px 10px;
       font-size: 12px;
     }
+    .pending-adjustments {
+      margin-bottom: 28px;
+    }
+    .pending-toolbar {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      padding: 12px 14px;
+      margin-bottom: 12px;
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #f8fbff;
+    }
+    .pending-toolbar div {
+      display: grid;
+      gap: 3px;
+    }
+    .pending-toolbar span {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .pending-toolbar button {
+      border: 1px solid #93c5fd;
+      border-radius: 12px;
+      background: #2563eb;
+      color: #fff;
+      padding: 10px 14px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+    .pending-table td:first-child span,
+    .pending-table small {
+      display: block;
+      color: var(--muted);
+      font-size: 12px;
+      margin-top: 4px;
+    }
+    .status-pill {
+      display: inline-flex;
+      align-items: center;
+      border-radius: 999px;
+      padding: 3px 8px;
+      background: #eef2ff;
+      color: #3730a3;
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .pending-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-bottom: 8px;
+    }
+    .pending-actions label {
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      padding: 4px 8px;
+      background: #fff;
+      color: var(--text);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .pending-note {
+      width: 100%;
+      min-height: 44px;
+      resize: vertical;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 8px;
+      font: inherit;
+      font-size: 12px;
+      box-sizing: border-box;
+    }
     .detail-list {
       margin: 8px 0 0;
       padding-left: 18px;
@@ -936,7 +1013,7 @@
   <header>
     <h1>权益类观察看板</h1>
     <div class="sub">
-      数据日期：2026-06-10 | 生成时间：2026-06-10 17:28
+      数据日期：2026-06-11 | 生成时间：2026-06-11 10:16
     </div>
   </header>
   <nav class="view-nav">
@@ -961,7 +1038,7 @@
     </div>
     <div class="equity-overview-cards">
       <div class="equity-card">
-        <div class="num">4,992.8万 USD</div>
+        <div class="num">5,042.8万 USD</div>
         <div class="label">公司 FCN 存续规模</div>
         <div class="hint">按公司账户本金折合美元汇总</div>
       </div>
@@ -971,9 +1048,9 @@
         <div class="hint">按持仓全额保证金汇总</div>
       </div>
       <div class="equity-card">
-        <div class="num">6</div>
+        <div class="num">5</div>
         <div class="label">今日需关注事项</div>
-        <div class="hint">观察 4 · FCN 风险 2 · 期权风险 0</div>
+        <div class="hint">观察 3 · FCN 风险 2 · 期权风险 0</div>
       </div>
     </div>
   </section>
@@ -988,11 +1065,11 @@
       <div class="scale-block compact-scale-block accent-scale-block">
         <div class="scale-title">公司</div>
         <div class="compact-scale-layout">
-          <div class="mini-card compact-total-card"><div class="num">4,992.8万 USD</div><div class="label">折合美元合计</div></div>
+          <div class="mini-card compact-total-card"><div class="num">5,042.8万 USD</div><div class="label">折合美元合计</div></div>
           <div class="compact-detail-cards">
-            <div class="mini-card principal-card"><div class="num">4,860.0万 USD</div><div class="label">USD 本金</div></div>
+            <div class="mini-card principal-card"><div class="num">4,910.0万 USD</div><div class="label">USD 本金</div></div>
             <div class="mini-card principal-card"><div class="num">900.0万 CNY</div><div class="label">CNY 本金</div></div>
-            <div class="mini-card count-card"><div class="num">103</div><div class="label">存续数量</div></div>
+            <div class="mini-card count-card"><div class="num">104</div><div class="label">存续数量</div></div>
           </div>
         </div>
       </div>
@@ -1016,8 +1093,8 @@
       <div class="summary-group action-group">
         <div class="summary-title">今日动作</div>
         <div class="summary-cards">
-          <div class="card"><div class="num">4</div><div class="label">今日观察</div></div>
-          <div class="card"><div class="num">0</div><div class="label">今日可能敲出</div></div>
+          <div class="card"><div class="num">3</div><div class="label">今日观察</div></div>
+          <div class="card"><div class="num">2</div><div class="label">今日可能敲出</div></div>
         </div>
       </div>
       <div class="summary-group risk-group">
@@ -1030,14 +1107,14 @@
     </div>
 
     <section>
-      <h2>今日观察：2026-06-10 <span>4 条；使用 iFinD 历史收盘价 判断敲出、接货或结束</span></h2>
-      <div class="observation-summary"><div class="observation-summary-main">今日观察 FCN 4 只，暂无敲出、产品结束或接货。</div></div>
+      <h2>今日观察：2026-06-11 <span>3 条；使用 iFinD 历史收盘价 判断敲出、接货或结束</span></h2>
+      <div class="observation-summary"><div class="observation-summary-main">今日观察 FCN 3 只，敲出 2 只。公司账户合计 100.0 万美元，宝成账户无。</div><div class="observation-summary-detail"><strong>公司账户：</strong>JPM FCN GOOGL 10%，50.0 万美元；JPM FCN UNH 10%，50.0 万美元。</div></div>
       <div class="observation-list">
-            <div class="observation-group obs-not-knockout">
+            <div class="observation-group obs-knockout">
               <div class="observation-group-title">
                 <span class="obs-dot"></span>
-                <strong>不敲出</strong>
-                <span>4 条</span>
+                <strong>敲出</strong>
+                <span>2 条</span>
               </div>
               <table class="observation-table">
                 <thead>
@@ -1045,67 +1122,65 @@
                 </thead>
                 <tbody>
                 <tr>
-                  <td class="obs-product">CLSA FCN ETHA 12%</td>
+                  <td class="obs-product">JPM FCN GOOGL 10%</td>
                   <td>50.0万 USD</td>
-                  <td>ETHA</td>
+                  <td>谷歌</td>
                   <td>摩根士丹利</td>
                   <td><div class="obs-price-lines">
             <div class="obs-price-line">
-              <strong>ETHA</strong>
-              <span>市场 12.48</span>
-              <span>初始 22.3546</span>
-              <span>接货 12.57</span>
+              <strong>谷歌</strong>
+              <span>市场 356.38</span>
+              <span>初始 350.524</span>
+              <span>接货 253.008</span>
             </div>
             </div></td>
-                  <td>2026-08-12</td>
+                  <td>2027-05-13</td>
                 </tr>
                 
                 <tr>
-                  <td class="obs-product">CLSA FCN IBIT 12%</td>
+                  <td class="obs-product">JPM FCN UNH 10%</td>
                   <td>50.0万 USD</td>
-                  <td>IBIT</td>
+                  <td>UNH</td>
                   <td>摩根士丹利</td>
                   <td><div class="obs-price-lines">
             <div class="obs-price-line">
-              <strong>IBIT</strong>
-              <span>市场 35.14</span>
-              <span>初始 49.9795</span>
-              <span>接货 34.9207</span>
+              <strong>UNH</strong>
+              <span>市场 407.46</span>
+              <span>初始 352.552</span>
+              <span>接货 271.676</span>
             </div>
             </div></td>
-                  <td>2026-08-12</td>
+                  <td>2026-11-13</td>
                 </tr>
-                
+                </tbody>
+              </table>
+            </div>
+            
+            <div class="observation-group obs-not-knockout">
+              <div class="observation-group-title">
+                <span class="obs-dot"></span>
+                <strong>不敲出</strong>
+                <span>1 条</span>
+              </div>
+              <table class="observation-table">
+                <thead>
+                  <tr><th>产品名称</th><th>金额</th><th>挂钩标的</th><th>购买机构</th><th>价格判断</th><th>到期日</th></tr>
+                </thead>
+                <tbody>
                 <tr>
-                  <td class="obs-product">BARC FCN 0883 8%</td>
+                  <td class="obs-product">JPM FCN AVGO 10%</td>
                   <td>50.0万 USD</td>
-                  <td>中海油</td>
+                  <td>博通</td>
                   <td>摩根士丹利</td>
                   <td><div class="obs-price-lines">
             <div class="obs-price-line">
-              <strong>中海油</strong>
-              <span>市场 25.56</span>
-              <span>初始 29.04</span>
-              <span>接货 19.875</span>
+              <strong>博通</strong>
+              <span>市场 372.1</span>
+              <span>初始 417.337</span>
+              <span>接货 210.004</span>
             </div>
             </div></td>
-                  <td>2027-01-13</td>
-                </tr>
-                
-                <tr>
-                  <td class="obs-product">JPM FCN PLTR 10%</td>
-                  <td>50.0万 USD</td>
-                  <td>Palantir</td>
-                  <td>摩根士丹利</td>
-                  <td><div class="obs-price-lines">
-            <div class="obs-price-line">
-              <strong>Palantir</strong>
-              <span>市场 132.07</span>
-              <span>初始 143.618</span>
-              <span>接货 65.0301</span>
-            </div>
-            </div></td>
-                  <td>2026-10-14</td>
+                  <td>2027-05-13</td>
                 </tr>
                 </tbody>
               </table>
@@ -1238,7 +1313,7 @@
                 <div class="date-num">9</div>
                 <div class="pill-row"></div>
                 <div class="calendar-labels"></div>
-                </td><td class="calendar-day current-day">
+                </td><td class="calendar-day">
                 <details>
                   <summary>
                     <div class="date-num">10</div>
@@ -1267,7 +1342,7 @@
                     </li>
                     </ul>
                 </details>
-                </td><td class="calendar-day">
+                </td><td class="calendar-day current-day">
                 <details>
                   <summary>
                     <div class="date-num">11</div>
@@ -1803,24 +1878,24 @@
               </div>
               <div class="risk-meta">1810.HK</div>
               <div class="risk-prices">
-                <span>市场价 <b>26.32</b></span>
-                <span>最小距离 <b>-16.09%</b></span>
+                <span>市场价 <b>25.74</b></span>
+                <span>最小距离 <b>-17.94%</b></span>
               </div>
               <details class="risk-details">
                 <summary>查看产品明细</summary>
                 <ul>
                 <li>
                   <strong>BARC 1810 12.53%</strong>
-                  <span>BC | 30.0万 USD | 接货价 31.36832 | 距离 -16.09% | 最后观察日 2026-07-07</span>
+                  <span>BC | 30.0万 USD | 接货价 31.36832 | 距离 -17.94% | 最后观察日 2026-07-07</span>
                 </li>
                 
                 <li>
                   <strong>BARC FCN 1810 12.53%</strong>
-                  <span>摩根大通 | 50.0万 USD | 接货价 31.36832 | 距离 -16.09% | 最后观察日 2026-07-07</span>
+                  <span>摩根大通 | 50.0万 USD | 接货价 31.36832 | 距离 -17.94% | 最后观察日 2026-07-07</span>
                 </li>
                 </ul>
               </details>
-              <div class="risk-source">ifind_realtime | 2026-06-10 17:20:20</div>
+              <div class="risk-source">ifind_realtime | 2026-06-11 10:15:57</div>
             </div>
             
 
@@ -1835,19 +1910,19 @@
               </div>
               <div class="risk-meta">2259.HK</div>
               <div class="risk-prices">
-                <span>市场价 <b>103.3</b></span>
-                <span>最小距离 <b>-7.00%</b></span>
+                <span>市场价 <b>100.6</b></span>
+                <span>最小距离 <b>-9.44%</b></span>
               </div>
               <details class="risk-details">
                 <summary>查看产品明细</summary>
                 <ul>
                 <li>
                   <strong>BARK FCN 2259 10%</strong>
-                  <span>摩根士丹利 | 50.0万 USD | 接货价 111.0812 | 距离 -7.00% | 最后观察日 2026-07-07</span>
+                  <span>摩根士丹利 | 50.0万 USD | 接货价 111.0812 | 距离 -9.44% | 最后观察日 2026-07-07</span>
                 </li>
                 </ul>
               </details>
-              <div class="risk-source">ifind_realtime | 2026-06-10 17:20:20</div>
+              <div class="risk-source">ifind_realtime | 2026-06-11 10:15:57</div>
             </div>
             </div>
       </section>
@@ -2281,7 +2356,7 @@
             <li>
               <strong>BNP NVDA&amp;TSM 12%</strong>
               <span>摩根士丹利 | 25.0万 USD</span>
-              <span>接货价：121.57</span>
+              <span>接货价：119.838</span>
               <span>到期：2027-06-25 | 最后观察：2027-06-23</span>
             </li>
             </ul>
@@ -2452,6 +2527,74 @@
             
             <details class="exposure-tile tile-lg risk-normal">
               <summary>
+                <div class="tile-name">台积电</div>
+                <div class="tile-amount">225.0万 USD</div>
+                <div class="tile-meta">8 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>HSBC FCN NVDA&amp;TSM 12%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>接货价：250.942</span>
+              <span>到期：2027-05-24 | 最后观察：2027-05-20</span>
+            </li>
+            
+            <li>
+              <strong>HSBC FCN TSM 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>接货价：235.136</span>
+              <span>到期：2027-06-04 | 最后观察：2027-06-02</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN GOOGL&amp;TSM 12%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>接货价：275.696</span>
+              <span>到期：2027-06-17 | 最后观察：2027-06-15</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN TSM&amp;NVDA 12%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>接货价：263.585</span>
+              <span>到期：2027-06-17 | 最后观察：2027-06-15</span>
+            </li>
+            
+            <li>
+              <strong>BNP FCN TSM&amp;GOOGL 12%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>接货价：262.175</span>
+              <span>到期：2027-06-24 | 最后观察：2027-06-22</span>
+            </li>
+            
+            <li>
+              <strong>BNP FCN TSM&amp;META 12%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>接货价：252.894</span>
+              <span>到期：2027-06-24 | 最后观察：2027-06-22</span>
+            </li>
+            
+            <li>
+              <strong>BNP NVDA&amp;TSM 12%</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>接货价：246.988</span>
+              <span>到期：2027-06-25 | 最后观察：2027-06-23</span>
+            </li>
+            
+            <li>
+              <strong>JPM FCN AAPL&amp;TSM</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>接货价：259.02</span>
+              <span>到期：2027-06-28 | 最后观察：2027-06-24</span>
+            </li>
+            </ul>
+              </div>
+            </details>
+            
+            <details class="exposure-tile tile-lg risk-normal">
+              <summary>
                 <div class="tile-name">Coinbase</div>
                 <div class="tile-amount">200.0万 USD</div>
                 <div class="tile-meta">4 笔产品 | 普通持仓</div>
@@ -2572,67 +2715,6 @@
             
             <details class="exposure-tile tile-lg risk-normal">
               <summary>
-                <div class="tile-name">台积电</div>
-                <div class="tile-amount">200.0万 USD</div>
-                <div class="tile-meta">7 笔产品 | 普通持仓</div>
-              </summary>
-              <div class="tile-detail">
-                <div class="tile-institution">摩根士丹利</div>
-                <ul>
-            <li>
-              <strong>HSBC FCN NVDA&amp;TSM 12%</strong>
-              <span>摩根士丹利 | 25.0万 USD</span>
-              <span>接货价：250.942</span>
-              <span>到期：2027-05-24 | 最后观察：2027-05-20</span>
-            </li>
-            
-            <li>
-              <strong>HSBC FCN TSM 10%</strong>
-              <span>摩根士丹利 | 50.0万 USD</span>
-              <span>接货价：235.136</span>
-              <span>到期：2027-06-04 | 最后观察：2027-06-02</span>
-            </li>
-            
-            <li>
-              <strong>JPM FCN GOOGL&amp;TSM 12%</strong>
-              <span>摩根士丹利 | 25.0万 USD</span>
-              <span>接货价：275.696</span>
-              <span>到期：2027-06-17 | 最后观察：2027-06-15</span>
-            </li>
-            
-            <li>
-              <strong>JPM FCN TSM&amp;NVDA 12%</strong>
-              <span>摩根士丹利 | 25.0万 USD</span>
-              <span>接货价：263.585</span>
-              <span>到期：2027-06-17 | 最后观察：2027-06-15</span>
-            </li>
-            
-            <li>
-              <strong>BNP FCN TSM&amp;GOOGL 12%</strong>
-              <span>摩根士丹利 | 25.0万 USD</span>
-              <span>接货价：262.175</span>
-              <span>到期：2027-06-24 | 最后观察：2027-06-22</span>
-            </li>
-            
-            <li>
-              <strong>BNP FCN TSM&amp;META 12%</strong>
-              <span>摩根士丹利 | 25.0万 USD</span>
-              <span>接货价：252.894</span>
-              <span>到期：2027-06-24 | 最后观察：2027-06-22</span>
-            </li>
-            
-            <li>
-              <strong>BNP NVDA&amp;TSM 12%</strong>
-              <span>摩根士丹利 | 25.0万 USD</span>
-              <span>接货价：248.7</span>
-              <span>到期：2027-06-25 | 最后观察：2027-06-23</span>
-            </li>
-            </ul>
-              </div>
-            </details>
-            
-            <details class="exposure-tile tile-lg risk-normal">
-              <summary>
                 <div class="tile-name">MAGS</div>
                 <div class="tile-amount">200.0万 USD</div>
                 <div class="tile-meta">4 笔产品 | 普通持仓</div>
@@ -2648,6 +2730,13 @@
             </li>
             
             <li>
+              <strong>GS FCN MAGS 10%</strong>
+              <span>摩根士丹利 | 50.0万 USD</span>
+              <span>接货价：52.7617</span>
+              <span>到期：2026-12-28 | 最后观察：2026-12-23</span>
+            </li>
+            
+            <li>
               <strong>JPM FCN MAGS 10%</strong>
               <span>摩根士丹利 | 50.0万 USD</span>
               <span>接货价：55.9935</span>
@@ -2659,13 +2748,6 @@
               <span>摩根士丹利 | 50.0万 USD</span>
               <span>接货价：55.4653</span>
               <span>到期：2027-03-18 | 最后观察：2027-03-16</span>
-            </li>
-            
-            <li>
-              <strong>GS FCN MAGS 10%</strong>
-              <span>摩根士丹利 | 50.0万 USD</span>
-              <span>接货价：53.5</span>
-              <span>到期：2027-12-27 | 最后观察：2026-12-23</span>
             </li>
             </ul>
               </div>
@@ -3034,8 +3116,8 @@
             <li>
               <strong>CITI FCN INTC 15%</strong>
               <span>摩根士丹利 | 50.0万 USD</span>
-              <span>接货价：52.11</span>
-              <span>到期：2027-12-27 | 最后观察：2026-12-23</span>
+              <span>接货价：51.0352</span>
+              <span>到期：2026-12-28 | 最后观察：2026-12-23</span>
             </li>
             </ul>
               </div>
@@ -3263,6 +3345,25 @@
             </ul>
               </div>
             </details>
+            
+            <details class="exposure-tile tile-sm risk-normal">
+              <summary>
+                <div class="tile-name">苹果</div>
+                <div class="tile-amount">25.0万 USD</div>
+                <div class="tile-meta">1 笔产品 | 普通持仓</div>
+              </summary>
+              <div class="tile-detail">
+                <div class="tile-institution">摩根士丹利</div>
+                <ul>
+            <li>
+              <strong>JPM FCN AAPL&amp;TSM</strong>
+              <span>摩根士丹利 | 25.0万 USD</span>
+              <span>接货价：175.87</span>
+              <span>到期：2027-06-28 | 最后观察：2027-06-24</span>
+            </li>
+            </ul>
+              </div>
+            </details>
             </div>
       </section>
 
@@ -3412,11 +3513,11 @@
                 <div class="date-num">9</div>
                 <div class="pill-row"></div>
                 <div class="calendar-labels"></div>
-                </td><td class="calendar-day current-day">
+                </td><td class="calendar-day">
                 <div class="date-num">10</div>
                 <div class="pill-row"></div>
                 <div class="calendar-labels"></div>
-                </td><td class="calendar-day">
+                </td><td class="calendar-day current-day">
                 <div class="date-num">11</div>
                 <div class="pill-row"></div>
                 <div class="calendar-labels"></div>
@@ -3430,37 +3531,37 @@
                   <ul>
                     <li>
                       <strong>AAOI</strong> PUT 卖出
-                      <br><span>AAOI 20260612 105.0 PUT | 行权价 105 | 数量 9 | 当前价 162.88</span>
+                      <br><span>AAOI 20260612 105.0 PUT | 行权价 105 | 数量 9 | 当前价 175.13</span>
                     </li>
                     
                     <li>
                       <strong>ASTS</strong> PUT 卖出
-                      <br><span>ASTS 20260612 70.00 PUT | 行权价 70 | 数量 14 | 当前价 88.71</span>
+                      <br><span>ASTS 20260612 70.00 PUT | 行权价 70 | 数量 14 | 当前价 87.32</span>
                     </li>
                     
                     <li>
                       <strong>ASTS</strong> PUT 卖出
-                      <br><span>ASTS 20260612 85.0 PUT | 行权价 85 | 数量 12 | 当前价 88.71</span>
+                      <br><span>ASTS 20260612 85.0 PUT | 行权价 85 | 数量 12 | 当前价 87.32</span>
                     </li>
                     
                     <li>
                       <strong>DRAM</strong> PUT 卖出
-                      <br><span>DRAM 20260612 47.0 PUT | 行权价 47 | 数量 21 | 当前价 59.86</span>
+                      <br><span>DRAM 20260612 47.0 PUT | 行权价 47 | 数量 21 | 当前价 57.37</span>
                     </li>
                     
                     <li>
                       <strong>PDD</strong> CALL 卖出
-                      <br><span>PDD 20260612 90.0 CALL | 行权价 90 | 数量 11 | 当前价 81.93</span>
+                      <br><span>PDD 20260612 90.0 CALL | 行权价 90 | 数量 11 | 当前价 81.82</span>
                     </li>
                     
                     <li>
                       <strong>RKLB</strong> PUT 卖出
-                      <br><span>RKLB 20260612 105.0 PUT | 行权价 105 | 数量 10 | 当前价 108.23</span>
+                      <br><span>RKLB 20260612 105.0 PUT | 行权价 105 | 数量 10 | 当前价 105.05</span>
                     </li>
                     
                     <li>
                       <strong>英特尔</strong> PUT 卖出
-                      <br><span>INTC 20260612 75.0 PUT | 行权价 75 | 数量 13 | 当前价 107.92</span>
+                      <br><span>INTC 20260612 75.0 PUT | 行权价 75 | 数量 13 | 当前价 107.04</span>
                     </li>
                     </ul>
                 </details>
@@ -3486,67 +3587,67 @@
                   <ul>
                     <li>
                       <strong>AAOI</strong> PUT 卖出
-                      <br><span>AAOI 20260618 100.0 PUT | 行权价 100 | 数量 10 | 当前价 162.88</span>
+                      <br><span>AAOI 20260618 100.0 PUT | 行权价 100 | 数量 10 | 当前价 175.13</span>
                     </li>
                     
                     <li>
                       <strong>COHR</strong> PUT 卖出
-                      <br><span>COHR 20260618 300.0 PUT | 行权价 300 | 数量 3 | 当前价 355.94</span>
+                      <br><span>COHR 20260618 300.0 PUT | 行权价 300 | 数量 3 | 当前价 354.77</span>
                     </li>
                     
                     <li>
                       <strong>Circle</strong> PUT 卖出
-                      <br><span>CRCL 20260618 60.0 PUT | 行权价 60 | 数量 17 | 当前价 81.1</span>
+                      <br><span>CRCL 20260618 60.0 PUT | 行权价 60 | 数量 17 | 当前价 78.93</span>
                     </li>
                     
                     <li>
                       <strong>Coinbase</strong> PUT 卖出
-                      <br><span>COIN 20260618 120.0 PUT | 行权价 120 | 数量 8 | 当前价 155.5</span>
+                      <br><span>COIN 20260618 120.0 PUT | 行权价 120 | 数量 8 | 当前价 153.97</span>
                     </li>
                     
                     <li>
                       <strong>DRAM</strong> PUT 卖出
-                      <br><span>DRAM 20260618 40.0 PUT | 行权价 40 | 数量 25 | 当前价 59.86</span>
+                      <br><span>DRAM 20260618 40.0 PUT | 行权价 40 | 数量 25 | 当前价 57.37</span>
                     </li>
                     
                     <li>
                       <strong>DXYZ</strong> PUT 卖出
-                      <br><span>DXYZ 20260618 25.0 PUT | 行权价 25 | 数量 40 | 当前价 34.7</span>
+                      <br><span>DXYZ 20260618 25.0 PUT | 行权价 25 | 数量 40 | 当前价 36.06</span>
                     </li>
                     
                     <li>
                       <strong>LITE</strong> PUT 卖出
-                      <br><span>LITE 20260618 600.0 PUT | 行权价 600 | 数量 2 | 当前价 821.76</span>
+                      <br><span>LITE 20260618 600.0 PUT | 行权价 600 | 数量 2 | 当前价 853.26</span>
                     </li>
                     
                     <li>
                       <strong>MRVL</strong> PUT 卖出
-                      <br><span>MRVL 20260618 170.0 PUT | 行权价 170 | 数量 6 | 当前价 266.88</span>
+                      <br><span>MRVL 20260618 170.0 PUT | 行权价 170 | 数量 6 | 当前价 252.59</span>
                     </li>
                     
                     <li>
                       <strong>NOK</strong> PUT 卖出
-                      <br><span>NOK 20260618 11.0 PUT | 行权价 11 | 数量 90 | 当前价 13.85</span>
+                      <br><span>NOK 20260618 11.0 PUT | 行权价 11 | 数量 90 | 当前价 13.4</span>
                     </li>
                     
                     <li>
                       <strong>QQQ</strong> PUT 卖出
-                      <br><span>QQQ 20260618 500.0 PUT | 行权价 500 | 数量 2 | 当前价 707.83</span>
+                      <br><span>QQQ 20260618 500.0 PUT | 行权价 500 | 数量 2 | 当前价 693.69</span>
                     </li>
                     
                     <li>
                       <strong>SPY</strong> PUT 卖出
-                      <br><span>SPY 20260618 570.0 PUT | 行权价 570 | 数量 2 | 当前价 737.05</span>
+                      <br><span>SPY 20260618 570.0 PUT | 行权价 570 | 数量 2 | 当前价 725.43</span>
                     </li>
                     
                     <li>
                       <strong>拼多多</strong> PUT 卖出
-                      <br><span>PDD 20260618 80.0 PUT | 行权价 80 | 数量 13 | 当前价 81.93</span>
+                      <br><span>PDD 20260618 80.0 PUT | 行权价 80 | 数量 13 | 当前价 81.82</span>
                     </li>
                     
                     <li>
                       <strong>英特尔</strong> PUT 卖出
-                      <br><span>INTC 20260618 75.0 PUT | 行权价 75 | 数量 13 | 当前价 107.92</span>
+                      <br><span>INTC 20260618 75.0 PUT | 行权价 75 | 数量 13 | 当前价 107.04</span>
                     </li>
                     </ul>
                 </details>
@@ -3580,32 +3681,32 @@
                   <ul>
                     <li>
                       <strong>AAOI</strong> PUT 卖出
-                      <br><span>AAOI 20260626 110.0 PUT | 行权价 110 | 数量 9 | 当前价 162.88</span>
+                      <br><span>AAOI 20260626 110.0 PUT | 行权价 110 | 数量 9 | 当前价 175.13</span>
                     </li>
                     
                     <li>
                       <strong>CBRS</strong> PUT 卖出
-                      <br><span>CBRS 20260626 170.0 PUT | 行权价 170 | 数量 6 | 当前价 226.815</span>
+                      <br><span>CBRS 20260626 170.0 PUT | 行权价 170 | 数量 6 | 当前价 237.33</span>
                     </li>
                     
                     <li>
                       <strong>COHR</strong> PUT 卖出
-                      <br><span>COHR 20260626 300.0 PUT | 行权价 300 | 数量 4 | 当前价 355.94</span>
+                      <br><span>COHR 20260626 300.0 PUT | 行权价 300 | 数量 4 | 当前价 354.77</span>
                     </li>
                     
                     <li>
                       <strong>DRAM</strong> PUT 卖出
-                      <br><span>DRAM 20260626 45.0 PUT | 行权价 45 | 数量 22 | 当前价 59.86</span>
+                      <br><span>DRAM 20260626 45.0 PUT | 行权价 45 | 数量 22 | 当前价 57.37</span>
                     </li>
                     
                     <li>
                       <strong>LITE</strong> PUT 卖出
-                      <br><span>LITE 20260626 650.0 PUT | 行权价 650 | 数量 2 | 当前价 821.76</span>
+                      <br><span>LITE 20260626 650.0 PUT | 行权价 650 | 数量 2 | 当前价 853.26</span>
                     </li>
                     
                     <li>
                       <strong>MRVL</strong> PUT 卖出
-                      <br><span>MRVL 20260626 190.0 PUT | 行权价 190 | 数量 5 | 当前价 266.88</span>
+                      <br><span>MRVL 20260626 190.0 PUT | 行权价 190 | 数量 5 | 当前价 252.59</span>
                     </li>
                     </ul>
                 </details>
@@ -3623,17 +3724,17 @@
                   <ul>
                     <li>
                       <strong>QQQ</strong> PUT 卖出
-                      <br><span>QQQ 20260630 500.0 PUT | 行权价 500 | 数量 2 | 当前价 707.83</span>
+                      <br><span>QQQ 20260630 500.0 PUT | 行权价 500 | 数量 2 | 当前价 693.69</span>
                     </li>
                     
                     <li>
                       <strong>SPY</strong> PUT 卖出
-                      <br><span>SPY 20260630 570.0 PUT | 行权价 570 | 数量 2 | 当前价 737.05</span>
+                      <br><span>SPY 20260630 570.0 PUT | 行权价 570 | 数量 2 | 当前价 725.43</span>
                     </li>
                     
                     <li>
                       <strong>SPY</strong> PUT 卖出
-                      <br><span>SPY 20260630 580.0 PUT | 行权价 580 | 数量 2 | 当前价 737.05</span>
+                      <br><span>SPY 20260630 580.0 PUT | 行权价 580 | 数量 2 | 当前价 725.43</span>
                     </li>
                     </ul>
                 </details>
@@ -4190,7 +4291,7 @@
               <td>9</td>
               <td>909 USD</td>
               <td>9.4万 USD</td>
-              <td>162.88</td>
+              <td>175.13</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>AAOI 20260612 105.0 PUT</td>
@@ -4206,7 +4307,7 @@
               <td>14</td>
               <td>910 USD</td>
               <td>9.8万 USD</td>
-              <td>88.71</td>
+              <td>87.32</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>ASTS 20260612 70.00 PUT</td>
@@ -4222,7 +4323,7 @@
               <td>12</td>
               <td>1,440 USD</td>
               <td>10.2万 USD</td>
-              <td>88.71</td>
+              <td>87.32</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>ASTS 20260612 85.0 PUT</td>
@@ -4238,7 +4339,7 @@
               <td>21</td>
               <td>1,575 USD</td>
               <td>9.9万 USD</td>
-              <td>59.86</td>
+              <td>57.37</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>DRAM 20260612 47.0 PUT</td>
@@ -4254,7 +4355,7 @@
               <td>11</td>
               <td>1,210 USD</td>
               <td>9.9万 USD</td>
-              <td>81.93</td>
+              <td>81.82</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>PDD 20260612 90.0 CALL</td>
@@ -4270,7 +4371,7 @@
               <td>10</td>
               <td>1,300 USD</td>
               <td>10.5万 USD</td>
-              <td>108.23</td>
+              <td>105.05</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>RKLB 20260612 105.0 PUT</td>
@@ -4286,7 +4387,7 @@
               <td>13</td>
               <td>910 USD</td>
               <td>9.8万 USD</td>
-              <td>107.92</td>
+              <td>107.04</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>INTC 20260612 75.0 PUT</td>
@@ -4302,7 +4403,7 @@
               <td>10</td>
               <td>1,050 USD</td>
               <td>10.0万 USD</td>
-              <td>162.88</td>
+              <td>175.13</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>AAOI 20260618 100.0 PUT</td>
@@ -4318,7 +4419,7 @@
               <td>3</td>
               <td>2,130 USD</td>
               <td>9.0万 USD</td>
-              <td>355.94</td>
+              <td>354.77</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>COHR 20260618 300.0 PUT</td>
@@ -4334,7 +4435,7 @@
               <td>17</td>
               <td>2,108 USD</td>
               <td>10.2万 USD</td>
-              <td>81.1</td>
+              <td>78.93</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>CRCL 20260618 60.0 PUT</td>
@@ -4350,7 +4451,7 @@
               <td>8</td>
               <td>1,200 USD</td>
               <td>9.6万 USD</td>
-              <td>155.5</td>
+              <td>153.97</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>COIN 20260618 120.0 PUT</td>
@@ -4366,7 +4467,7 @@
               <td>25</td>
               <td>2,500 USD</td>
               <td>10.0万 USD</td>
-              <td>59.86</td>
+              <td>57.37</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>DRAM 20260618 40.0 PUT</td>
@@ -4382,7 +4483,7 @@
               <td>40</td>
               <td>800 USD</td>
               <td>10.0万 USD</td>
-              <td>34.7</td>
+              <td>36.06</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>DXYZ 20260618 25.0 PUT</td>
@@ -4398,7 +4499,7 @@
               <td>2</td>
               <td>1,540 USD</td>
               <td>12.0万 USD</td>
-              <td>821.76</td>
+              <td>853.26</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>LITE 20260618 600.0 PUT</td>
@@ -4414,7 +4515,7 @@
               <td>6</td>
               <td>450 USD</td>
               <td>10.2万 USD</td>
-              <td>266.88</td>
+              <td>252.59</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>MRVL 20260618 170.0 PUT</td>
@@ -4430,7 +4531,7 @@
               <td>90</td>
               <td>450 USD</td>
               <td>9.9万 USD</td>
-              <td>13.85</td>
+              <td>13.4</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>NOK 20260618 11.0 PUT</td>
@@ -4446,7 +4547,7 @@
               <td>2</td>
               <td>1,500 USD</td>
               <td>10.0万 USD</td>
-              <td>707.83</td>
+              <td>693.69</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>QQQ 20260618 500.0 PUT</td>
@@ -4462,7 +4563,7 @@
               <td>2</td>
               <td>1,590 USD</td>
               <td>11.4万 USD</td>
-              <td>737.05</td>
+              <td>725.43</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>SPY 20260618 570.0 PUT</td>
@@ -4478,7 +4579,7 @@
               <td>13</td>
               <td>3,250 USD</td>
               <td>10.4万 USD</td>
-              <td>81.93</td>
+              <td>81.82</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>PDD 20260618 80.0 PUT</td>
@@ -4494,7 +4595,7 @@
               <td>13</td>
               <td>806 USD</td>
               <td>9.8万 USD</td>
-              <td>107.92</td>
+              <td>107.04</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>INTC 20260618 75.0 PUT</td>
@@ -4510,7 +4611,7 @@
               <td>9</td>
               <td>1,575 USD</td>
               <td>9.9万 USD</td>
-              <td>162.88</td>
+              <td>175.13</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>AAOI 20260626 110.0 PUT</td>
@@ -4526,7 +4627,7 @@
               <td>6</td>
               <td>1,392 USD</td>
               <td>10.2万 USD</td>
-              <td>226.815</td>
+              <td>237.33</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>CBRS 20260626 170.0 PUT</td>
@@ -4542,7 +4643,7 @@
               <td>4</td>
               <td>1,760 USD</td>
               <td>12.0万 USD</td>
-              <td>355.94</td>
+              <td>354.77</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>COHR 20260626 300.0 PUT</td>
@@ -4558,7 +4659,7 @@
               <td>22</td>
               <td>1,100 USD</td>
               <td>9.9万 USD</td>
-              <td>59.86</td>
+              <td>57.37</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>DRAM 20260626 45.0 PUT</td>
@@ -4574,7 +4675,7 @@
               <td>2</td>
               <td>1,600 USD</td>
               <td>13.0万 USD</td>
-              <td>821.76</td>
+              <td>853.26</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>LITE 20260626 650.0 PUT</td>
@@ -4590,7 +4691,7 @@
               <td>5</td>
               <td>775 USD</td>
               <td>9.5万 USD</td>
-              <td>266.88</td>
+              <td>252.59</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>MRVL 20260626 190.0 PUT</td>
@@ -4606,7 +4707,7 @@
               <td>2</td>
               <td>1,348 USD</td>
               <td>10.0万 USD</td>
-              <td>707.83</td>
+              <td>693.69</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>QQQ 20260630 500.0 PUT</td>
@@ -4622,7 +4723,7 @@
               <td>2</td>
               <td>1,520 USD</td>
               <td>11.4万 USD</td>
-              <td>737.05</td>
+              <td>725.43</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>SPY 20260630 570.0 PUT</td>
@@ -4638,7 +4739,7 @@
               <td>2</td>
               <td>1,570 USD</td>
               <td>11.6万 USD</td>
-              <td>737.05</td>
+              <td>725.43</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>SPY 20260630 580.0 PUT</td>
@@ -4654,7 +4755,7 @@
               <td>10</td>
               <td>1,540 USD</td>
               <td>10.0万 USD</td>
-              <td>162.88</td>
+              <td>175.13</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>AAOI 20260702 100.0 PUT</td>
@@ -4670,7 +4771,7 @@
               <td>15</td>
               <td>2,250 USD</td>
               <td>10.5万 USD</td>
-              <td>81.1</td>
+              <td>78.93</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>CRCL 20260717 70.0 PUT</td>
@@ -4686,7 +4787,7 @@
               <td>25</td>
               <td>1,000 USD</td>
               <td>8.8万 USD</td>
-              <td>59.86</td>
+              <td>57.37</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>DRAM 20260717 35.0 PUT</td>
@@ -4702,7 +4803,7 @@
               <td>13</td>
               <td>1,365 USD</td>
               <td>9.8万 USD</td>
-              <td>107.92</td>
+              <td>107.04</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>INTC 20260717 75.0 PUT</td>
@@ -4718,7 +4819,7 @@
               <td>12</td>
               <td>1,800 USD</td>
               <td>10.2万 USD</td>
-              <td>81.93</td>
+              <td>81.82</td>
               <td>待补充期权现价</td>
               <td>是</td>
               <td>PDD 20260717 85.0 PUT</td>
@@ -4734,7 +4835,7 @@
               <td>25</td>
               <td>4,500 USD</td>
               <td>10.0万 USD</td>
-              <td>59.86</td>
+              <td>57.37</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>DRAM 20260821 40.0 PUT</td>
@@ -4750,7 +4851,7 @@
               <td>5</td>
               <td>1,465 USD</td>
               <td>10.0万 USD</td>
-              <td>427.92</td>
+              <td>408.75</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>TSM 20260821 200.0 PUT</td>
@@ -4766,7 +4867,7 @@
               <td>22</td>
               <td>2,860 USD</td>
               <td>9.9万 USD</td>
-              <td>81.1</td>
+              <td>78.93</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>CRCL 20260918 45.0 PUT</td>
@@ -4782,7 +4883,7 @@
               <td>10</td>
               <td>3,990 USD</td>
               <td>10.0万 USD</td>
-              <td>81.93</td>
+              <td>81.82</td>
               <td>待补充期权现价</td>
               <td>是</td>
               <td>PDD 20260918 100.0 PUT</td>
@@ -4798,7 +4899,7 @@
               <td>10</td>
               <td>8,150 USD</td>
               <td>10.0万 USD</td>
-              <td>81.93</td>
+              <td>81.82</td>
               <td>待补充期权现价</td>
               <td>是</td>
               <td>PDD 20260918 100.0 PUT</td>
@@ -4814,7 +4915,7 @@
               <td>22</td>
               <td>3,119 USD</td>
               <td>10.1万 USD</td>
-              <td>383</td>
+              <td>373.8</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>HEX.HK 20260929 360 PUT</td>
@@ -4830,7 +4931,7 @@
               <td>8</td>
               <td>4,400 USD</td>
               <td>9.6万 USD</td>
-              <td>208.19</td>
+              <td>200.42</td>
               <td>待补充期权现价</td>
               <td>否</td>
               <td>NVDA 20261218 120.0 PUT</td>
@@ -5199,6 +5300,165 @@
   </div>
     
   </div>
+
+  
+  <section class="pending-adjustments" id="pending-adjustments">
+    <h2>昨日观察待处理 <span>观察日 2026-06-10；使用 iFinD 昨日收盘价判断，导出 CSV 作为台账调整建议</span></h2>
+    <div class="pending-toolbar">
+      <div>
+        <strong>4 条昨日观察</strong>
+        <span>只生成建议表，不直接修改 Excel 台账</span>
+      </div>
+      <button type="button" id="download-pending-csv">导出调整建议表 CSV</button>
+    </div>
+    <table class="pending-table">
+      <thead>
+        <tr><th>产品</th><th>挂钩标的</th><th>昨日收盘价判断</th><th>系统判断</th><th>建议移入 Sheet</th><th>人工确认 / 备注</th></tr>
+      </thead>
+      <tbody>
+            <tr class="pending-row"
+                data-product="CLSA FCN ETHA 12%"
+                data-account="在线途游（香港）有限公司"
+                data-institution="摩根士丹利"
+                data-observation-date="2026-06-10"
+                data-price-date="2026-06-10"
+                data-underlying="ETHA"
+                data-prices="ETHA: 12.28"
+                data-system-result="不敲出"
+                data-target-sheet="-">
+              <td>
+                <strong>CLSA FCN ETHA 12%</strong>
+                <span>摩根士丹利 | 在线途游（香港）有限公司 | 50.0万 USD</span>
+              </td>
+              <td>ETHA</td>
+              <td><div class="obs-price-lines">
+            <div class="obs-price-line">
+              <strong>ETHA</strong>
+              <span>市场 12.28</span>
+              <span>初始 22.3546</span>
+              <span>接货 12.57</span>
+            </div>
+            </div></td>
+              <td><span class="status-pill obs-not-knockout">不敲出</span><small>至少一个标的市场价未大于敲出价</small></td>
+              <td>-</td>
+              <td>
+                <div class="pending-actions" role="group" aria-label="人工确认结果 1">
+                  <label><input type="radio" name="pending-action-0" value="确认结束" >确认结束</label>
+                  <label><input type="radio" name="pending-action-0" value="确认敲出" >确认敲出</label>
+                  <label><input type="radio" name="pending-action-0" value="暂不处理" checked>暂不处理</label>
+                </div>
+                <textarea class="pending-note" placeholder="备注，例如：待同事确认回款/需核对成交单"></textarea>
+              </td>
+            </tr>
+            
+            <tr class="pending-row"
+                data-product="CLSA FCN IBIT 12%"
+                data-account="在线途游（香港）有限公司"
+                data-institution="摩根士丹利"
+                data-observation-date="2026-06-10"
+                data-price-date="2026-06-10"
+                data-underlying="IBIT"
+                data-prices="IBIT: 35.08"
+                data-system-result="不敲出"
+                data-target-sheet="-">
+              <td>
+                <strong>CLSA FCN IBIT 12%</strong>
+                <span>摩根士丹利 | 在线途游（香港）有限公司 | 50.0万 USD</span>
+              </td>
+              <td>IBIT</td>
+              <td><div class="obs-price-lines">
+            <div class="obs-price-line">
+              <strong>IBIT</strong>
+              <span>市场 35.08</span>
+              <span>初始 49.9795</span>
+              <span>接货 34.9207</span>
+            </div>
+            </div></td>
+              <td><span class="status-pill obs-not-knockout">不敲出</span><small>至少一个标的市场价未大于敲出价</small></td>
+              <td>-</td>
+              <td>
+                <div class="pending-actions" role="group" aria-label="人工确认结果 2">
+                  <label><input type="radio" name="pending-action-1" value="确认结束" >确认结束</label>
+                  <label><input type="radio" name="pending-action-1" value="确认敲出" >确认敲出</label>
+                  <label><input type="radio" name="pending-action-1" value="暂不处理" checked>暂不处理</label>
+                </div>
+                <textarea class="pending-note" placeholder="备注，例如：待同事确认回款/需核对成交单"></textarea>
+              </td>
+            </tr>
+            
+            <tr class="pending-row"
+                data-product="BARC FCN 0883 8%"
+                data-account="在线途游（香港）有限公司"
+                data-institution="摩根士丹利"
+                data-observation-date="2026-06-10"
+                data-price-date="2026-06-10"
+                data-underlying="中海油"
+                data-prices="中海油: 25.56"
+                data-system-result="不敲出"
+                data-target-sheet="-">
+              <td>
+                <strong>BARC FCN 0883 8%</strong>
+                <span>摩根士丹利 | 在线途游（香港）有限公司 | 50.0万 USD</span>
+              </td>
+              <td>中海油</td>
+              <td><div class="obs-price-lines">
+            <div class="obs-price-line">
+              <strong>中海油</strong>
+              <span>市场 25.56</span>
+              <span>初始 29.04</span>
+              <span>接货 19.875</span>
+            </div>
+            </div></td>
+              <td><span class="status-pill obs-not-knockout">不敲出</span><small>至少一个标的市场价未大于敲出价</small></td>
+              <td>-</td>
+              <td>
+                <div class="pending-actions" role="group" aria-label="人工确认结果 3">
+                  <label><input type="radio" name="pending-action-2" value="确认结束" >确认结束</label>
+                  <label><input type="radio" name="pending-action-2" value="确认敲出" >确认敲出</label>
+                  <label><input type="radio" name="pending-action-2" value="暂不处理" checked>暂不处理</label>
+                </div>
+                <textarea class="pending-note" placeholder="备注，例如：待同事确认回款/需核对成交单"></textarea>
+              </td>
+            </tr>
+            
+            <tr class="pending-row"
+                data-product="JPM FCN PLTR 10%"
+                data-account="在线途游（香港）有限公司"
+                data-institution="摩根士丹利"
+                data-observation-date="2026-06-10"
+                data-price-date="2026-06-10"
+                data-underlying="Palantir"
+                data-prices="Palantir: 130.21"
+                data-system-result="不敲出"
+                data-target-sheet="-">
+              <td>
+                <strong>JPM FCN PLTR 10%</strong>
+                <span>摩根士丹利 | 在线途游（香港）有限公司 | 50.0万 USD</span>
+              </td>
+              <td>Palantir</td>
+              <td><div class="obs-price-lines">
+            <div class="obs-price-line">
+              <strong>Palantir</strong>
+              <span>市场 130.21</span>
+              <span>初始 143.618</span>
+              <span>接货 65.0301</span>
+            </div>
+            </div></td>
+              <td><span class="status-pill obs-not-knockout">不敲出</span><small>至少一个标的市场价未大于敲出价</small></td>
+              <td>-</td>
+              <td>
+                <div class="pending-actions" role="group" aria-label="人工确认结果 4">
+                  <label><input type="radio" name="pending-action-3" value="确认结束" >确认结束</label>
+                  <label><input type="radio" name="pending-action-3" value="确认敲出" >确认敲出</label>
+                  <label><input type="radio" name="pending-action-3" value="暂不处理" checked>暂不处理</label>
+                </div>
+                <textarea class="pending-note" placeholder="备注，例如：待同事确认回款/需核对成交单"></textarea>
+              </td>
+            </tr>
+            </tbody>
+    </table>
+  </section>
+    
   <script>
     const tabs = document.querySelectorAll(".view-tab");
     const views = document.querySelectorAll(".dashboard-view");
@@ -5210,6 +5470,46 @@
         document.getElementById(tab.dataset.view).classList.add("active");
       });
     });
+    const csvButton = document.getElementById("download-pending-csv");
+    if (csvButton) {
+      const csvHeaders = ["产品名称", "账户/主体", "机构", "观察日", "判断使用价格日期", "标的", "昨日收盘价", "系统判断结果", "人工确认结果", "建议动作", "建议移入sheet", "备注"];
+      const csvEscape = (value) => `"${String(value ?? "").replaceAll('"', '""')}"`;
+      csvButton.addEventListener("click", () => {
+        const rows = Array.from(document.querySelectorAll(".pending-row")).map((row) => {
+          const selected = row.querySelector("input[type='radio']:checked");
+          const note = row.querySelector(".pending-note");
+          const action = selected ? selected.value : "";
+          return [
+            row.dataset.product,
+            row.dataset.account,
+            row.dataset.institution,
+            row.dataset.observationDate,
+            row.dataset.priceDate,
+            row.dataset.underlying,
+            row.dataset.prices,
+            row.dataset.systemResult,
+            action,
+            action,
+            row.dataset.targetSheet,
+            note ? note.value : "",
+          ];
+        });
+        if (!rows.length) {
+          alert("暂无可导出的昨日观察待处理事项");
+          return;
+        }
+        const csv = [csvHeaders, ...rows].map((row) => row.map(csvEscape).join(",")).join("\n");
+        const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
+        const url = URL.createObjectURL(blob);
+        const link = document.createElement("a");
+        link.href = url;
+        link.download = `FCN昨日观察调整建议_${new Date().toISOString().slice(0, 10)}.csv`;
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+        URL.revokeObjectURL(url);
+      });
+    }
   </script>
 </body>
 </html>
