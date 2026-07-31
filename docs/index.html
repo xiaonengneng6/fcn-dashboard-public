@@ -288,6 +288,104 @@
       border-color: #bbf7d0;
       background: #f6fff9;
     }
+    .judgment-section {
+      border-color: #dbeafe;
+      background: linear-gradient(135deg, #f8fbff 0%, #ffffff 100%);
+    }
+    .judgment-section h2 {
+      margin-bottom: 0;
+    }
+    .judgment-summary-cards {
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      margin: 14px 18px 0;
+    }
+    .judgment-section .card {
+      border-color: #bbf7d0;
+      background: #f6fff9;
+    }
+    .judgment-summary-cards .card {
+      min-height: 88px;
+    }
+    .judgment-summary-cards small {
+      display: block;
+      margin-top: 6px;
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .judgment-summary-cards .deduction-card {
+      border-color: #fed7aa;
+      background: #fff7ed;
+    }
+    .judgment-summary-cards .remaining-card {
+      border-color: #bfdbfe;
+      background: #f8fbff;
+    }
+    .judgment-bucket-layout {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin: 12px 18px 0;
+    }
+    .judgment-bucket-cards {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 8px;
+    }
+    .judgment-bucket-cards .mini-card {
+      border: 1px solid #dbeafe;
+      border-radius: 12px;
+      background: #fff;
+      padding: 10px;
+    }
+    .judgment-bucket-cards small {
+      display: block;
+      margin-top: 5px;
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .judgment-note {
+      margin: 12px 18px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.55;
+    }
+    .judgment-empty {
+      margin: 0 18px 18px;
+      border: 1px dashed #bbf7d0;
+      border-radius: 12px;
+      padding: 10px;
+      color: #15803d;
+      background: #f0fdf4;
+      font-size: 13px;
+      font-weight: 700;
+    }
+    .judgment-table {
+      width: calc(100% - 36px);
+      margin: 0 18px 18px;
+      border-collapse: collapse;
+      font-size: 12px;
+      overflow: hidden;
+      border-radius: 12px;
+    }
+    .judgment-table th,
+    .judgment-table td {
+      padding: 8px;
+      border-bottom: 1px solid #e5e7eb;
+      text-align: left;
+      vertical-align: top;
+    }
+    .judgment-table th {
+      color: var(--muted);
+      background: #f8fafc;
+      font-size: 11px;
+    }
+    .judgment-table td:first-child span {
+      display: block;
+      margin-top: 3px;
+      color: var(--muted);
+    }
     .summary-group.scale-group .card {
       border-color: #bfdbfe;
       background: #f8fbff;
@@ -894,6 +992,120 @@
       font-weight: 800;
       cursor: pointer;
     }
+    .review-toolbar {
+      justify-content: flex-start;
+      margin: 14px 18px 12px;
+    }
+    .yesterday-review-summary {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 10px;
+      margin: 0 18px 14px;
+    }
+    .review-summary-card {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      padding: 12px;
+      background: #fff;
+    }
+    .review-summary-card .num {
+      font-size: 24px;
+      font-weight: 900;
+      line-height: 1;
+    }
+    .review-summary-card .label {
+      margin-top: 6px;
+      color: var(--text);
+      font-weight: 800;
+      font-size: 13px;
+    }
+    .review-summary-card small {
+      display: block;
+      margin-top: 4px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .review-summary-card.pending {
+      border-color: #fed7aa;
+      background: #fff7ed;
+    }
+    .review-summary-card.pending .num {
+      color: #c2410c;
+    }
+    .review-summary-card.reflected {
+      border-color: #bfdbfe;
+      background: #f8fbff;
+    }
+    .review-summary-card.reflected .num {
+      color: #1d4ed8;
+    }
+    .review-summary-card.no-action {
+      border-color: #d1d5db;
+      background: #f8fafc;
+    }
+    .review-summary-card.no-action .num {
+      color: #64748b;
+    }
+    .yesterday-review-group {
+      margin: 14px 18px 0;
+    }
+    .yesterday-review-group.yesterday-pending {
+      border-color: #fed7aa;
+      background: #fffaf3;
+    }
+    .yesterday-review-group.yesterday-reflected {
+      border-color: #bfdbfe;
+      background: #f8fbff;
+    }
+    .yesterday-review-group.yesterday-no-action {
+      border-color: #d1d5db;
+      background: #f8fafc;
+    }
+    .yesterday-review-group.yesterday-pending .obs-dot {
+      background: #f97316;
+    }
+    .yesterday-review-group.yesterday-reflected .obs-dot {
+      background: #2563eb;
+    }
+    .yesterday-review-group.yesterday-no-action .obs-dot {
+      background: #94a3b8;
+    }
+    .observation-group-title small {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .pending-review-row td {
+      background: #fff7ed;
+    }
+    .pending-category {
+      margin-top: 14px;
+    }
+    .pending-category-title {
+      display: flex;
+      align-items: baseline;
+      gap: 8px;
+      padding: 0 2px 8px;
+      color: var(--text);
+    }
+    .pending-category-title strong {
+      font-size: 15px;
+    }
+    .pending-category-title span {
+      color: var(--blue);
+      font-size: 12px;
+      font-weight: 800;
+    }
+    .pending-category-title small {
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .reflected-row td {
+      background: #f8fbff;
+    }
+    .no-action-row td {
+      background: #f8fafc;
+    }
     .pending-table td:first-child span,
     .pending-table small {
       display: block;
@@ -1430,6 +1642,7 @@
       .summary-groups, .risk-grid, .exposure-grid, .review-grid { grid-template-columns: 1fr; }
       .scale-sub-layout { grid-template-columns: 1fr; }
       .compact-scale-layout { grid-template-columns: 1fr; }
+      .judgment-bucket-layout, .yesterday-review-summary { grid-template-columns: 1fr; }
       .scale-cards, .mini-scale-cards, .option-summary-cards, .option-total-cards, .option-account-cards { grid-template-columns: repeat(2, minmax(100px, 1fr)); }
       .ended-grid { grid-template-columns: repeat(2, 1fr); }
       section { overflow-x: auto; }
@@ -1440,7 +1653,7 @@
   <header>
     <h1>权益类观察看板</h1>
     <div class="sub">
-      数据日期：2026-07-31 | 生成时间：2026-07-31 10:04
+      数据日期：2026-07-31 | 生成时间：2026-07-31 18:51
     </div>
   </header>
   <nav class="view-nav">
@@ -1542,25 +1755,6 @@
       <div class="observation-summary"><div class="observation-summary-main">今日观察 FCN 0 只。</div></div>
       <div class="empty">今日暂无观察日</div>
     </section>
-
-    
-  <section class="pending-adjustments" id="pending-adjustments">
-    <h2>昨日观察待处理 <span>观察日 2026-07-30；使用 iFinD 昨日收盘价判断，导出 CSV 作为台账调整建议</span></h2>
-    <div class="pending-toolbar">
-      <div>
-        <strong>0 条昨日观察</strong>
-        <span>只生成建议表，不直接修改 Excel 台账</span>
-      </div>
-      <button type="button" id="download-pending-csv">导出调整建议表 CSV</button>
-    </div>
-    <table class="pending-table">
-      <thead>
-        <tr><th>产品</th><th>挂钩标的</th><th>昨日收盘价判断</th><th>系统判断</th><th>建议移入 Sheet</th><th>人工确认 / 备注</th></tr>
-      </thead>
-      <tbody><tr><td colspan="6" class="empty">昨日暂无 FCN 观察待处理事项</td></tr></tbody>
-    </table>
-  </section>
-    
 
     
     <section>
@@ -7871,7 +8065,7 @@
       <span><i class="legend-dot dot-blue"></i>普通持仓</span>
     </div>
     
-        <div class="risk-summary">触及接货价预警 FCN 3 只，公司账户 125.0 万美元，宝成账户 0.0 万美元，涉及标的：拼多多、阿里巴巴。</div>
+        <div class="risk-summary">触及接货价预警 FCN 3 只，公司账户 125.0 万美元，涉及标的：拼多多、阿里巴巴。</div>
         <div class="risk-list">
             <div class="risk-card">
               <div class="risk-card-top">
@@ -7942,6 +8136,7 @@
       <span><i class="legend-dot dot-blue"></i>普通持仓</span>
     </div>
     
+        <div class="risk-summary">接近接货价 FCN 1 只，公司账户 25.0 万美元，涉及标的：腾讯控股。</div>
         <div class="risk-list">
             <div class="risk-card">
               <div class="risk-card-top">
@@ -9108,6 +9303,144 @@
             </div>
       </section>
     </div>
+
+    
+      <section class="judgment-section">
+        <h2>系统判断后预计变化 <span>仅用于日常维护核对，不改变上方台账统计口径</span></h2>
+        <div class="summary-cards judgment-summary-cards">
+          <div class="card"><div class="num">82</div><div class="label">台账当前 FCN</div><small>4,044.9万 USD</small></div>
+          <div class="card deduction-card"><div class="num">-0</div><div class="label">预计扣减 FCN</div><small>0 USD</small></div>
+          <div class="card remaining-card"><div class="num">82</div><div class="label">预计剩余 FCN</div><small>4,044.9万 USD</small></div>
+        </div>
+        <div class="judgment-bucket-layout">
+          
+        <div class="scale-block compact-scale-block judgment-bucket-block accent-scale-block">
+          <div class="scale-title">公司</div>
+          <div class="judgment-bucket-cards">
+            <div class="mini-card"><div class="num">73</div><div class="label">台账当前</div><small>3,614.9万 USD</small></div>
+            <div class="mini-card deduction-card"><div class="num">-0</div><div class="label">预计扣减</div><small>0 USD</small></div>
+            <div class="mini-card remaining-card"><div class="num">73</div><div class="label">预计剩余</div><small>3,614.9万 USD</small></div>
+          </div>
+        </div>
+        
+          
+        <div class="scale-block compact-scale-block judgment-bucket-block">
+          <div class="scale-title">BC（宝成）</div>
+          <div class="judgment-bucket-cards">
+            <div class="mini-card"><div class="num">9</div><div class="label">台账当前</div><small>430.0万 USD</small></div>
+            <div class="mini-card deduction-card"><div class="num">-0</div><div class="label">预计扣减</div><small>0 USD</small></div>
+            <div class="mini-card remaining-card"><div class="num">9</div><div class="label">预计剩余</div><small>430.0万 USD</small></div>
+          </div>
+        </div>
+        
+        </div>
+        <div class="judgment-note">维护口径：上方 FCN规模概览仍完全来自台账；本模块只按今日观察系统判断提示可能需要从持仓扣减的产品，方便人工更新台账。</div>
+        <div class="judgment-empty">今日观察暂无敲出、产品结束或接货，预计规模暂不扣减。</div>
+      </section>
+    
+
+    
+  <section class="pending-adjustments" id="pending-adjustments">
+    <h2>昨日观察待处理 <span>观察日 2026-07-30；系统判断展示，人工自行核对台账</span></h2>
+    <div class="pending-toolbar review-toolbar">
+      <div>
+        <strong>2 条昨日观察</strong>
+        <span>待确认 0 条，已反映 2 条，无需处理 0 条</span>
+      </div>
+    </div>
+    
+    <div class="observation-summary yesterday-text-summary">
+      <div class="observation-summary-main">昨日产品结束 FCN 2 只，公司账户合计 100.0 万美元。</div>
+      <div class="observation-summary-detail">HSBC FCN TSLA&amp;NVDA 12%，公司账户50.0 万美元。</div><div class="observation-summary-detail">HSBC FCN TSLA&amp;GOOGL 12%，公司账户50.0 万美元。</div>
+    </div>
+    
+    
+    <div class="yesterday-review-summary">
+      <div class="review-summary-card pending">
+        <div class="num">0</div>
+        <div class="label">待确认处理</div>
+        <small>终态判断但台账仍持有中</small>
+      </div>
+      <div class="review-summary-card reflected">
+        <div class="num">2</div>
+        <div class="label">已反映到台账</div>
+        <small>当前状态已非持有中</small>
+      </div>
+      <div class="review-summary-card no-action">
+        <div class="num">0</div>
+        <div class="label">无需处理</div>
+        <small>未触发敲出/结束/接货</small>
+      </div>
+    </div>
+    
+    
+        <div class="observation-group yesterday-review-group yesterday-reflected">
+          <div class="observation-group-title">
+            <span class="obs-dot"></span>
+            <strong>已反映到台账</strong>
+            <span>2 条</span>
+            <small>昨日观察已触发终态判断，但当前台账已不属于持有中，用于核对不重复处理。</small>
+          </div>
+          <table class="pending-table">
+            <thead>
+              <tr><th>产品</th><th>挂钩标的</th><th>昨日价格判断</th><th>系统判断</th></tr>
+            </thead>
+            <tbody>
+            <tr class="review-row reflected-row">
+              <td>
+                <strong>HSBC FCN TSLA&amp;NVDA 12%</strong>
+                <span>摩根士丹利 | 在线途游（香港）有限公司 | 50.0万 USD</span>
+                <small>台账状态：到期结束</small>
+              </td>
+              <td>特斯拉 / 英伟达</td>
+              <td><div class="obs-price-lines">
+            <div class="obs-price-line">
+              <strong>特斯拉</strong>
+              <span>市场 308.85</span>
+              <span>初始 440.13</span>
+              <span>接货 274.069</span>
+            </div>
+            
+            <div class="obs-price-line">
+              <strong>英伟达</strong>
+              <span>市场 195.04</span>
+              <span>初始 188.412</span>
+              <span>接货 117.324</span>
+            </div>
+            </div></td>
+              <td><span class="status-pill obs-ended">产品结束</span><small>最后观察日未触发接货</small></td>
+            </tr>
+            
+            <tr class="review-row reflected-row">
+              <td>
+                <strong>HSBC FCN TSLA&amp;GOOGL 12%</strong>
+                <span>摩根士丹利 | 在线途游（香港）有限公司 | 50.0万 USD</span>
+                <small>台账状态：到期结束</small>
+              </td>
+              <td>特斯拉 / 谷歌</td>
+              <td><div class="obs-price-lines">
+            <div class="obs-price-line">
+              <strong>特斯拉</strong>
+              <span>市场 308.85</span>
+              <span>初始 440.13</span>
+              <span>接货 288.681</span>
+            </div>
+            
+            <div class="obs-price-line">
+              <strong>谷歌</strong>
+              <span>市场 333.66</span>
+              <span>初始 331.807</span>
+              <span>接货 217.632</span>
+            </div>
+            </div></td>
+              <td><span class="status-pill obs-ended">产品结束</span><small>最后观察日未触发接货</small></td>
+            </tr>
+            </tbody>
+          </table>
+        </div>
+        
+  </section>
+    
 
     <p class="note">
       说明：FCN 和期权的标的价格来自台账市场价；保证金、权利金、数量等持仓字段来自台账。今日观察按 FCN 规则判断，接货风险按标的汇总展示。双挂钩产品的风险金额按本金平分到各标的。
@@ -15707,46 +16040,6 @@
       }
       updateCalendarMonth();
     });
-    const csvButton = document.getElementById("download-pending-csv");
-    if (csvButton) {
-      const csvHeaders = ["产品名称", "账户/主体", "机构", "观察日", "判断使用价格日期", "标的", "昨日收盘价", "系统判断结果", "人工确认结果", "建议动作", "建议移入sheet", "备注"];
-      const csvEscape = (value) => `"${String(value ?? "").replaceAll('"', '""')}"`;
-      csvButton.addEventListener("click", () => {
-        const rows = Array.from(document.querySelectorAll(".pending-row")).map((row) => {
-          const selected = row.querySelector("input[type='radio']:checked");
-          const note = row.querySelector(".pending-note");
-          const action = selected ? selected.value : "";
-          return [
-            row.dataset.product,
-            row.dataset.account,
-            row.dataset.institution,
-            row.dataset.observationDate,
-            row.dataset.priceDate,
-            row.dataset.underlying,
-            row.dataset.prices,
-            row.dataset.systemResult,
-            action,
-            action,
-            row.dataset.targetSheet,
-            note ? note.value : "",
-          ];
-        });
-        if (!rows.length) {
-          alert("暂无可导出的昨日观察待处理事项");
-          return;
-        }
-        const csv = [csvHeaders, ...rows].map((row) => row.map(csvEscape).join(",")).join("\n");
-        const blob = new Blob(["\ufeff" + csv], { type: "text/csv;charset=utf-8;" });
-        const url = URL.createObjectURL(blob);
-        const link = document.createElement("a");
-        link.href = url;
-        link.download = `FCN昨日观察调整建议_${new Date().toISOString().slice(0, 10)}.csv`;
-        document.body.appendChild(link);
-        link.click();
-        link.remove();
-        URL.revokeObjectURL(url);
-      });
-    }
   </script>
 </body>
 </html>
